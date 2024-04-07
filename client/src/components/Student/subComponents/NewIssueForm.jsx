@@ -49,10 +49,8 @@ function NewIssueForm() {
     useEffect(() => {
       const fetchCodeRequests = async () => {
         try {
-          // Make a GET request to your backend API to fetch code requests for the logged-in requester
           const response = await axios.get(`http://localhost:8080/api/code/single-code-request/${reporter}`); // Update the URL as needed
   
-          // Update the state with the fetched code requests
           setAssignStaff(response?.data?.staff);
         } catch (error) {
           console.error('Error fetching staff code:', error);
@@ -70,9 +68,9 @@ function NewIssueForm() {
       formData.append('reporter', data.reporter);
       formData.append('description', data.description);
       formData.append('category', data.category);
-      formData.append('attachment', data.attachment[0]); // Assuming a single file is selected
-      // Check if private_channel_code exists before appending
-      if (data.private_channel_code) {
+      //formData.append('attachment', data.attachment[0]);
+
+      if (data.private_channel_code) { 
         formData.append('private_channel_code', data.private_channel_code);
       }
     
@@ -144,7 +142,7 @@ function NewIssueForm() {
                 <div className='mt-2'>
                   <input
                     type="file"
-                    required
+                    // required
                     {...register("attachment")}
                     className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                   />

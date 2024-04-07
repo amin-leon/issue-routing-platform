@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const FeedbackModal = ({ feedback, onClose }) => {
+   
     
     const staff = 'Staff';
     const [assignedTo, setSelectedStaff] = useState('');
@@ -24,7 +25,8 @@ const FeedbackModal = ({ feedback, onClose }) => {
         try {
             if (feedback?.issueId && assignedTo) { // Check if feedback.issueId is defined
                 const response = await axios.put(`http://localhost:8080/feedback/assign/${feedback.issueId}/${assignedTo}`);
-                console.log("Assigned to:", response);
+                await axios.delete(`http://localhost:8080/feedback/${feedback._id}`)
+                window.location.href = 'http://localhost:3000/Home/staff-home'
             } else {
                 console.log('Invalid feedback or assignedTo value', feedback);
             }

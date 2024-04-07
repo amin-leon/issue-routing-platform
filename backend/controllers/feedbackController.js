@@ -127,10 +127,10 @@ const updateFeedbackIsRead = async (req, res) => {
   const updateAssignedToDuringEscalation = async (req, res) => {
     try {
         const { issueId, assignedTo } = req.params;
-        const updatedIssue = await Issue.findByIdAndUpdate(issueId, { assignedTo: assignedTo }, { new: true });
+        const updatedIssue = await Issue.findByIdAndUpdate(issueId, { assignedTo: assignedTo , status: 'assigned'}, { new: true });
 
         // Assuming the feedback document has a field named 'issueId' to reference the related issue
-       await Feedback.findOneAndUpdate({ issueId: issueId }, { assignedStaff: assignedTo }, { new: true });
+       await Feedback.findByIdAndDelete(issueId);
 
         res.json(updatedIssue);
     } catch (error) {
