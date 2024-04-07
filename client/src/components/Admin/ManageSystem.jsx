@@ -3,7 +3,7 @@ import { FiUsers } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { authActions } from '../../redux/auth/authSlice';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { codesActions } from '../../redux/request_codes/codesSlice';
@@ -14,7 +14,6 @@ import { GrChannel } from "react-icons/gr";
 
 function ManageSystem() {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.auth.user);
   const users = useSelector((state) => state.auth.users);
   const pendingUsers = users ? users.filter((user) => user.approvalStatus === 'pending') : [];
   const pendingUsersCount = pendingUsers.length;
@@ -49,6 +48,7 @@ function ManageSystem() {
 
         const issuesResponse = await axios.get('http://localhost:8080/issue/all-issues');
         dispatch(issueActions.setIssues(issuesResponse.data));
+        console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;", issuesResponse.data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -56,6 +56,7 @@ function ManageSystem() {
 
     fetchData();
   }, [dispatch]);
+
 
   return (
     <div className='bg-gray-100'>

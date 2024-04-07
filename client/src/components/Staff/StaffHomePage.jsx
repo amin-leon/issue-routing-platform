@@ -3,19 +3,36 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { Link } from 'react-router-dom';
+import { Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+ } from 'chart.js';
 
+ import { Bar } from 'react-chartjs-2';
+
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+)
 
 const StaffHomePage = () => {
-    // const userInfo = useSelector((state)=> state.auth.user);
+
 const dispatch = useDispatch();
-const newIssues = useSelector((state) => state.issue.newIssues);
+const newIssues = useSelector((state) => state.issue.issues);
 const progressIssues = useSelector((state) => state.issue.progressIssues);
 const closedIssues = useSelector((state) => state.issue.closedIssues);
 const All_Issues = useSelector((state) => state.issue.assignedToMe);
 const len = All_Issues.length;
-const Issues = All_Issues.slice(len - 4, len);
+const Issues = len > 0 ? All_Issues.slice(len - 4, len) : [];
 
-//three lengths
+
+//Three lengths
 const newLeng = newIssues.length
 const progLeng = progressIssues.length
 const closeLeng = closedIssues.length
@@ -53,6 +70,31 @@ useEffect(() => {
   }
 }, [dispatch, assignedToId]);
 
+const data = {
+  labels: ['New', "Assigned", "Closed"],
+  datasets: [
+    {
+        label: 'Status of Issues',
+        data: [newIssues.length, progressIssues.length, closedIssues.length],
+        backgroundColor: [
+            'rgba(54, 162, 235, 0.2)', // New
+            'rgba(255, 206, 86, 0.2)', // Progress
+            'rgba(75, 192, 192, 0.2)', // Closed
+        ],
+        borderColor: [
+            'rgba(54, 162, 235, 1)', // New
+            'rgba(255, 206, 86, 1)', // Progress
+            'rgba(75, 192, 192, 1)', // Closed
+        ],
+        borderWidth: 1,
+    },
+],
+}
+
+const options = {
+ //
+}
+
   return (
     <div>
       <div className="issue-container px-32 py-16 grid grid-cols-2 gap-6">
@@ -78,6 +120,10 @@ useEffect(() => {
             </Link>
           </div>
           <div className="graph py-32">
+            <Bar 
+              data={data}
+              options={options}
+            ></Bar>
           </div>
         </div>
       <div className="latest-issue border px-8 py-4">
@@ -85,14 +131,18 @@ useEffect(() => {
           <p className=''>Recent issues</p>
         </div>
         <div className="issues-list flex flex-col gap-5 py-4">
-        {Issues?.map((issue) =>(
-            <div className="issue-1 border p-4 rounded-md space-y-2" key={Date.now()}>
-              <p className=''>{issue.title}</p>
-              {issue.status==='assigned' && <p className='px-3 text-red-500'>{issue.status}</p> }
-              {issue.status==='new' && <p className='px-3 text-green-500 '>{issue.status}</p>}
-              {issue.status==='closed' && <p className='px-3 text-gray-500'>{issue.status}</p>}
+        {Issues.length > 0 ? (
+          Issues.map((issue) => (
+            <div className="issue-1 border p-4 rounded-md space-y-2" key={Math.random() + Date.now()}>
+              <p className="">{issue.title}</p>
+              {issue.status === 'assigned' && <p className="px-3 text-red-500">{issue.status}</p>}
+              {issue.status === 'new' && <p className="px-3 text-green-500 ">{issue.status}</p>}
+              {issue.status === 'closed' && <p className="px-3 text-gray-500">{issue.status}</p>}
             </div>
-        ))}
+          ))
+        ) : (
+          <p>No recent issues</p>
+        )}
         </div>
       </div>
       </div>
