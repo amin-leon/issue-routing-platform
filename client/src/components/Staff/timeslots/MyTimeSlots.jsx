@@ -16,7 +16,7 @@ function MyTimeSlots() {
   const [commentText, setComment] = useState('');
   const [authorId, setUserId] = useState('');
   const [closerInfo, setCloserInfo] = useState('');
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [newStep, setNewStep] = useState('');
   const [steps, setSteps] = useState([]);
@@ -36,7 +36,7 @@ function MyTimeSlots() {
       text: feedbackText,
       author: authorId,
       steps: steps,
-      attachment: file
+      // attachment: file
     }));
   }, [feedbackText, authorId, steps]);
 
@@ -119,29 +119,29 @@ function MyTimeSlots() {
     fetchComments();
   }, [dispatch, issueId]);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
+  // const handleFileChange = (event) => {
+  //   setFile(event.target.files[0]);
+  // };
 
-  const handleAddAttachment = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append('attachment', file);
+  // const handleAddAttachment = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('attachment', file);
 
-      await axios.post(`http://localhost:8080/issue/add-attachment/${issueId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+  //     await axios.post(`http://localhost:8080/issue/add-attachment/${issueId}`, formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
 
-      alert('document added successfully!');
-    } catch (error) {
-      console.log('Error adding attachment:', error);
-      alert('Document not added');
+  //     alert('document added successfully!');
+  //   } catch (error) {
+  //     console.log('Error adding attachment:', error);
+  //     alert('Document not added');
 
-    }
-  };
+  //   }
+  // };
 
   const handleCloseIssue = async (e) => {
     e.preventDefault();
@@ -168,6 +168,9 @@ function MyTimeSlots() {
       setNewStep('');
     }
   };
+
+
+  console.log("Helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", issueDetails)
 
   return (
     <div className="">
@@ -212,16 +215,18 @@ function MyTimeSlots() {
                 <div>
                   <input type="text" value={authorId} hidden readOnly />
                 </div>
-                <div className="p-3">
-                  <button
-                    type="submit"
-                    className="bg-[#1F3365] hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
-                  >
-                    <BsSend />
-                  </button>
+                <div className="p-3 text-red-500 font-bold">
+                  {issueDetails.issue.status === 'closed' ? 'Closed' : (
+                      <button
+                        type="submit"
+                        className="bg-[#1F3365] hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
+                      >
+                     <BsSend />
+                    </button>
+                  )}
                 </div>
               </form>
-              {closerInfo?.role === 'Staff' && (
+              {closerInfo?.role === 'Staff' && issueDetails?.issue.status !== 'closed' (
                 <div className='flex gap-3 items-center'>
                   <button
                     className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none'

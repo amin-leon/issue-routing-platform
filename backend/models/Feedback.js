@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+
 const feedbackSchema = new mongoose.Schema({
     issueId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -34,10 +35,6 @@ const feedbackSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
-    },
-    document: {
-        type: String, // Assuming this will be a URL or file path
-        required: true
     },
     createdAt: {
         type: Date,

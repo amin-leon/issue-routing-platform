@@ -88,6 +88,14 @@ const Sidebar = ({ isSidebarOpen }) => {
               </div>
         </Link>
 
+        {userInfo.role === 'Staff' && (
+            <Link to="/Home/board-issues" className="text-gray-500">
+                    <div className='p-3 text-white  rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
+                      <GiConvergenceTarget className="text-xl" />Statistics
+                    </div>
+            </Link>
+        )}
+
       </div>
     </div>
   );
