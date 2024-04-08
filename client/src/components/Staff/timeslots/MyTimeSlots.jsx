@@ -135,9 +135,11 @@ function MyTimeSlots() {
         },
       });
 
-      console.log('Attachment added successfully');
+      alert('document added successfully!');
     } catch (error) {
       console.log('Error adding attachment:', error);
+      alert('Document not added');
+
     }
   };
 
@@ -239,16 +241,6 @@ function MyTimeSlots() {
                         className="w-full p-2 border rounded-md"
                         rows={6}
                       />
-                      <div>
-                        <label htmlFor="fileInput" className="block">Attach File</label>
-                        <input
-                          type="file"
-                          id="fileInput"
-                          className="border p-2 rounded-md"
-                          accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                          onChange={handleFileChange}
-                        />
-                      </div>
                       <div>
                         <p className="font-bold">Steps to Follow:</p>
                         <ol className="list-decimal pl-4">

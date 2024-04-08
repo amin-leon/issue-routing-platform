@@ -39,7 +39,7 @@ const FeedbackComponent = () => {
     setSelectedFeedback(null);
   };
 
-  const updateIsRead = async (feedback) => { // Pass feedback as argument
+  const updateIsRead = async (feedback) => {
     try {
       await axios.put(`http://localhost:8080/feedback/read/${feedback._id}`);
     } catch (error) {

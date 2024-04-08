@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import axios from 'axios'; // Import Axios for making HTTP requests
+import axios from 'axios';
 
 function SharedDocs() {
   const issueDetails = useSelector((state) => state.issue.studentIssues);

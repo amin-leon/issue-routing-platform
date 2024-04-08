@@ -10,6 +10,7 @@ import staffRoutes from './routes/staffRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
 import codeRequestRoutes from './routes/codeRequestRoutes.js'
 import feedbackRoutes from './routes/feedbackRoutes.js'
+import docsRoutes from './routes/SharedDocsRoutes.js'
 
 
 
@@ -29,6 +30,7 @@ app.use(cors());
 app.use('/auth', authRoutes);
 app.use('/issue', issueRoutes);
 app.use('/feedback', feedbackRoutes);
+app.use('/docs', docsRoutes);
 app.use('/notification', notificationRoutes);
 app.use("/api/school", staffRoutes);
 app.use("/api/school", studentRoutes);

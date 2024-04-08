@@ -68,7 +68,7 @@ function NewIssueForm() {
       formData.append('reporter', data.reporter);
       formData.append('description', data.description);
       formData.append('category', data.category);
-      //formData.append('attachment', data.attachment[0]);
+      formData.append('attachment', data.attachment[0]);
 
       if (data.private_channel_code) { 
         formData.append('private_channel_code', data.private_channel_code);
