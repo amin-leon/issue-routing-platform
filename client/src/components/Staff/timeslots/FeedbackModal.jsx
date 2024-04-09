@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const FeedbackModal = ({ feedback, onClose }) => {
-   
-    
+const FeedbackModal = ({ feedback, onClose, onDelete }) => {
     const staff = 'Staff';
     const [assignedTo, setSelectedStaff] = useState('');
     const [allStaffs, setAllStaffs] = useState([]);
@@ -23,10 +21,10 @@ const FeedbackModal = ({ feedback, onClose }) => {
 
     const handleAssignTo = async () => {
         try {
-            if (feedback?.issueId && assignedTo) { // Check if feedback.issueId is defined
+            if (feedback?.issueId && assignedTo) {
                 const response = await axios.put(`http://localhost:8080/feedback/assign/${feedback.issueId}/${assignedTo}`);
-                await axios.delete(`http://localhost:8080/feedback/${feedback._id}`)
-                window.location.href = 'http://localhost:3000/Home/staff-home'
+                onDelete(feedback._id); // Delete the feedback from the list
+                window.location.href = 'http://localhost:3000/Home/staff-home';
             } else {
                 console.log('Invalid feedback or assignedTo value', feedback);
             }
@@ -34,7 +32,16 @@ const FeedbackModal = ({ feedback, onClose }) => {
             console.log('Error assigning to staff:', error);
         }
     };
-    
+
+    const handleDelete = async () => {
+        try {
+            await axios.delete(`http://localhost:8080/feedback/${feedback._id}`);
+            onDelete(feedback._id);
+            alert("Deleted done")
+        } catch (error) {
+            console.log('Error deleting feedback:', error);
+        }
+    };
 
     return (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-75 z-50">
@@ -71,7 +78,7 @@ const FeedbackModal = ({ feedback, onClose }) => {
                         {feedback?.wantToGoHigher && (
                             <button className="mt-4 text-white bg-blue-500 px-4 py-2 rounded hover:bg-black" onClick={handleAssignTo}>Assign To</button>
                         )}
-                        <button className="mt-2 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600">Delete</button>
+                        <button className="mt-2 text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600" onClick={handleDelete}>Delete</button>
                     </div>
                 </div>
             </div>
