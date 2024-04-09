@@ -23,7 +23,7 @@ function MyStaffPage() {
     switch (selectedSetting) {
       case 'all-issues':
         return <AllIssues />;
-      case 'new-issue':
+      case 'busting-issue':
         return <IssuesInProgress />;
       case 'feedback':
         return <FeedbackComponent />;
@@ -55,7 +55,7 @@ function MyStaffPage() {
           className={`p-5 text-black rounded-md cursor-pointer flex justify-center items-center ${
             selectedSetting === 'new-issue' ? 'bg-[#1F3365] text-white' : ''
           }`}
-          onClick={() => handleSettingClick('new-issue')}
+          onClick={() => handleSettingClick('busting-issue')}
         >
           Busting issues
         </div>
