@@ -216,17 +216,17 @@ function MyTimeSlots() {
                   <input type="text" value={authorId} hidden readOnly />
                 </div>
                 <div className="p-3 text-red-500 font-bold">
-                  {issueDetails.issue.status === 'closed' ? 'Closed' : (
+                  {/* {issueDetails.issue.status === 'closed' ? 'Closed' : ( */}
                       <button
                         type="submit"
                         className="bg-[#1F3365] hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
                       >
                      <BsSend />
                     </button>
-                  )}
+                  {/* )} */}
                 </div>
               </form>
-              {closerInfo?.role === 'Staff' && issueDetails?.issue.status !== 'closed' (
+              {closerInfo?.role === 'Staff' && (
                 <div className='flex gap-3 items-center'>
                   <button
                     className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none'

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
@@ -7,15 +7,10 @@ import axios from 'axios';
 import Modal from './pop_up/Model';
 import { useSelector } from 'react-redux';
 
-
-
-
 const validationSchema = object().shape({
   title: string()
     .max(30, 'Issue title must be at most 30 characters')
     .required('Title is required'),
-    reporter: string()
-    .required('Your id is missing please'),
   description: string()
     .max(200, 'Description must be at most 200 characters')
     .required('Description is required'),
@@ -24,6 +19,7 @@ const validationSchema = object().shape({
 
 function UpdateIssue() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { id } = useParams();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -35,34 +31,47 @@ function UpdateIssue() {
   const userInfo = useSelector((state)=> state.auth.user);
   const reporter = userInfo._id;
 
-
-
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
+  useEffect(() => {
+    const fetchIssue = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/issue/view/${id}`);
+        const issueData = response.data; 
+        setValue('description', issueData?.issue.description);
+        setValue('category', issueData?.issue.category);
+        setValue('title', issueData?.issue.title);
 
-  const onSubmitHandler = async (data) => {
+      } catch (error) {
+        console.error('Error fetching issue:', error);
+      }
+    };
+
+    fetchIssue()
+  }, [id, setValue]);
+
+  const onSubmitHandler = async (data, e) => {
+    e.preventDefault();
+
     try {
-      const formData = new FormData();
-      formData.append('title', data.title);
-      formData.append('reporter', data.reporter);
-      formData.append('description', data.description);
-      formData.append('category', data.category);
-      formData.append('attachment', data.attachment[0]); // Assuming a single file is selected
-
-      await axios.post('http://localhost:8080/issue/new-issue', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
+      const updatedIssueData = {
+        title: data.title,
+        description: data.description,
+        category: data.category,
+      };
+  
+      await axios.put(`http://localhost:8080/issue/edit/${id}`, updatedIssueData);
+  
       openModal();
     } catch (error) {
-      console.error('Error creating issue:', error);
+      console.error('Error updating issue:', error);
     }
     reset();
   };
+  
+
 
   return (
     <div>
@@ -96,14 +105,7 @@ function UpdateIssue() {
                       <option value="Personal">Personal</option>
                     </select>
                   </div>
-                  <div className='mt-2'>
-                    <input
-                      type="file"
-                      required
-                      {...register("attachment")}
-                      className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
-                    />
-                  </div>
+                  {/* Remove file input for attachment */}
                   <div className='mt-2'>
                     <input
                     {...register('reporter')}
@@ -116,7 +118,6 @@ function UpdateIssue() {
                     <label className="text-sm font-medium text-red-500">{errors.reporter?.message}</label>
                   </div>
                 </div>
-                {/* text area and button */}
                 <div>
                   <div>
                     <textarea {...register("description")} rows={10}
@@ -134,9 +135,6 @@ function UpdateIssue() {
                   </button>
                 </div>
               </div>
-              <p>
-                <Link to='#' className='text-blue-500 max-w-64'>Back</Link>
-              </p>
             </form>
           </div>
         </div>
