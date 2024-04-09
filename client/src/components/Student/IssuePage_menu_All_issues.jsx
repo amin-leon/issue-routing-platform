@@ -57,6 +57,15 @@ function IssuePageMenuAllIssues() {
     setCurrentPage(pageNumber);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/issue/delete/${id}`);
+      dispatch(issueActions.deleteIssue(id));
+    } catch (error) {
+      console.error('Error deleting issue:', error);
+    }
+  };
+
   return (
     <div>
       <div className="mb-4 flex items-center space-x-4">
@@ -107,7 +116,7 @@ function IssuePageMenuAllIssues() {
                       <Link to={`/Home/update-issue/${issue._id}`}>
                         <button className="px-4 py-2 text-blue-500 cursor-pointer rounded-md">Edit</button>
                       </Link>
-                      <Link to="#">
+                      <Link to="#" onClick={() => handleDelete(issue._id)}>
                         <button className="px-4 py-2 text-red-500 cursor-pointer rounded-md">Delete</button>
                       </Link>
                     </div>

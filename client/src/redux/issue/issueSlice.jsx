@@ -49,6 +49,12 @@ const issueSlice = createSlice({
       state.assignedIssues = state.issues.filter((issue) => issue.status === 'assigned');
 
       },
+      // delete opened issue from middleman page
+      deleteIssue: (state, action)=>{
+      const id= action.payload;
+      state.issues = state.issues.filter((issue) => issue._id !== id);
+    
+      },
 
     //   delete opened issue from middleman page
       removeAssignedIssue: (state, action)=>{
