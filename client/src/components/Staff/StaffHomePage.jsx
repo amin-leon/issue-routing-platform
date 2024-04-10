@@ -99,13 +99,13 @@ const options = {
     <div>
       <div className="issue-container px-32 py-16 grid grid-cols-2 gap-6">
         <div className="cards-graph">
-          <div className="cards grid grid-cols-3 gap-3">
-          <Link to="/Home/staff-issue-page">
+          <div className="cards grid grid-cols-2 gap-3">
+          {/* <Link to="/Home/staff-issue-page">
             <div className="card-1 cursor-pointer text-white bg-[#1F3365] px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
               <p className='text-2xl'>New </p>
               <h1 className='text-2xl'>{newLeng}</h1>
             </div>
-            </Link>
+            </Link> */}
             <Link to="/Home/staff-issue-page">
             <div className="card-1 cursor-pointer text-white bg-[#1F3365] px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
               <p className='text-2xl'>Progress</p>
@@ -131,13 +131,12 @@ const options = {
           <p className=''>Recent issues</p>
         </div>
         <div className="issues-list flex flex-col gap-5 py-4">
-        {Issues.length > 0 ? (
-          Issues.map((issue) => (
+        {progressIssues.length > 0 ? (
+          progressIssues.map((issue) => (
             <div className="issue-1 border p-4 rounded-md space-y-2" key={Math.random() + Date.now()}>
               <p className="">{issue.title}</p>
-              {issue.status === 'assigned' && <p className="px-3 text-red-500">{issue.status}</p>}
-              {issue.status === 'new' && <p className="px-3 text-green-500 ">{issue.status}</p>}
-              {issue.status === 'closed' && <p className="px-3 text-gray-500">{issue.status}</p>}
+                {issue.status === 'assigned' && <p className="px-3 text-red-500">{issue.status}
+              </p>}
             </div>
           ))
         ) : (

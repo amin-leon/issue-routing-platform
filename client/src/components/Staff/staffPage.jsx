@@ -16,7 +16,7 @@ function StaffPage() {
   );
 
   const allIssues = useSelector((state) => state.issue.assignedIssues);
-  const recentIssues = allIssues.slice(0, 3);
+  const recentIssues = (allIssues.slice(0, 3)).filter(issues => (issues.status ==='open'));
 
   const indexOfLastIssue = currentPage * itemsPerPage;
   const indexOfFirstIssue = indexOfLastIssue - itemsPerPage;

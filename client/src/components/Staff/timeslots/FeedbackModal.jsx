@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+
 
 const FeedbackModal = ({ feedback, onClose, onDelete }) => {
+
+    // logged in user
+    const userInfo = useSelector((state) => state.auth.user);
+    const userId = userInfo._id;
+
     const staff = 'Staff';
     const [assignedTo, setSelectedStaff] = useState('');
     const [allStaffs, setAllStaffs] = useState([]);
+
+    // filter my id
+    const staffs = allStaffs.filter((staff) => staff._id !==userId)
+
 
     useEffect(() => {
         const fetchIssuesData = async () => {
@@ -70,7 +81,7 @@ const FeedbackModal = ({ feedback, onClose, onDelete }) => {
                             onChange={(e) => setSelectedStaff(e.target.value)}
                         >
                             <option value="">Select staff</option>
-                            {allStaffs.map((s) => <option key={s._id} value={s._id}>{s.position}</option>)}
+                            {staffs.map((s) => <option key={s._id} value={s._id}>{s.position}</option>)}
                         </select>
                     )}
                     <div>

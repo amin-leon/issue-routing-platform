@@ -10,6 +10,7 @@ function AllIssues() {
   const [currentPage, setCurrentPage] = useState(1);
   const issuesPerPage = 5;
 
+
   const handleIconClick = (issueId) => {
     setSelectedIssueId(issueId);
   };

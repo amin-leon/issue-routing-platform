@@ -1,10 +1,22 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+
+
 
 function MeetingAndEscalate({ onClose, issueId }) {
+
+  // logged in user
+  const userInfo = useSelector((state) => state.auth.user);
+  const userId = userInfo._id;
+
   const [issue, setIssue] = useState(issueId);
   const [allStaffs, setAllStaffs] = useState([]);
   const [assignedTo, setSelectedStaff] = useState('');
+
+  // filter my id
+  const staffs = allStaffs.filter((staff) => staff._id !==userId)
 
   // Use useEffect to update the issue state when issueId changes
   useEffect(() => {
@@ -61,7 +73,7 @@ function MeetingAndEscalate({ onClose, issueId }) {
                 value={assignedTo}
                 onChange={(e) => setSelectedStaff(e.target.value)}
               >
-                {allStaffs.map((staff) => (
+                {staffs.map((staff) => (
                   <option key={staff._id} value={staff._id}>{staff.position}</option>
                 ))}
               </select>

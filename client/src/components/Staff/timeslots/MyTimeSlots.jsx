@@ -119,29 +119,6 @@ function MyTimeSlots() {
     fetchComments();
   }, [dispatch, issueId]);
 
-  // const handleFileChange = (event) => {
-  //   setFile(event.target.files[0]);
-  // };
-
-  // const handleAddAttachment = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append('attachment', file);
-
-  //     await axios.post(`http://localhost:8080/issue/add-attachment/${issueId}`, formData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //       },
-  //     });
-
-  //     alert('document added successfully!');
-  //   } catch (error) {
-  //     console.log('Error adding attachment:', error);
-  //     alert('Document not added');
-
-  //   }
-  // };
 
   const handleCloseIssue = async (e) => {
     e.preventDefault();
@@ -170,7 +147,7 @@ function MyTimeSlots() {
   };
 
 
-  console.log("Helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", issueDetails)
+  // console.log("Helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", issueDetails)
 
   return (
     <div className="">
@@ -184,8 +161,9 @@ function MyTimeSlots() {
             <div className="flex gap-2 p-2" key={comment._id}>
               <img
                 className="w-8 h-8 rounded-full"
-                src={`http://localhost:8080/${comment?.userInfo?.profile}`}
-                alt=""
+                // src={`http://localhost:8080/${comment?.userInfo?.profile}`}
+                src=''
+                alt="No_Pic"
               />
               <div>
                 <p className="font-bold">
@@ -203,6 +181,7 @@ function MyTimeSlots() {
               <form onSubmit={handleCommentSubmit}>
                 <div>
                   <textarea
+                  id="chat_message"
                     cols={120}
                     rows={7}
                     required
