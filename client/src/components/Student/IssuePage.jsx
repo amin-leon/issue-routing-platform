@@ -3,6 +3,7 @@ import IssuePageMenuAllIssues from './IssuePage_menu_All_issues';
 import NewIssueForm from './subComponents/NewIssueForm';
 import ClosedIssues from './subComponents/RequestCode';
 import RequestCode from './subComponents/RequestCode';
+import Mycodes from './My-codes';
 
 
 function IssuePage() {
@@ -29,6 +30,8 @@ function IssuePage() {
           return <NewIssueForm />;
         case 'requestCode':
           return <RequestCode />;
+          case 'my-codes':
+            return <Mycodes />;
         default:
           return null;
       }
@@ -61,6 +64,14 @@ function IssuePage() {
         onClick={() => handleSettingClick('requestCode')}
       >
          Request Code
+      </div>
+      <div
+        className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
+          selectedSetting === 'my-codes' ? 'bg-[#1F3365] text-white' : ''
+        }`}
+        onClick={() => handleSettingClick('my-codes')}
+      >
+         Ongoing codes
       </div>
     </div>
     <div className="col-span-5 border h-full px-2">

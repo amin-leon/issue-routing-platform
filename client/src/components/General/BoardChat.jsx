@@ -154,6 +154,8 @@ const RemoveIssuefromGroup = async(e)=>{
                 <div>
                   <textarea
                     required
+                    rows={8}
+                    cols={100}
                     name="comments"
                     className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
                     placeholder="Type your comment ...."

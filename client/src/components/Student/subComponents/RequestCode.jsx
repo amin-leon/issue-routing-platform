@@ -6,7 +6,8 @@ import { object, string } from "yup";
 import axios from 'axios';
 import Modal from '../pop_up/Model';
 import { useSelector } from 'react-redux';
-import CodeCard from './codeCard/CodeCard ';
+
+
 
 const validationSchema = object().shape({
   staff: string()
@@ -29,7 +30,6 @@ function RequestCode() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [allStaffs, setAllStaffs] = useState([]);
   const [staff_to_interact, setSelectedStaff] = useState('');
-  const [myCodes, setMyCodes] = useState([])
   
   // select staff to interact with
   const staff = 'Staff';
@@ -46,22 +46,6 @@ function RequestCode() {
     fetchIssuesData();
   }, []);
 
-  // fetch all codes for one user(logged in)
-  useEffect(() => {
-    const fetchCodeRequests = async () => {
-      try {
-        // Make a GET request to your backend API to fetch code requests for the logged-in requester
-        const response = await axios.get(`http://localhost:8080/api/code/single-code-request/${requester}`); // Update the URL as needed
-
-        // Update the state with the fetched code requests
-        setMyCodes(response.data.filter((code)=> code.in_use ==false));
-      } catch (error) {
-        console.error('Error fetching code requests:', error);
-      }
-    };
-
-    fetchCodeRequests();
-  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -95,16 +79,12 @@ function RequestCode() {
     reset();
   };
 
-  const code=true;
-  console.log("Helloooooooooooooooooooooooooooooooooooooooooooooooo", myCodes);
-
   return (
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative">
         <div className="flex z-10 px-2">
           <div className="p-8 rounded-2xl w-full">
             {/* CodeCard component */}
-            {code ? <div className='flex justify-end'><CodeCard codes={myCodes}/></div> : ''}
             <p className='pb-8 text-2xl font-bold'>Request Private Channel</p>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="grid grid-cols-2 gap-4">

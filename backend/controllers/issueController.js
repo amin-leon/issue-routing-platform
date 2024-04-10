@@ -87,6 +87,27 @@ const addAttachment = async (req, res) => {
   }
 };
 
+const deleteAttachment = async (req, res) => {
+  try {
+    const { issueId, attachmentId } = req.params;
+    const issue = await Issue.findByIdAndUpdate(
+      issueId,
+      { $pull: { attachments: { _id: attachmentId } } },
+      { new: true }
+    );
+    if (!issue) {
+      return res.status(404).json({ error: 'Issue not found' });
+    }
+
+    res.status(200).json({ message: 'Attachment deleted successfully', issue });
+  } catch (error) {
+    console.log('Error deleting attachment:', error);
+    res.status(500).json({ error: 'An error occurred while deleting the attachment.' });
+  }
+};
+
+
+
 
 // Assign issue to Staff
 const updateAssignedTo = async (req, res) => {
@@ -506,6 +527,7 @@ export default {
       getStaffStudentCommentsByIssueId,
       markIssueAsRead,
       addAttachment,
+      deleteAttachment,
       closeIssue
 };
 
