@@ -99,13 +99,13 @@ const options = {
     <div>
       <div className="issue-container px-32 py-16 grid grid-cols-2 gap-6">
         <div className="cards-graph">
-          <div className="cards grid grid-cols-2 gap-3">
-          {/* <Link to="/Home/staff-issue-page">
+          <div className="cards grid grid-cols-3 gap-3">
+          <Link to="/Home/staff-issue-page">
             <div className="card-1 cursor-pointer text-white bg-[#1F3365] px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
-              <p className='text-2xl'>New </p>
-              <h1 className='text-2xl'>{newLeng}</h1>
+              <p className='text-2xl'>Total</p>
+              <h1 className='text-2xl'>{len}</h1>
             </div>
-            </Link> */}
+            </Link>
             <Link to="/Home/staff-issue-page">
             <div className="card-1 cursor-pointer text-white bg-[#1F3365] px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
               <p className='text-2xl'>Progress</p>
