@@ -10,6 +10,7 @@ function IssuePageMenuAllIssues() {
   const studentIssues = useSelector((state) => state.issue.issues);
   const [reporterId, setUserId] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
   const [currentPage, setCurrentPage] = useState(1);
   const issuesPerPage = 5;
 
@@ -40,8 +41,17 @@ function IssuePageMenuAllIssues() {
   }, [dispatch, reporterId]);
 
   const filteredIssues = studentIssues.filter((issue) => {
-    if (filter === 'all') return true;
-    return issue.status === filter;
+    if (filter !== 'all' && issue.status !== filter) {
+      return false;
+    }
+    if (selectedMonth !== 'all') {
+      const issueDate = new Date(issue.createdAt);
+      const issueMonth = issueDate.getMonth().toString();
+      if (issueMonth !== selectedMonth) {
+        return false;
+      }
+    }
+    return true;
   });
 
   const indexOfLastIssue = currentPage * issuesPerPage;
@@ -79,6 +89,27 @@ function IssuePageMenuAllIssues() {
           <option value="all">All</option>
           <option value="assigned">In Progress</option>
           <option value="closed">Closed</option>
+        </select>
+        <select
+          id="monthOption"
+          name="monthOption"
+          className="border p-2 rounded-md w-96"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="all">All Months</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
         </select>
       </div>
 
