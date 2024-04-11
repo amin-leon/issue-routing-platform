@@ -7,9 +7,10 @@ function AllIssues() {
   const MyIssues_Staff = useSelector((state) => state.issue.assignedToMe);
   const [selectedIssueId, setSelectedIssueId] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const [currentPage, setCurrentPage] = useState(1);
   const issuesPerPage = 5;
-
 
   const handleIconClick = (issueId) => {
     setSelectedIssueId(issueId);
@@ -19,17 +20,33 @@ function AllIssues() {
     setSelectedIssueId(null);
   };
 
-  const filteredIssues = filter === 'all' ? MyIssues_Staff : MyIssues_Staff.filter((issue) => {
-    return issue.status === filter;
+  const filteredIssues = MyIssues_Staff.filter((issue) => {
+    if (filter !== 'all' && issue.status !== filter) {
+      return false;
+    }
+    if (selectedMonth !== 'all') {
+      const issueDate = new Date(issue.createdAt);
+      const issueMonth = issueDate.getMonth().toString();
+      if (issueMonth !== selectedMonth) {
+        return false;
+      }
+    }
+    if (selectedYear !== 'all') {
+      const issueDate = new Date(issue.createdAt);
+      const issueYear = issueDate.getFullYear().toString();
+      if (issueYear !== selectedYear) {
+        return false;
+      }
+    }
+    return true;
   });
-  
 
   const indexOfLastIssue = currentPage * issuesPerPage;
   const indexOfFirstIssue = indexOfLastIssue - issuesPerPage;
   const currentIssues = filteredIssues.slice(indexOfFirstIssue, indexOfLastIssue);
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(MyIssues_Staff.length / issuesPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(filteredIssues.length / issuesPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -49,6 +66,40 @@ function AllIssues() {
           <option value="new">Pending</option>
           <option value="assigned">In Progress</option>
           <option value="closed">Closed</option>
+        </select>
+        <select
+          id="monthOption"
+          name="monthOption"
+          className="border p-2 rounded-md w-64"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="all">All Months</option>
+          <option value="0">January</option>
+          <option value="1">February</option>
+          <option value="2">March</option>
+          <option value="3">April</option>
+          <option value="4">May</option>
+          <option value="5">June</option>
+          <option value="6">July</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">October</option>
+          <option value="10">November</option>
+          <option value="11">December</option>
+        </select>
+        <select
+          id="yearOption"
+          name="yearOption"
+          className="border p-2 rounded-md w-64"
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
+          <option value="all">All Years</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          {/* Add more years as needed */}
         </select>
       </div>
       {currentIssues.length === 0 ? (

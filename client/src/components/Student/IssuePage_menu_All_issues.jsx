@@ -11,6 +11,7 @@ function IssuePageMenuAllIssues() {
   const [reporterId, setUserId] = useState(null);
   const [filter, setFilter] = useState('all');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const [currentPage, setCurrentPage] = useState(1);
   const issuesPerPage = 5;
 
@@ -48,6 +49,13 @@ function IssuePageMenuAllIssues() {
       const issueDate = new Date(issue.createdAt);
       const issueMonth = issueDate.getMonth().toString();
       if (issueMonth !== selectedMonth) {
+        return false;
+      }
+    }
+    if (selectedYear !== 'all') {
+      const issueDate = new Date(issue.createdAt);
+      const issueYear = issueDate.getFullYear().toString();
+      if (issueYear !== selectedYear) {
         return false;
       }
     }
@@ -110,6 +118,21 @@ function IssuePageMenuAllIssues() {
           <option value="9">October</option>
           <option value="10">November</option>
           <option value="11">December</option>
+        </select>
+        <select
+          id="yearOption"
+          name="yearOption"
+          className="border p-2 rounded-md w-96"
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(e.target.value)}
+        >
+          <option value="all">All Years</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          {/* Add more years as needed */}
         </select>
       </div>
 
