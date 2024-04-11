@@ -4,22 +4,31 @@ import axios from 'axios';
 
 function IssuesInProgress() {
   const [progressIssues, setProgressIssues] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
 
   useEffect(() => {
     const fetchIssues = async () => {
       try {
         const response = await axios.get('http://localhost:8080/issue/all-issues');
-        setProgressIssues(response.data);
+        const filteredIssues = response.data.filter((issue) => issue.status !== 'new');
+        setProgressIssues(filteredIssues);
       } catch (error) {
         console.error('Error fetching issues:', error);
       }
     };
-
+  
     fetchIssues();
   }, []);
 
+  // Filter issues based on selected year and month
+  const filteredIssues = progressIssues.filter((issue) => {
+    const issueDate = new Date(issue.createdAt);
+    return issueDate.getFullYear() === selectedYear && issueDate.getMonth() + 1 === selectedMonth;
+  });
+
   // Calculate category occurrence
-  const categoryCounts = progressIssues.reduce((acc, issue) => {
+  const categoryCounts = filteredIssues.reduce((acc, issue) => {
     acc[issue.category] = acc[issue.category] ? acc[issue.category] + 1 : 1;
     return acc;
   }, {});
@@ -64,6 +73,34 @@ function IssuesInProgress() {
   return (
     <div>
       <h2 className="text-xl font-bold mb-4 text-center">Submitted Issues's Statistics</h2>
+      <div className="flex justify-center mb-4">
+        <select
+          className="border p-2 w-[100px] rounded-md mx-2"
+          value={selectedYear}
+          onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+        >
+          <option value={new Date().getFullYear()}>{new Date().getFullYear()}</option>
+          {/* Add options for other years if needed */}
+        </select>
+        <select
+          className="border p-2 rounded-md mx-2"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
+        >
+          <option value={1}>January</option>
+          <option value={2}>February</option>
+          <option value={3}>March</option>
+          <option value={4}>April</option>
+          <option value={5}>May</option>
+          <option value={6}>June</option>
+          <option value={7}>July</option>
+          <option value={8}>August</option>
+          <option value={9}>September</option>
+          <option value={10}>October</option>
+          <option value={11}>November</option>
+          <option value={12}>December</option>
+        </select>
+      </div>
       <div className="bg-white p-4 rounded-lg shadow-md">
         <Bar data={data} options={options} />
       </div>

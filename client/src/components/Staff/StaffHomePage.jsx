@@ -1,26 +1,73 @@
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { issueActions } from '../../redux/issue/issueSlice';
 import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 
 const StaffHomePage = () => {
+  const dispatch = useDispatch();
   const newIssues = useSelector((state) => state.issue.issues);
   const prog = useSelector((state) => state.issue.progressIssues);
   const closedIssues = useSelector((state) => state.issue.closedIssues);
-  const All_Issues = useSelector((state) => state.issue.assignedToMe);
+  
+  // monthly total issues
+  const All_Issues = useSelector((state) => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+  
+    return state.issue.assignedToMe.filter((issue) => {
+      const issueDate = new Date(issue.createdAt);
+      return issueDate.getMonth() === currentMonth;
+    });
+  });
+  
   const len = All_Issues.length;
+  
   const progressIssues = len > 0 ? prog.slice(len - 4, len) : [];
 
-  const currentMonth = new Date().getMonth().toString();
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
 
-  const filteredProgressIssues = prog.filter((issue) => {
-    const issueMonth = new Date(issue.createdAt).getMonth().toString();
-    return issueMonth === currentMonth;
+  const filteredProgressIssues = progressIssues.filter((issue) => {
+    const issueDate = new Date(issue.createdAt);
+    return issueDate.getMonth() === currentMonth && issue.status !== 'new';
   });
 
   const filteredClosedIssues = closedIssues.filter((issue) => {
-    const issueMonth = new Date(issue.createdAt).getMonth().toString();
-    return issueMonth === currentMonth;
+    const issueDate = new Date(issue.createdAt);
+    return issueDate.getMonth() === currentMonth && issue.status !== 'new';
   });
+
+  //Three lengths
+  const newLeng = newIssues.length;
+  const progLeng = filteredProgressIssues.length;
+  const closeLeng = filteredClosedIssues.length;
+
+  const [assignedToId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
+    if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+      setUserId(storedUserInfo.user._id);
+    } else {
+      //
+    }
+  }, []);
+
+  useEffect(() => {
+    if (assignedToId) {
+      const fetchStudentIssues = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
+          dispatch(issueActions.setAssignedToMe(response.data));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchStudentIssues();
+    }
+  }, [dispatch, assignedToId]);
 
   const data = {
     labels: ['New', 'Assigned', 'Closed'],
@@ -59,13 +106,13 @@ const StaffHomePage = () => {
             <Link to="/Home/staff-issue-page">
               <div className="card-1 cursor-pointer text-white bg-[#1F3365] px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
                 <p className="text-2xl">Progress</p>
-                <h1 className="text-2xl">{filteredProgressIssues.length}</h1>
+                <h1 className="text-2xl">{progLeng}</h1>
               </div>
             </Link>
             <Link to="/Home/staff-issue-page">
               <div className="card-1 text-white cursor-pointer bg-[#1F3365] px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
                 <p className="text-2xl">Closed</p>
-                <h1 className="text-2xl">{filteredClosedIssues.length}</h1>
+                <h1 className="text-2xl">{closeLeng}</h1>
               </div>
             </Link>
           </div>
@@ -78,13 +125,11 @@ const StaffHomePage = () => {
             <p className="">Recent issues</p>
           </div>
           <div className="issues-list flex flex-col gap-5 py-4">
-            {progressIssues.length > 0 ? (
-              progressIssues.map((issue) => (
+            {filteredProgressIssues.length > 0 ? (
+              filteredProgressIssues.map((issue) => (
                 <div className="issue-1 border p-4 rounded-md space-y-2" key={Math.random() + Date.now()}>
                   <p className="">{issue.title}</p>
-                  {issue.status === 'assigned' && (
-                    <p className="px-3 text-red-500">{issue.status}</p>
-                  )}
+                  {issue.status === 'assigned' && <p className="px-3 text-red-500">{issue.status}</p>}
                 </div>
               ))
             ) : (
