@@ -109,7 +109,7 @@ const deleteAttachment = async (req, res) => {
 
 
 
-// Assign issue to Staff
+// Assign issue to Staff.
 const updateAssignedTo = async (req, res) => {
   const { issueId } = req.params;
   const { assignedTo, status, senderId, priority } = req.body;

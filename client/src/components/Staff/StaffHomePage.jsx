@@ -4,6 +4,21 @@ import { useEffect, useState } from 'react';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+ } from 'chart.js';
+
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+)
 
 const StaffHomePage = () => {
   const dispatch = useDispatch();
