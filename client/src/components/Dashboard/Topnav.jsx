@@ -68,7 +68,7 @@ const Topnav = ({ toggleSidebar }) => {
   };
 
   return (
-    <div className="bg-[#1F3365] text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
+    <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
       <div className="flex items-center">
         <button
           className="text-gray-700 focus:outline-none mr-3 md:hidden"
@@ -76,28 +76,28 @@ const Topnav = ({ toggleSidebar }) => {
         >
           <FaBars />
         </button>
-        <div className="flex items-center text-white flex-grow justify-center">
+        <div className="flex items-center text-black flex-grow justify-center">
         <p>NPC</p>
         </div>
       </div>
       <div className="flex items-center">
         <div className="relative group">
             <div className="mr-3 flex items-center gap-3">
-              <IoMdNotificationsOutline className="text-3xl relative text-white" 
+              <IoMdNotificationsOutline className="text-3xl relative text-black" 
                 onClick={toggleDropdown}
 
               />
               {notifications.length > 0 && (
-                <span className="bg-red-500 text-white rounded-full px-2 ml-3 absolute top-[-6px] left-0" onClick={toggleDropdown}>
+                <span className="bg-red-500 text-black rounded-full px-2 ml-3 absolute top-[-6px] left-0" onClick={toggleDropdown}>
                   {notifications.length}
                 </span>
               )}
               {/* Feedbacks */}
-              <MdDynamicFeed  className="text-3xl relative text-white" 
+              <MdDynamicFeed  className="text-3xl relative text-black" 
                 onClick={toggleDropdown}
               />
               {notifications.length > 0 && (
-                <span className="bg-red-500 text-white rounded-full px-2 ml-3 absolute top-[-6px] left-0" onClick={toggleDropdown}>
+                <span className="bg-red-500 text-black rounded-full px-2 ml-3 absolute top-[-6px] left-0" onClick={toggleDropdown}>
                   {notifications.length}
                 </span>
               )}
@@ -111,7 +111,7 @@ const Topnav = ({ toggleSidebar }) => {
         </div>
       )}
           <button className="focus:outline-none" onClick={handleLogout}>
-              <MdPowerSettingsNew className="text-2xl text-white" />
+              <MdPowerSettingsNew className="text-2xl text-black" />
           </button>
             </div>
         </div>

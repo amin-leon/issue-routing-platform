@@ -91,11 +91,11 @@ const getFeedbackByUserId = async (req, res) => {
             // Construct the populated feedback object profile
             const populatedFeedback = {
                 _id: feedback._id,
-                issueId:issue._id,
+                issueId: feedback.issueId,
                 issueTitle: issue ? issue.title : 'Issue not found',
                 feedbackText: feedback.feedbackMessage,
                 wantToGoHigher: feedback.wantToGoHigher,
-                createdAt:feedback.createdAt,
+                createdAt: feedback.createdAt,
                 reporterName: reporter ? reporter.fullName : 'Reporter not found',
                 reporterImage: reporter ? reporter.profile : null
             };
@@ -109,6 +109,7 @@ const getFeedbackByUserId = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 // when user read feedback
 const updateFeedbackIsRead = async (req, res) => {

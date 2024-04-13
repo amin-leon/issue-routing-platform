@@ -47,30 +47,76 @@ const FeedbackComponent = () => {
     }
   };
 
+  const groupFeedbackByDate = () => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const previousDay = new Date(today);
+    previousDay.setDate(today.getDate() - 2);
+
+    const todayFeedback = [];
+    const yesterdayFeedback = [];
+    const previousDayFeedback = [];
+    const otherFeedback = [];
+
+    feedbackData.forEach((feedback) => {
+      const feedbackDate = new Date(feedback.createdAt);
+      if (feedbackDate.toDateString() === today.toDateString()) {
+        todayFeedback.push(feedback);
+      } else if (feedbackDate.toDateString() === yesterday.toDateString()) {
+        yesterdayFeedback.push(feedback);
+      } else if (feedbackDate.toDateString() === previousDay.toDateString()) {
+        previousDayFeedback.push(feedback);
+      } else {
+        otherFeedback.push(feedback);
+      }
+    });
+
+    return [
+      { title: 'Today', data: todayFeedback },
+      { title: 'Yesterday', data: yesterdayFeedback },
+      { title: 'Previous Day', data: previousDayFeedback },
+      { title: 'Other', data: otherFeedback },
+    ];
+  };
+
+  const groupedFeedbackData = groupFeedbackByDate();
+
   return (
     <div className="container mx-auto py-8">
-      {feedbackData && feedbackData.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {feedbackData.map((feedback) => (
-            <div key={feedback._id} className={`bg-white rounded-md shadow-md p-6 cursor-pointer ${feedback.isRead ? '' : 'border border-red-500'}`} onClick={() => openModal(feedback)}>
-              <h2 className="text-xl font-semibold mb-2">{feedback.issueTitle}</h2>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <img
-                    src={feedback.reporterImage}
-                    alt="reporter_image"
-                    className="w-8 h-8 rounded-full mr-2"
-                  />
-                  <span className="text-gray-700">{feedback.reporterName}</span>
+      {groupedFeedbackData.map((group) => (
+        <div key={group.title}>
+          <h2 className="text-2xl font-bold mb-4">{group.title}</h2>
+          {group.data.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {group.data.map((feedback) => (
+                <div
+                  key={feedback._id}
+                  className={`bg-white rounded-md shadow-md p-6 cursor-pointer ${
+                    feedback.isRead ? '' : 'border border-red-500'
+                  }`}
+                  onClick={() => openModal(feedback)}
+                >
+                  <h2 className="text-lg font-semibold mb-2">{feedback.issueTitle}</h2>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <img
+                        src={feedback.reporterImage}
+                        alt="reporter_image"
+                        className="w-8 h-8 rounded-full mr-2"
+                      />
+                      <span className="text-gray-700">{feedback.reporterName}</span>
+                    </div>
+                    <span className="text-gray-500">{new Date(feedback.createdAt).toLocaleDateString()}</span>
+                  </div>
                 </div>
-                <span className="text-gray-500">{new Date(feedback.createdAt).toLocaleDateString()}</span>
-              </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div className="text-center text-gray-500">No feedback found</div>
+          )}
         </div>
-      ) : (
-        <div className="text-center text-gray-500">No feedback found</div>
-      )}
+      ))}
       {selectedFeedback && <FeedbackModal feedback={selectedFeedback} onClose={closeModal} />}
     </div>
   );

@@ -30,7 +30,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
   return (
     <div
-      className={`bg-[#1F3365] text-white h-screen w-64 border border-r-1${
+      className={`bg-white text-black h-screen w-64 border border-r-1${
         isSidebarOpen ? 'block' : 'hidden md:block'
       }`}
     >
@@ -46,27 +46,27 @@ const Sidebar = ({ isSidebarOpen }) => {
           to={link}
           className="text-gray-500"
         >
-          <div className='p-3 text-white rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
+          <div className='p-3 text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
             <AiOutlineHome className="text-xl" />Home
           </div>
         </Link>
 
         {userInfo.role === 'Staff' && (
             <Link to="/Home/board-issues" className="text-gray-500">
-                    <div className='p-3 text-white  rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
+                    <div className='p-3 text-black  rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
                       <GiConvergenceTarget className="text-xl" />Chat Room
                     </div>
             </Link>
         )}
 
         <Link to="/Home/settings" className="text-gray-500">
-          <div className='p-3 text-white  rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
+          <div className='p-3 text-black  rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
             <BsInfoCircle className="text-xl" /> Info
           </div>
           
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school" className="text-gray-500">
-            <div className='p-3 text-white  rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
+            <div className='p-3 text-black  rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
               <PiStudentLight className="text-xl " /> Students
             </div>
           </Link>
@@ -75,7 +75,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school/staff" className="text-gray-500">
-            <div className='p-3 text-white rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
+            <div className='p-3 text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
               <FaPersonMilitaryToPerson  className="text-xl" /> Staffs
             </div>
           </Link>
@@ -83,18 +83,10 @@ const Sidebar = ({ isSidebarOpen }) => {
 
         </Link>
         <Link to="/Home/admin/setting" className="text-gray-500">
-              <div className='p-3  text-white rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
-                  <GrUserSettings className="text-xl text-white" />Settings
+              <div className='p-3  text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
+                  <GrUserSettings className="text-xl text-black" />Settings
               </div>
         </Link>
-
-        {userInfo.role === 'Staff' && (
-            <Link to="/Home/board-issues" className="text-gray-500">
-                    <div className='p-3 text-white  rounded-md hover:bg-black hover:text-white flex gap-2 items-center'>
-                      <GiConvergenceTarget className="text-xl" />Statistics
-                    </div>
-            </Link>
-        )}
 
       </div>
     </div>
