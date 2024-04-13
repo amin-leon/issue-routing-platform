@@ -215,6 +215,7 @@ function MyTimeSlots() {
               {isFormOpen && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
                   <div className="bg-white w-full p-8 rounded-md md:w-[45%]">
+                    <label htmlFor="form">Close issue with feedback</label>
                     <form className="flex flex-col space-y-4">
                       <textarea
                         placeholder='Type feedback....'
