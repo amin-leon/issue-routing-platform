@@ -39,7 +39,7 @@ const ClaimFormModal = ({ onClose }) => {
 
   return (
     <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-md shadow-md w-[50%]">
+      <div className="bg-white p-6 rounded-md shadow-md w-full md:w-[50%]">
         <h2 className="text-lg font-bold mb-4">Feedback Form Fuck</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -129,16 +129,16 @@ const SingleFeedback = () => {
     <div className="max-w-[100%] bg-white shadow-md rounded-md overflow-hidden my-4">
       {issueDetails?.issue.status === 'closed' ? (
         <div>
-          <div className="px-6 py-4">
+          <div className="md:px-6 md:py-4">
             <div className="font-bold text-lg mb-2">Feedback Details</div>
             <p className="text-sm mb-2"><strong>Issue title:</strong> {issueDetails?.issue.title}</p>
             <p className="text-sm mb-2"><strong>Submitted Date:</strong> {new Date(issueDetails?.issue.updatedAt).toLocaleDateString()}</p>
             <p className="text-sm mb-2"><strong>Status:</strong> {issueDetails?.issue.status}</p>
           </div>
-          <div className="px-6 py-4">
+          <div className="md:px-6 md:py-4">
             <div className="font-bold text-lg mt-4 mb-2">Feedback</div>
             {issueDetails?.issue.feedback.map((feedbackItem, index) => (
-              <div key={index} className="bg-gray-100 rounded-md p-4 mb-4">
+              <div key={index} className="bg-gray-100 rounded-md md:p-4 mb-4">
                 <p>{feedbackItem.text}</p>
               </div>
             ))}

@@ -48,9 +48,8 @@ function ManageSystem() {
 
         const issuesResponse = await axios.get('http://localhost:8080/issue/all-issues');
         dispatch(issueActions.setIssues(issuesResponse.data));
-        console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;", issuesResponse.data)
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.log('Error fetching data:', error);
       }
     };
 
@@ -60,7 +59,8 @@ function ManageSystem() {
 
   return (
     <div className='bg-gray-100'>
-      <div className="grid grid-cols-3 grid-rows-1 gap-4 p-32">
+      {/* grid grid-cols-3 grid-rows-1 gap-4 p-32 */}
+      <div className="md:grid md:grid-cols-3 md:grid-rows-1 md:gap-4 md:p-32 ">
         <Link to="/Home/admin/users">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><FiUsers className='text-6xl text-[#1F3365]'/></p>

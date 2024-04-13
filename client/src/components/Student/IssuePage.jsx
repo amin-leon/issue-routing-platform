@@ -39,7 +39,8 @@ function IssuePage() {
 
     
     return (
-    <div className="px-8 py-5 w-full grid grid-cols-6">
+      // px-8 py-5 w-full grid grid-cols-6
+    <div className="">
     <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">
       <div
         className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
@@ -74,7 +75,7 @@ function IssuePage() {
          Ongoing codes
       </div>
     </div>
-    <div className="col-span-5 border h-full px-2">
+    <div className="col-span-5 border h-full md:px-2">
       <div className="pb-5">
       </div>
       {renderMenuSelection()}

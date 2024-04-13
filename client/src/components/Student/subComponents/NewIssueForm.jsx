@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { object, string } from "yup";
@@ -93,10 +92,11 @@ function NewIssueForm() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative">
         <div className="flex z-10 px-2">
-          <div className="p-8 rounded-2xl w-full">
-           <p className='pb-8 text-2xl font-bold'>Rise Issue Here </p>
+          <div className="md:p-8 rounded-2xl w-full">
+           <p className='text-center pb-8 text-2xl font-bold'>Rise Issue Here </p>
            <form onSubmit={handleSubmit(onSubmitHandler)}>
-            <div className="grid grid-cols-2 gap-4">
+            {/* grid grid-cols-2 gap-4 */}
+            <div className="md:grid md:grid-cols-2 gap-4">
               {/* fields */}
               <div>
                 <p>Is this issue private?</p>
@@ -177,9 +177,6 @@ function NewIssueForm() {
                 </button>
               </div>
             </div>
-            <p>
-              <Link to='#' className='text-[#1F3365] max-w-64'>Back</Link>
-            </p>
           </form>
 
           </div>

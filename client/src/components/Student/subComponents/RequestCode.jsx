@@ -83,11 +83,11 @@ function RequestCode() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative">
         <div className="flex z-10 px-2">
-          <div className="p-8 rounded-2xl w-full">
+          <div className="md:p-8 rounded-2xl w-full">
             {/* CodeCard component */}
             <p className='pb-8 text-2xl font-bold'>Request Private Channel</p>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="md:grid md:grid-cols-2 gap-4">
                 {/* fields */}
                 <div>
                   <div className='mt-2'>
@@ -146,9 +146,6 @@ function RequestCode() {
                   </button>
                 </div>
               </div>
-              <p>
-                <Link to='#' className='text-[#1F3365] max-w-64'>Back</Link>
-              </p>
             </form>
             {errorMessage && <div className="error-message text-red-500">{errorMessage}</div>}
           </div>
