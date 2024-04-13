@@ -38,10 +38,12 @@ function TimeSlots() {
 
 
   return (
-    <div className="p-5">
-      <div className="flex pt-3">
-        <div className="w-[10%] flex flex-col items-center gap-2 pt-5">
-          <p className="text-2xl cursor-pointer p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('my-slots')}>
+    <div className="md:p-5">
+      {/* flex pt-3 */}
+      <div className="md:flex md:pt-3 ">
+        {/* w-[10%] flex flex-col items-center gap-2 pt-5 */}
+        <div className="md:w-[10%] md:flex md:flex-col md:items-center md:gap-2 md:pt-5">
+          <p className="text-2xl cursor-pointer md:p-2 hover:bg-[#1F3365] text-white bg-[#1F3365] hover:text-white" onClick={() => handleSettingClick('my-slots')}>
             <CiChat2 />
           </p>
           {userInfo?.role ==="Student" && (
@@ -53,9 +55,9 @@ function TimeSlots() {
             <IoDocumentsOutline />
           </p>
         </div>
-        <div className="w-[90%] ml-4">
-          <div className=" ">
-            <div className="p-5 relative">
+        <div className="md:w-[90%] md:ml-4">
+          <div className="">
+            <div className="md:p-5 md:relative">
               {renderSettingContent()}
             </div>
           </div>

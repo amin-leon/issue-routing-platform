@@ -56,7 +56,8 @@ function AllIssues() {
 
   return (
     <div>
-      <div className="mb-4 flex items-center space-x-4">
+      {/* mb-4 flex items-center space-x-4 */}
+      <div className="mb-4 flex">
         <select
           className="border p-2 rounded-md w-64"
           value={filter}

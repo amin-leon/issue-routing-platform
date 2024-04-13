@@ -147,18 +147,16 @@ function MyTimeSlots() {
   };
 
 
-  // console.log("Helloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", issueDetails)
-
   return (
     <div className="">
-        <div className="w-[50%] p-5">
+        <div className="md:w-[50%] md:p-5">
           <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
           <p className='text-xs'>"{issueDetails?.issue?.description}"</p>
         </div>
-        <div className="p-10 border">
+        <div className="md:p-10 border">
           <p className='pb-5'>({StaffStudentComments.length})Comments</p>
           {Array.isArray(StaffStudentComments) && StaffStudentComments.map((comment) => (
-            <div className="flex gap-2 p-2" key={comment._id}>
+            <div className="flex gap-2 md:p-2" key={comment._id}>
               <img
                 className="w-8 h-8 rounded-full"
                 // src={`http://localhost:8080/${comment?.userInfo?.profile}`}

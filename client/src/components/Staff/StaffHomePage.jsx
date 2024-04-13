@@ -109,7 +109,8 @@ const StaffHomePage = () => {
 
   return (
     <div>
-      <div className="issue-container px-32 py-16 grid grid-cols-2 gap-6">
+      {/* px-32 py-16 grid grid-cols-2 gap-6 */}
+      <div className="issue-container">
         <div className="cards-graph">
           <div className="cards grid grid-cols-3 gap-3">
             <Link to="/Home/staff-issue-page">

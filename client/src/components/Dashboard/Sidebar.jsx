@@ -11,11 +11,11 @@ import { FaBars, FaPersonMilitaryToPerson } from "react-icons/fa6";
 
 const HamburgerMenu = () => (
   <div className="md:hidden">
-    <div>
+    {/* <div>
       <button className="text-gray-700 focus:outline-none mr-3 md:hidden">
           <FaBars />
       </button>
-    </div>
+    </div> */}
   </div>
 );
 
@@ -43,7 +43,7 @@ const Sidebar = ({ isSidebarOpen }) => {
     <>
     <HamburgerMenu />
     <div
-      className={`sm:bg-red-500 sm:text-black sm:h-screen sm:w-64 sm:hidden sm:border border-r-1 ${
+      className={`bg-white sm:text-black sm:h-screen sm:w-64 sm:hidden sm:border border-r-1 md:block ${
         isSidebarOpen ? 'block' : 'hidden md:block'
       }`}
     >

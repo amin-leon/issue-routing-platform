@@ -59,9 +59,10 @@ function SharedDocs() {
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Upload
         </button>
-      </form>
+      </form> 
+      {/* sm:grid-cols-2 */}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1  md:grid-cols-3 gap-4">
         {issueDetails?.issue.attachments.map((attachment) => (
           <div key={attachment._id} className="bg-white rounded shadow-md p-4">
             <div className="w-full h-auto mb-2" />
