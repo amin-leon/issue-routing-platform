@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { MdPowerSettingsNew } from 'react-icons/md';
-import { FaBars, FaSearch } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../redux/auth/authSlice';
 import axios from 'axios';
@@ -12,17 +12,11 @@ import { MdDynamicFeed } from "react-icons/md";
 
 
 
-const Topnav = ({ toggleSidebar }) => {
+const Topnav = () => {
   const user = useSelector((user)=> user.auth.user);
   const notifications = useSelector((user)=> user.issue.unReadNots);
 
   const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = useState('');
-
-
-  const handleSearchChange = (e) => {
-    setSearchValue(e.target.value);
-  };
 
   const handleLogout = (e) => {
     e.preventDefault()
@@ -70,12 +64,6 @@ const Topnav = ({ toggleSidebar }) => {
   return (
     <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
       <div className="flex items-center">
-        <button
-          className="text-gray-700 focus:outline-none mr-3 md:hidden"
-          onClick={toggleSidebar}
-        >
-          <FaBars />
-        </button>
         <div className="flex items-center text-black flex-grow justify-center">
         <p>NPC</p>
         </div>

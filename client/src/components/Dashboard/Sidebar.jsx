@@ -6,7 +6,18 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { GiConvergenceTarget } from "react-icons/gi";
 import { PiStudentLight } from "react-icons/pi";
-import { FaPersonMilitaryToPerson } from "react-icons/fa6";
+import { FaBars, FaPersonMilitaryToPerson } from "react-icons/fa6";
+
+
+const HamburgerMenu = () => (
+  <div className="md:hidden">
+    <div>
+      <button className="text-gray-700 focus:outline-none mr-3 md:hidden">
+          <FaBars />
+      </button>
+    </div>
+  </div>
+);
 
 
 
@@ -29,12 +40,14 @@ const Sidebar = ({ isSidebarOpen }) => {
   
 
   return (
+    <>
+    <HamburgerMenu />
     <div
-      className={`bg-white text-black h-screen w-64 border border-r-1${
+      className={`sm:bg-red-500 sm:text-black sm:h-screen sm:w-64 sm:hidden sm:border border-r-1 ${
         isSidebarOpen ? 'block' : 'hidden md:block'
       }`}
     >
-      <div className="flex flex-col items-center p-4 ">
+      <div className="sm:flex flex flex-col items-center p-4 ">
         <Link to="#">
         <div className="p-3 border-b border-1">
           <div className='text-black text-4xl font-bold'><img src="https://www.npc.ac.rw/fileadmin/templates/assets/images/NPC_LOGO.png" alt="" className='w-16 h-16'/></div>
@@ -90,6 +103,7 @@ const Sidebar = ({ isSidebarOpen }) => {
 
       </div>
     </div>
+    </>
   );
 };
 export default Sidebar;
