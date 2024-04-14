@@ -51,7 +51,7 @@ function IssueDetailsPage() {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4 pl-32 pr-32 pt-20">
+    <div className="md:grid md:grid-cols-3 gap-4 md:pl-32 md:pr-32 pt-4 md:pt-20">
       <div className="col-span-2">
         <div className="border p-5">
           <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
@@ -70,7 +70,7 @@ function IssueDetailsPage() {
         </div>
       </div>
 
-      <div className="col-span-1">
+      <div className="pt-12 md:col-span-1">
         <div className="p-4 border flex gap-3 mb-5">
           <img className='w-20 h-20 rounded-md' src={`http://localhost:8080/${reporter?.profile}`} alt="" />
           <div>
