@@ -59,15 +59,16 @@ function AccountSettings() {
       };
 
   return (
-    <div className='flex gap-3 ml-10 mr-10 mt-10 border px-32'>
-         <div className="max-w-[300px] bg-white rounded-lg p-12 flex flex-col  border-r-2">
+    // 
+    <div className='md:flex md:gap-3 md:ml-10 md:mr-10 md:mt-10 border md:px-32'>
+         <div className="md:max-w-[300px] md:bg-white rounded-lg md:p-12 md:flex md:flex-col  border-r-2">
                 <div className="mb-8">
-                    <img className="object-center object-cover rounded-md h-36 w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="qw" />
+                    <img className="object-center object-cover rounded-md h-48 w-48 md:h-36 md:w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="qw" />
                 </div>
                 <div className="text-center">
                     <p className="text-xl text-gray-700 font-bold mb-2">{userInfo?.fullName}</p>
                     <p className="text-base text-gray-400 font-normal">{userInfo?.role}</p>
-                    <div className='add '>
+                    <div className='add'>
                         <button type="file" className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-sm w-full" > Edit Profile
                         </button>
                     </div>
@@ -75,12 +76,12 @@ function AccountSettings() {
             </div>
             <div className="bg-no-repeat bg-cover bg-center relative">
                 <div className="flex z-10">
-                <div className="pb-12 pl-12 pb-r bg-white mx-auto rounded-2xl w-100 ">
+                <div className="pt-8 md:pb-12 md:pl-12 pb-r bg-white md:mx-auto rounded-2xl w-full md:w-100">
                     <div>
                     <p className='text-2xl pt-5 pb-10 font-bold'>Provide More info ..... </p>
                     </div>
                     <form className="grid grid-cols-1 gap-4" onSubmit={handleUpdate}>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="md:grid md:grid-cols-2 md:gap-4">
                         <div>
                         <label className="text-sm font-medium text-gray-700">Full names</label>
                         <input
