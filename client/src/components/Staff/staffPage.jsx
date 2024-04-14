@@ -35,14 +35,14 @@ function StaffPage() {
   };
 
   return (
-    <div className='pl-4 pr-4 pt-10'>
+    <div className='md:pl-4 md:pr-4 md:pt-10'>
       <header className="bg-slate-200 p-5 text-black">
         <div className="container mx-auto flex justify-between items-center rounded-md">
           <h1 className="text-xl font-bold">New Issues</h1>
         </div>
       </header>
-      <div className="flex p-8 border rounded-md">
-        <div className="w-4/5 mr-8 border px-4">
+      <div className="md:flex md:p-8 border rounded-md">
+        <div className="md:w-4/5 md:mr-8 border md:px-4">
 
           {/* Search by Category */}
           <div className="mb-4 py-8">
@@ -57,7 +57,7 @@ function StaffPage() {
           </div>
 
           {/* Issues Table */}
-          <div className="bg-white shadow-md overflow">
+          <div className="bg-white shadow-md overflow-x-auto">
             <table className="min-w-full table-auto">
               <thead>
                 <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
@@ -117,7 +117,7 @@ function StaffPage() {
             </nav>
           </div>
         </div>
-        <div className="w-1/5 border">
+        <div className="md:w-1/5 border">
           <h5 className="text-md font-thin italic mb-4">Recent Assigned</h5>
           <div className="space-y-4">
           {recentIssues.map((issue) => (
