@@ -67,9 +67,9 @@ function UserDetailComponent() {
 
 
   return (
-    <div className="w-[90%] mt-1 bg-white rounded-lg shadow-xl">
-      <h2 className="text-2xl mb-4 pb-7 px-8">Edit User Details</h2>
-      <form onSubmit={handleSubmit} className='p-8'>
+    <div className="md:w-[90%] mt-1 bg-white rounded-lg shadow-xl">
+      <h2 className="text-2xl mb-4 pb-7 md:px-8">Edit User Details</h2>
+      <form onSubmit={handleSubmit} className='md:p-8'>
         <div className="mb-4">
           <input
             type="text"
