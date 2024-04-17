@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FeedbackModal from './FeedbackModal';
+import { useDispatch,useSelector } from 'react-redux';
+import { feedbackActions } from '../../../redux/feedbacks/feeddbackSlice';
 
 const FeedbackComponent = () => {
+  const dispatch = useDispatch()
   const [userId, setUserId] = useState(null);
-  const [feedbackData, setFeedbackData] = useState([]);
   const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const feedbackData = useSelector((state) => state.feedbacks.feedbacks);
+
 
   useEffect(() => {
     const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
@@ -21,7 +25,7 @@ const FeedbackComponent = () => {
       try {
         if (!userId) return;
         const response = await axios.get(`http://localhost:8080/feedback/${userId}`);
-        setFeedbackData(response.data);
+        dispatch(feedbackActions.setFeedbacks(response.data))
       } catch (error) {
         console.error('Error fetching feedback data:', error);
       }
@@ -59,7 +63,7 @@ const FeedbackComponent = () => {
     const previousDayFeedback = [];
     const otherFeedback = [];
 
-    feedbackData.forEach((feedback) => {
+    feedbackData?.forEach((feedback) => {
       const feedbackDate = new Date(feedback.createdAt);
       if (feedbackDate.toDateString() === today.toDateString()) {
         todayFeedback.push(feedback);
@@ -84,7 +88,7 @@ const FeedbackComponent = () => {
 
   return (
     <div className="container mx-auto py-8">
-      {groupedFeedbackData.map((group) => (
+      {groupedFeedbackData?.map((group) => (
         <div key={group.title}>
           <h2 className="text-2xl font-bold mb-4">{group.title}</h2>
           {group.data.length > 0 ? (

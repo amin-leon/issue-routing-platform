@@ -11,6 +11,7 @@ import { Chart as ChartJS,
   Tooltip,
   Legend
  } from 'chart.js';
+import { feedbackActions } from '../../redux/feedbacks/feeddbackSlice';
 
 ChartJS.register(
   BarElement,
@@ -22,9 +23,11 @@ ChartJS.register(
 
 const StaffHomePage = () => {
   const dispatch = useDispatch();
-  const newIssues = useSelector((state) => state.issue.issues);
+  const newIssues = useSelector((state) => state.issue.assignedToMe);
   const prog = useSelector((state) => state.issue.progressIssues);
   const closedIssues = useSelector((state) => state.issue.closedIssues);
+  const [feedbackData, setFeedbackData] = useState([]);
+
   
   // monthly total issues
   const All_Issues = useSelector((state) => {
@@ -70,6 +73,22 @@ const StaffHomePage = () => {
     }
   }, []);
 
+  // feedbacks
+  useEffect(() => {
+    const fetchFeedbackData = async () => {
+      try {
+        if (!assignedToId) return;
+        const response = await axios.get(`http://localhost:8080/feedback/${assignedToId}`);
+        setFeedbackData(response.data);
+        dispatch(feedbackActions.setFeedbacks(response.data))
+      } catch (error) {
+        console.error('Error fetching feedback data:', error);
+      }
+    };
+
+    fetchFeedbackData();
+  }, [assignedToId]);
+
   useEffect(() => {
     if (assignedToId) {
       const fetchStudentIssues = async () => {
@@ -106,6 +125,9 @@ const StaffHomePage = () => {
   };
 
   const options = {};
+
+  console.log("Heelllooooooooooooooooooooooooooooooooo", feedbackData)
+
 
   return (
     <div>
