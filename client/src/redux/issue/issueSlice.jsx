@@ -138,6 +138,14 @@ const issueSlice = createSlice({
     commentsOnIssue: (state, action) => {
       state.comments = action.payload;
     },
+
+    // delete attachment
+    deleteAttachment(state, action) {
+      const { attachmentId } = action.payload;
+        state.studentIssues.issue.attachments = state.studentIssues.issue.attachments.filter(attachment => attachment._id !== attachmentId);
+      },
+    
+            
   },
 });
 

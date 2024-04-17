@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { issueActions } from '../../../redux/issue/issueSlice';
 
 function SharedDocs() {
   const issueDetails = useSelector((state) => state.issue.studentIssues);
   const [file, setFile] = useState(null);
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -37,9 +39,9 @@ function SharedDocs() {
 
   const handleDelete = async (attachmentId) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/issue/attachments/${issueDetails.issue._id}/${attachmentId}`);
-      console.log(response.data);
-      alert('Document deleted');
+      await axios.delete(`http://localhost:8080/issue/attachments/${issueDetails.issue._id}/${attachmentId}`);
+      dispatch(issueActions.deleteAttachment(attachmentId));
+      alert('Attachment deleted deleted');
     } catch (error) {
       console.log('Error deleting attachment:', error);
     }
