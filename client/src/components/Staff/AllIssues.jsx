@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import MeetingAndEscalate from './issueEscalationAndMeeting/ShareAndEscalateIssue';
+import axios from 'axios';
+import { issueActions } from '../../redux/issue/issueSlice';
 
 function AllIssues() {
+  const dispatch = useDispatch();
+  const [assignedToId, setUserId] = useState(null);
   const MyIssues_Staff = useSelector((state) => state.issue.assignedToMe);
   const [selectedIssueId, setSelectedIssueId] = useState(null);
   const [filter, setFilter] = useState('all');
@@ -53,6 +57,31 @@ function AllIssues() {
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+  // user Id
+  useEffect(() => {
+    const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
+    if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
+      setUserId(storedUserInfo.user._id);
+    } else {
+      //
+    }
+  }, [assignedToId]);
+
+  // assigned to me
+    useEffect(() => {
+    if (assignedToId) {
+      const fetchStudentIssues = async () => {
+        try {
+          const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
+          dispatch(issueActions.setAssignedToMe(response.data));
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchStudentIssues();
+    }
+  }, [dispatch, assignedToId]);
 
   return (
     <div>

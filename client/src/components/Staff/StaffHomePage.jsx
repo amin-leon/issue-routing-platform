@@ -126,9 +126,6 @@ const StaffHomePage = () => {
 
   const options = {};
 
-  console.log("Heelllooooooooooooooooooooooooooooooooo", feedbackData)
-
-
   return (
     <div>
       {/* px-32 py-16 grid grid-cols-2 gap-6 */}
