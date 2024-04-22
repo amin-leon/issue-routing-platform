@@ -1,7 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
 import authSlice from './auth/authSlice';
 import issueSlice from './issue/issueSlice';
-import codeSlice from './request_codes/codesSlice';
 import feedbackSlice from './feedbacks/feeddbackSlice';
 
 
@@ -11,7 +10,6 @@ const store = configureStore({
     reducer:{
         auth: authSlice.reducer,
         issue: issueSlice.reducer,
-        codes: codeSlice.reducer,
         feedbacks: feedbackSlice.reducer,
 
     },
