@@ -152,7 +152,7 @@ function AllIssues() {
                   className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap">
-                    <Link to={`/Home/manage-issue/${issue._id}`} key={Date.now()}>
+                    <Link to={`/Home/manage-issue/${issue._id}/${issue.reporter}`} key={Date.now()}>
                       <div className="flex gap-1">
                         <div>
                           <p className="pb-2">{issue.title}</p>

@@ -52,7 +52,7 @@ const App = () => {
                 <Route path="hero" element={<HeroSectionStudent />} />
                 <Route path="issue-list" element={<IssuesList />} />
                 <Route path="issue-page" element={!isLoggedIn ? <Navigate to="/" /> : <IssuePage />} />
-                <Route path="manage-issue/:issueId" element={<TimeSlots />} />
+                <Route path="manage-issue/:issueId/:reporter" element={<TimeSlots />} />
                 <Route path="staff-home" element={<StaffHomePage />} />
                 <Route path="timeslots/:issueId" element={<TimeSlots />} />
                 <Route path="staff-issue-page" element={<MyStaffPage />} />

@@ -483,7 +483,7 @@ const markIssueAsRead = async (req, res) => {
 
 // close issue
 const closeIssue = async (req, res) => {
-  const { issueId } = req.params;
+  const { issueId, reporterId } = req.params;
 
   try {
     const issue = await Issue.findById(issueId);
@@ -491,11 +491,13 @@ const closeIssue = async (req, res) => {
     if (!issue) {
       return res.status(404).json({ error: 'Issue not found' });
     }
+
     issue.feedback.push(req.body);
     issue.status = 'closed';
     const updatedIssue = await issue.save();
-    // delete code after issue is closed
-    await CodeRequest.findByIdAndDelete(issueId);
+
+    // Delete code request related to the issueId
+    await CodeRequest.findOneAndDelete(reporterId);
 
     res.json(updatedIssue);
   } catch (error) {
@@ -503,6 +505,7 @@ const closeIssue = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
   
 

@@ -6,7 +6,7 @@ import { issueActions } from '../../../redux/issue/issueSlice';
 import { BsSend } from 'react-icons/bs';
 
 function MyTimeSlots() {
-  const { issueId } = useParams();
+  const { issueId , reporterId} = useParams();
   const dispatch = useDispatch();
   const issueDetails = useSelector((state) => state.issue.studentIssues);
   const StaffStudentComments = useSelector((comments) => comments.issue.StudentStaffComment);
@@ -123,7 +123,7 @@ function MyTimeSlots() {
   const handleCloseIssue = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8080/issue/close/${issueId}`, feedback);
+      const response = await axios.put(`http://localhost:8080/issue/close/${issueId}/${reporterId}`, feedback);
       dispatch(issueActions.setIssueToClose(response.data));
       window.location.href = '/Home/staff-issue-page';
     } catch (error) {
