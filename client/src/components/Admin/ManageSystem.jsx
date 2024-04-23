@@ -18,6 +18,10 @@ function ManageSystem() {
   const pendingUsers = users ? users.filter((user) => user.approvalStatus === 'pending') : [];
   const pendingUsersCount = pendingUsers.length;
 
+  // codes
+  const dummyCodeRequests = useSelector(state => state.codes.codeRequests.filter(request => request.status === 'Pending'));
+  const codes = dummyCodeRequests.length;
+
   // Unassigned issues
   const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
   const total_number_issues = unassignedIssues.length;
@@ -79,7 +83,7 @@ function ManageSystem() {
         <Link to="requests">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
             <p><GrChannel  className='text-6xl text-[#1F3365]'/></p>
-            <p className='text-xl text-red-500'>10</p>
+            <p className='text-xl text-red-500'>{codes}</p>
             <p className='text-2xl text-center'>Private Channels</p>
           </div>
         </Link>

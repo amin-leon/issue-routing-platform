@@ -14,7 +14,7 @@ const School_Students = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/school/student/all');
+        const response = await fetch('http://localhost:8080/api/school/student/all');
         if (response.ok) {
           const data = await response.json();
           setStudents(data);
@@ -57,6 +57,8 @@ const School_Students = () => {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
+
 
   return (
     <div className="container mx-auto mt-8 px-16 border w-[90%] py-8 h-[90%]">
