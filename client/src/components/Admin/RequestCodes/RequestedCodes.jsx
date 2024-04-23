@@ -40,7 +40,7 @@ function RequestedCodes() {
  const handleReject = async (code) => {
   try {
     // Remove the code request from the state
-    const updatedCodeRequests = dummyCodeRequests.filter(request => request._id !== code);
+    const updatedCodeRequests = dummyCodeRequests?.filter(request => request._id !== code);
       
     // Update the state with the filtered array
     setCodeRequests(updatedCodeRequests);
@@ -76,7 +76,6 @@ function RequestedCodes() {
         { status: 'Approved' }
       );
       dispatch(codesActions.updateCodeRequest(selectedCode))
-      console.log(response.data);
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -175,15 +174,7 @@ function RequestedCodes() {
               <p className="text-lg font-bold">Confirm Code</p>
               <p>Yes, Leon</p>
               <p>{why}</p>
-              <p>{why}</p>
               <p>{selectedCode}</p>
-              <p>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                  when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                  It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                  essentially unchanged.
-                </p>
               <textarea
                 className="w-full h-48 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-400"
                 placeholder="Enter reason for confirmation..."
