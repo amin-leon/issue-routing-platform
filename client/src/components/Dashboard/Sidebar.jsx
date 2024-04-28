@@ -1,13 +1,12 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, Navigate } from 'react-router-dom';
 import { GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from "react";
 import { GiConvergenceTarget } from "react-icons/gi";
 import { PiStudentLight } from "react-icons/pi";
-import { FaBars, FaPersonMilitaryToPerson } from "react-icons/fa6";
-
+import { FaPersonMilitaryToPerson } from "react-icons/fa6";
 
 const HamburgerMenu = () => (
   <div className="md:hidden">
@@ -19,11 +18,8 @@ const HamburgerMenu = () => (
   </div>
 );
 
-
-
 const Sidebar = ({ isSidebarOpen }) => {
   const userInfo = useSelector((state)=> state.auth.user);
-
   const [link, setLink] = useState(null);
 
   useEffect(() => {
@@ -37,7 +33,10 @@ const Sidebar = ({ isSidebarOpen }) => {
       }
     }
   }, [userInfo]);
-  
+
+  if (!userInfo) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>

@@ -63,7 +63,6 @@ function ManageSystem() {
 
   return (
     <div className='bg-gray-100'>
-      {/* grid grid-cols-3 grid-rows-1 gap-4 p-32 */}
       <div className="md:grid md:grid-cols-3 md:grid-rows-1 md:gap-4 md:p-32">
         <Link to="/Home/admin/users">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
