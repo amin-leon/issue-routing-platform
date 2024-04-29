@@ -135,7 +135,7 @@ const RegisterForm = () => {
                    {...register("email")}
                     type="email"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="mail@gmail.com"
+                    placeholder="mail.example@gmail.com"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
@@ -159,7 +159,7 @@ const RegisterForm = () => {
                   {...register("username")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Your username"
+                    placeholder="Kmoreen12"
                     name="username"
                     value={formData.username}
                     onChange={handleChange}
@@ -171,10 +171,45 @@ const RegisterForm = () => {
                   {...register("fullName")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Your full name"
+                    placeholder="Keza Morgon"
                     name="fullName"
                     value={formData.fullName}
                     onChange={handleChange}
+                  />
+                </div>
+                {/* Gender */}
+                <div>
+                <label className="text-sm font-thin text-red-500">Gender error</label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      className="mr-1"
+                    />
+                    Female
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      name="gender"
+                      className="mr-1"
+                    />
+                    Male
+                  </label>
+                </div>
+              </div>
+
+                {/* Telephone */}
+                <div>
+                <label className="text-sm font-thin text-red-500">Telephone: Error here</label>
+                  <input
+                    type="number"
+                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="0780933456"
+                    name="telephone"
                   />
                 </div>
               </div>
