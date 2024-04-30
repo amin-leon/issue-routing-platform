@@ -12,7 +12,7 @@ import { authActions } from '../redux/auth/authSlice';
 // Validaton uing yup
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {object, string}  from "yup";
+import { object, string}  from "yup";
 
 // Validation Form schema
 const validationSchema = object().shape({
@@ -22,10 +22,19 @@ const validationSchema = object().shape({
 fullName: string()
   .matches(/^[A-Za-z\s]+$/, 'Full name can only contain letters and spaces')
   .required('Full name is required'),
+
+telephone: string()
+  .matches(/^\d{10}$/, 'Telephone number must be exactly ten digits')
+  .required('Telephone number is required'),
   
+gender: string()
+  .required('Gengder is required'),
+
 email: string()
   .email('Invalid email format')
   .required('Please enter email'),
+
+profile: string(),
 
 password: string()
   .min(8, 'Password must be at least 8 characters')
@@ -58,6 +67,9 @@ const RegisterForm = () => {
     password: '',
     username: '',
     fullName: '',
+    gender: '',
+    telephone: '',
+    profile: ''
   });
   const [error, setError] = useState(null);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
@@ -142,18 +154,6 @@ const RegisterForm = () => {
                   />
                 </div>
                 <div>
-                <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
-                  <input
-                    {...register("password")}
-                    type="password"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Enter your password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div>
                 <label className="text-sm font-thin text-red-500">{errors.username?.message}</label>
                   <input
                   {...register("username")}
@@ -179,13 +179,17 @@ const RegisterForm = () => {
                 </div>
                 {/* Gender */}
                 <div>
-                <label className="text-sm font-thin text-red-500">Gender error</label>
+                <label className="text-sm font-thin text-red-500">{errors.gender?.message}</label>
                 <div>
                   <label>
                     <input
+                      {...register("gender")}
                       type="radio"
                       name="gender"
                       className="mr-1"
+                      value="female" // Set a unique value for the female option
+                      checked={formData.gender === "female"} // Check if the gender state matches the value
+                      onChange={handleChange}
                     />
                     Female
                   </label>
@@ -193,23 +197,67 @@ const RegisterForm = () => {
                 <div>
                   <label>
                     <input
+                      {...register("gender")}
                       type="radio"
                       name="gender"
                       className="mr-1"
+                      value="male" // Set a unique value for the male option
+                      checked={formData.gender === "male"} // Check if the gender state matches the value
+                      onChange={handleChange}
                     />
                     Male
                   </label>
                 </div>
               </div>
 
+
                 {/* Telephone */}
                 <div>
-                <label className="text-sm font-thin text-red-500">Telephone: Error here</label>
+                <label className="text-sm font-thin text-red-500">{errors.telephone?.message}</label>
                   <input
+                  {...register("telephone")}
                     type="number"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="0780933456"
                     name="telephone"
+                    value={formData.telephone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div>
+                <label for="profileImage" class="block text-sm font-medium text-gray-700">Profile Image</label>
+                  <div class="mt-1 flex items-center">
+                    <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                      <img src="https://via.placeholder.com/150" alt="Profile Image" class="h-full w-full object-cover" />
+                    </span>
+                    <label for="profileImage" class="ml-5 cursor-pointer inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Upload</label>
+                    <input id="profileImage" name="profileImage" type="file" class="sr-only" />
+                  </div>
+                </div>
+                {/* Password */}
+                <div>
+                <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
+                  <input
+                    {...register("password")}
+                    type="password"
+                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="Enter your password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                </div>
+                {/* Comvirm Password */}
+                <div>
+                <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
+                  <input
+                    {...register("password")}
+                    type="password"
+                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="Comfirm password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

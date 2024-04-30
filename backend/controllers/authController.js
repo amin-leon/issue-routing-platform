@@ -13,7 +13,7 @@ const PASSWORD = process.env.PASSWORD;
 
 
 const registerUser = async (req, res) => {
-  const { username, password, fullName, email } = req.body;
+  const { username, password, fullName, email, gender, telephone } = req.body;
   const profile = req.file ? req.file.path : null;
   const verificationCode = generateVerificationCode();
 
@@ -31,8 +31,8 @@ const registerUser = async (req, res) => {
       fullName,
       email,
       profile,
-      faculty: '',
-      level: 0,
+      gender,
+      telephone,
       verificationCode: verificationCode,
     });
 
@@ -427,25 +427,21 @@ const VerifyCode = async (req, res) => {
   try {
     const { verificationCode, email } = req.params;
 
-    // Find this person in School's database
-    const validPerson = await Student.findOne({email: email}) || await Staff.findOne({email: email});
-    if (!validPerson) {
-      console.log('You are not in schools Database');
-      return res.status(404).json({ Message: 'You are not in schools Database' });
-    }
-
     const checkCode = await User.findOneAndUpdate(
-      { verificationCode: verificationCode },
-      { 
-        verificationCode: 0,
-      },
-      { new: true }
+      { verificationCode: verificationCode },{ verificationCode: 0,},{ new: true }
     );
-
 
     if (!checkCode) {
       return res.status(404).json({ error: 'verificationCode not found' });
     }
+
+    if (checkCode) {
+      await User.findOneAndUpdate(
+        { email: email },{ accountStatus: 'active',},{ new: true }
+      );
+    }
+
+
 
     return res.json(checkCode);
   } catch (error) {
