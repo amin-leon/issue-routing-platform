@@ -6,15 +6,15 @@ import { BsInfoCircle } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiConvergenceTarget } from "react-icons/gi";
 import { PiStudentLight } from "react-icons/pi";
-import { FaPersonMilitaryToPerson } from "react-icons/fa6";
+import { FaBars, FaPersonMilitaryToPerson } from "react-icons/fa6";
 
 const HamburgerMenu = () => (
   <div className="md:hidden">
-    {/* <div>
+    <div>
       <button className="text-gray-700 focus:outline-none mr-3 md:hidden">
           <FaBars />
       </button>
-    </div> */}
+    </div>
   </div>
 );
 
@@ -79,7 +79,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school" className="text-gray-500">
             <div className='p-3 text-black  rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
-              <PiStudentLight className="text-xl " /> Students
+              <PiStudentLight className="text-xl " /> Roles
             </div>
           </Link>
 
@@ -88,7 +88,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school/staff" className="text-gray-500">
             <div className='p-3 text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
-              <FaPersonMilitaryToPerson  className="text-xl" /> Staffs
+              <FaPersonMilitaryToPerson  className="text-xl" /> Positions
             </div>
           </Link>
           )}
