@@ -125,7 +125,7 @@ const filteredUsers = allUsers.filter((user) => {
                     <div className="flex-shrink-0 w-10 h-10">
                       <img
                         className="w-full h-full rounded-full"
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixdivb=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80"
+                        src={`http://localhost:8080/${user?.profile}`}
                         alt=""
                       />
                     </div>
