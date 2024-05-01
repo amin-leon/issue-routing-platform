@@ -1,176 +1,17 @@
-// import React, { useState } from 'react';
-// import { useDispatch, useSelector } from "react-redux";
-// import axios from 'axios';
-// import { authActions } from "../../../redux/auth/authSlice";
-// import { useNavigate, useParams } from 'react-router-dom';
-
-// // ... (other imports and code)
-
-// function UserListDetails() {
-    // const navigate = useNavigate()
-    // const userId = useParams();
-    // const id = userId.userId;
-    // const dispatch = useDispatch();
-    // const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-    // const [approvalConfirmed, setApprovalConfirmed] = useState(false);
-  
-    // const users = useSelector((state) => state.auth.users);
-    // const pendingUsers = users.filter((user) => user._id === id);
-  
-    // const ApproveUser = () => {
-    //   // Show the success pop-up
-    //   setShowSuccessPopup(true);
-    // }
-  
-    // const handleConfirmApproval = async () => {
-    //   try {
-    //     await axios.put(`http://localhost:8080/auth/approve/${id}`);
-    //     dispatch(authActions.approveAccount(id));
-    //     navigate('/Home/admin/users');
-    //   } catch (error) {
-    //     console.error('Error:', error);
-    //   }
-  
-    //   // Close the success pop-up
-    //   setShowSuccessPopup(false);
-    //   setApprovalConfirmed(true);
-    // }
-  
-    // const handleCancelApproval = () => {
-    //   // Close the success pop-up without taking any action
-    //   setShowSuccessPopup(false);
-    //   setApprovalConfirmed(false);
-    // }
-  
-    // // Wrap the handleRejectUser function in an anonymous function
-    // const handleRejectUser = async (accountId) => {
-    //   try {
-    //     await axios.delete(`http://localhost:8080/auth/reject/${accountId}`);
-    //     dispatch(authActions.rejectUser(accountId));
-    //     navigate('/Home/admin/users');
-    //   } catch (error) {
-    //     console.error('Error:', error);
-    //   }
-    // };
-
-    //     // Activate User
-    //     const ActivateAccount = async (userId) => {
-    //       try {
-    //         await axios.put(`http://localhost:8080/auth/activate/${userId}`);
-    //         dispatch(authActions.activateAccount(userId));
-    //         dispatch(authActions.setUsersAfterApprove(userId));
-    //         navigate('/Home/admin/users');
-    //       } catch (error) {
-    //         console.error('Error:', error);
-    //       }
-    //     }
-
-    // // Deactivate user
-    // const DeactivateAccount = async (userId) => {
-    //   try {
-    //     await axios.put(`http://localhost:8080/auth/deactivate/${userId}`);
-    //     dispatch(authActions.deactivateAccount(userId));
-    //     dispatch(authActions.setUsersAfterApprove(userId));
-    //     navigate('/Home/admin/users');
-    //   } catch (error) {
-    //     console.error('Error:', error);
-    //   }
-    // }
-  
-//     return (
-//       <div className='max-w-full p-32 col-span-5 h-screen'>
-        // {pendingUsers?.length === 0 ? (
-        //   <div className="mt-32">No User Available</div>
-        // ) : (
-//           pendingUsers?.map((userData, index) => (
-//             <div key={index} className='grid grid-cols-4 grid-rows-1 gap-2'>
-//               <div className='col-span-1'>
-//                 <img
-//                   className="w-full pb-[100px] rounded-md"
-//                   src="https://images.unsplash.com/photo-1558203728-00f45181dd84?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1748&q=80"
-//                   alt=""
-//                 />
-//                 <div className='flex items-center justify-center pt-2 italic'>{userData?.role}</div>
-//               </div>
-//               <div className='col-span-3 pl-5'>
-//                 <div className='top'>
-//                   <div className='text-2xl font-bold'>{userData?.fullName}</div>
-//                   <div className='pl-5 italic'>{userData?.role}</div>
-//                 </div>
-//                 <div className='pt-5 flex items-center gap-2'>
-//                   <div>
-//                     <div>{userData?.faculty}</div>
-//                     <div>{userData?.level}</div>
-//                   </div>
-//                 </div>
-//                 <div className='pt-5'>
-//                   <div className='pt-3 flex flex-col gap-2'>
-//                     <div className='flex gap-6'>
-//                       <p>{userData?.email}</p>
-//                     </div>
-//                     {/* {userData?.accountStatus} */}
-                // {userData?.approvalStatus === 'pending' && 
-                //     <div>
-                //       <button className="bg-blue-500 hover-bg-blue-700 text-white p-2 mt-3 rounded-sm" onClick={ApproveUser}> Approve
-                //       </button>
-                //       <button className="bg-red-500 ml-3 text-white p-2 mt-3 rounded-sm" onClick={() => handleRejectUser(userData?._id)}> Reject
-                //       </button>
-                //     </div>
-                // }
-                // {userData?.accountStatus === 'inactive' && 
-                //     <div>
-                //       <button className='bg-green-500 p-1 text-white rounded-sm text-xs' onClick={()=> ActivateAccount(userData?._id)}>Activate</button>
-                //     </div>
-                // }
-                // {userData?.accountStatus === 'active' && 
-                //     <div>
-                //         <button className='bg-red-500 p-1 text-white rounded-sm text-xs' onClick={() => DeactivateAccount(userData._id)}>Deactivate</button>
-                //     </div>
-                // }
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           ))
-//         )}
-  
-        // {showSuccessPopup && !approvalConfirmed && (
-        //   <div>
-        //     <div className="success-overlay fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50"></div>
-        //     <div className="success-popup w-[500px] h-[200px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-lg p-6 rounded-lg text-center z-50 w-500 h-200">
-        //       <span className="close-popup absolute top-2 right-2 text-gray-500 text-2xl cursor-pointer" onClick={handleCancelApproval}>
-        //         &times;
-        //       </span>
-        //       <h2 className="text-2xl font-semibold mb-4">Approval Confirmation</h2>
-        //       <p className="text-gray-600">Do you want to approve this user?</p>
-        //       <div className="flex justify-center mt-6">
-        //         <button
-        //           className="bg-blue-500 hover-bg-blue-700 text-white py-2 px-4 rounded-md mr-2"
-        //           onClick={handleConfirmApproval}
-        //         >
-        //           Confirm
-        //         </button>
-        //         <button
-        //           className="bg-red-500 hover-bg-red-700 text-white py-2 px-4 rounded-md"
-        //           onClick={handleCancelApproval}
-        //         >
-        //           Cancel
-        //         </button>
-        //       </div>
-        //     </div>
-        //   </div>
-        // )}
-//       </div>
-//     );
-//   }
-  
-//   export default UserListDetails;
-  
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { authActions } from "../../../redux/auth/authSlice";
 import { useNavigate, useParams } from 'react-router-dom';
+import * as Yup from 'yup';
+
+
+
+const schema = Yup.object().shape({
+  role: Yup.string().required('Role is required'),
+  position: Yup.string().required('Position is required'),
+});
+
 
 
 const UserDetailsPage = () => {
@@ -181,6 +22,12 @@ const UserDetailsPage = () => {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [approvalConfirmed, setApprovalConfirmed] = useState(false);
 
+  const [role, setRole] = useState('');
+  const [position, setPosition] = useState('');
+  const [roleError, setRoleError] = useState('');
+  const [positionError, setPositionError] = useState('');
+
+
   const users = useSelector((state) => state.auth.users);
   const pendingUsers = users.filter((user) => user._id === id);
 
@@ -189,19 +36,34 @@ const UserDetailsPage = () => {
     setShowSuccessPopup(true);
   }
 
-  const handleConfirmApproval = async () => {
+  const handleConfirmApproval = async (event) => {
+    event.preventDefault(); // Prevent the form from submitting
+    
     try {
-      await axios.put(`http://localhost:8080/auth/approve/${id}`);
+      await schema.validate({ role, position }, { abortEarly: false });
+  
+      // If validation passes, proceed with the approval process
+      await axios.put(`http://localhost:8080/auth/approve/${id}`, { role, position });
       dispatch(authActions.approveAccount(id));
-      navigate('/Home/admin/users');
+      navigate('/Home/admin/manage');
+      setShowSuccessPopup(false);
+      setApprovalConfirmed(true);
     } catch (error) {
-      console.error('Error:', error);
+      // If validation fails, display the error messages
+      if (error.name === 'ValidationError') {
+        error.inner.forEach((e) => {
+          if (e.path === 'role') {
+            setRoleError(e.message);
+          }
+          if (e.path === 'position') {
+            setPositionError(e.message);
+          }
+        });
+      }
     }
-
-    // Close the success pop-up
-    setShowSuccessPopup(false);
-    setApprovalConfirmed(true);
-  }
+  };
+  
+  
 
   const handleCancelApproval = () => {
     // Close the success pop-up without taking any action
@@ -398,31 +260,60 @@ const UserDetailsPage = () => {
 
       {/* comfirmation pop up ........... */}
       {showSuccessPopup && !approvalConfirmed && (
-          <div>
-            <div className="success-overlay fixed top-0 left-0 w-full h-full bg-black opacity-50 z-50"></div>
-            <div className="success-popup w-[500px] h-[200px] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-lg p-6 rounded-lg text-center z-50 w-500 h-200">
-              <span className="close-popup absolute top-2 right-2 text-gray-500 text-2xl cursor-pointer" onClick={handleCancelApproval}>
-                &times;
-              </span>
-              <h2 className="text-2xl font-semibold mb-4">Approval Confirmation</h2>
-              <select>
-                <option className='min-w-[100%] px-16 py-2' value="">Select Position</option>
-                <option value="">Admin</option>
-                <option value="">Ci</option>
-                <option value="">Cmdt</option>
-                <option value="">Io</option>
-                <option value="">Rogistic</option>
-                <option value="">Academia</option>
+        <form className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="w-full max-w-md bg-white shadow-lg rounded-lg">
+            <div className="px-6 py-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold">Approval Confirmation</h2>
+                <span className="text-gray-500 text-2xl cursor-pointer" onClick={handleCancelApproval}>
+                  &times;
+                </span>
+              </div>
+              <div className="mt-4">
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700">Select Role</label>
+              <select
+                id="role"
+                name="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${roleError && 'border-red-500'}`}
+              >
+                <option value="">Select Role</option>
+                <option value="Staff">Staff</option>
+                <option value="Student">Student</option>
               </select>
-              <div className="flex justify-center mt-6">
-                <button
-                  className="bg-blue-500 hover-bg-blue-700 text-white py-2 px-4 rounded-md mr-2"
+              {roleError && <p className="mt-1 text-red-500 text-sm">{roleError}</p>}
+            </div>
+            <div className="mt-4">
+              <label htmlFor="position" className="block text-sm font-medium text-gray-700">Select Position</label>
+              <select
+                id="position"
+                name="position"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${positionError && 'border-red-500'}`}
+              >
+                <option value="">Select Position</option>
+                <option value="Admin">Admin</option>
+                <option value="Ci">Ci</option>
+                <option value="Cmdt">Cmdt</option>
+                <option value="Io">Io</option>
+                <option value="Rogistic">Rogistic</option>
+                <option value="Academia">Academia</option>
+                <option value="Student">Student</option>
+              </select>
+              {positionError && <p className="mt-1 text-red-500 text-sm">{positionError}</p>}
+            </div>
+
+              <div className="mt-6 flex justify-center">
+                <button type='submit'
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-2"
                   onClick={handleConfirmApproval}
                 >
                   Confirm
                 </button>
                 <button
-                  className="bg-red-500 hover-bg-red-700 text-white py-2 px-4 rounded-md"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                   onClick={handleCancelApproval}
                 >
                   Cancel
@@ -430,6 +321,7 @@ const UserDetailsPage = () => {
               </div>
             </div>
           </div>
+        </form>
         )}
     </div>
   );

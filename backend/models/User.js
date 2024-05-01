@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   createdAt: {type: Date, default: Date.now},
   position: {
     type: String,
-    enum: ['Ci', 'Io', 'Academic', 'Logistics', 'Admin', 'Commandant','Student', 'Other']
+    enum: ['Ci', 'Io', 'Academic', 'Logistics', 'Admin', 'Commandant','Student', 'null'], default: 'null'
   },
   accountStatus: { type: String, enum: ['active', 'inactive'], default: 'inactive' },
   approvalStatus: { type: String, enum: ['pending','approved'], default: 'pending' },

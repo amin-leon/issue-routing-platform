@@ -169,7 +169,8 @@ const updateUser = async (req, res) => {
 // Admin approve pending user
 const updateApprovalStatus = async (req, res) => {
   const { userId } = req.params;
-  const { approvalStatus } = req.body;
+  const { role, position } = req.body;
+  const approvalStatus = 'approved'
 
   try {
     // Check if the user exists
@@ -178,9 +179,15 @@ const updateApprovalStatus = async (req, res) => {
       return res.status(404).json({ error: 'User not found.' });
     }
 
-    // Update the approvalStatus
+    // Update the approvalStatus, role, and position
+    if (role && role.trim() !== '') {
+      user.role = role;
+    }
+    if (position && position.trim() !== '') {
+      user.position = position;
+    }
     user.approvalStatus = approvalStatus;
-    //
+
     await user.save();
 
     // Create a notification
@@ -360,23 +367,29 @@ const updateUserPassword = async (req, res) => {
   }
 };
 
-// Approve user
+// approve user
 const ApproveUser = async (req, res) => {
   try {
-    const {userId} = req.params;
+    const { userId } = req.params;
+    const { role, position } = req.body;
 
-    const approveUser = await User.findByIdAndUpdate(userId, { approvalStatus: 'approved' }, { new: true });
+    const updatedUser = await User.findByIdAndUpdate(userId, { 
+      approvalStatus: 'approved', 
+      role:role,
+      position: position 
+    }, { new: true });
 
-    if (!approveUser) {
+    if (!updatedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    return res.json(approveUser);
+    return res.json(updatedUser);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 // Reject a user
 const RejectUser = async (req, res) => {
