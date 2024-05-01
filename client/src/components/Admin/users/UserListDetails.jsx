@@ -87,7 +87,7 @@ const UserDetailsPage = () => {
   };
 
       // Activate User
-      const ActivateAccount = async (userId) => {
+   const ActivateAccount = async (userId) => {
         try {
           await axios.put(`http://localhost:8080/auth/activate/${userId}`);
           dispatch(authActions.activateAccount(userId));
@@ -96,7 +96,7 @@ const UserDetailsPage = () => {
         } catch (error) {
           console.error('Error:', error);
         }
-      }
+    }
 
   // Deactivate user
   const DeactivateAccount = async (userId) => {
@@ -111,158 +111,174 @@ const UserDetailsPage = () => {
   }
   return (
     <div className="min-h-screen bg-gray-100 py-16">
-        {pendingUsers?.length === 0 ? (
-          <div className="mt-32">No User Available</div>
-        ) : (
-            pendingUsers?.map((userData, index) => (
-              <div className="grid grid-cols-2 gap-4 max-w-screen-lg mx-auto bg-white p-8 rounded shadow-md">
-        
-              {/* Left Part */}
-              <div className="border p-8">
-                <div className="mb-6">
-                  {userData?.profile !=null ? (
-                   <img
-                    src={`http://localhost:8080/${userData?.profile}`} 
+      {pendingUsers?.length === 0 ? (
+        <div className="mt-32">No User Available</div>
+      ) : (
+        pendingUsers?.map((userData, index) => (
+          <div key={index} className="max-w-screen-lg mx-auto bg-white p-8 rounded shadow-md">
+
+            {/* Left Part */}
+            <div className="flex items-center space-x-4">
+              <div className="flex-shrink-0">
+                {userData?.profile ? (
+                  <img
+                    src={`http://localhost:8080/${userData?.profile}`}
                     alt="User"
-                    className="max-w-full h-auto rounded"
-                    />
-                  ):(
-                    <img
-                    src="https://media.istockphoto.com/id/1016744034/vector/profile-placeholder-image-gray-silhouette-no-photo.jpg?s=612x612&w=0&k=20&c=Rqti26VQj_fs-_hL15mJj6b84FEZNa00FJgZRaG5PD4=" 
+                    className="h-32 w-32 object-cover rounded-full"
+                  />
+                ) : (
+                  <img
+                    src="https://media.istockphoto.com/id/1016744034/vector/profile-placeholder-image-gray-silhouette-no-photo.jpg?s=612x612&w=0&k=20&c=Rqti26VQj_fs-_hL15mJj6b84FEZNa00FJgZRaG5PD4="
                     alt="User"
-                    className="max-w-full h-auto rounded"
-                    />
-                  )}
-                </div>
-                <div>
-                  {/* Other user details information */}
-                  <p className="text-xl font-semibold mb-2">Names</p>
-                  <p className="text-gray-700">{userData?.fullName}</p>
-                  {/* Add more user details here */}
-                </div>
+                    className="h-32 w-32 object-cover rounded-full"
+                  />
+                )}
               </div>
-      
-              {/* Right Part */}
-              <div className="border p-8">
-                {/* Other related info */}
-                <div className="mb-6">
-                  <p className="text-xl font-semibold mb-2">Other Info</p>
-                  <div className="flex items-center mb-2">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      ></path>
-                    </svg>
-                    <p className="text-gray-700">Username: {userData?.username}</p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      ></path>
-                    </svg>
-                    <p className="text-gray-700">Class: {userData?.level}</p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      ></path>
-                    </svg>
-                    <p className="text-gray-700">Email: {userData?.email}</p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      ></path>
-                    </svg>
-                    <p className="text-gray-700">Role: {userData?.role}</p>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <svg
-                      className="w-5 h-5 mr-2 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      ></path>
-                    </svg>
-                    <p className="text-gray-700">accountStatus: {userData?.accountStatus}</p>
-                  </div>
-                  {/* Add more related info here */}
-                </div>
-      
-                {/* Buttons */}
-                <div>
-                {userData?.approvalStatus === 'pending' && 
-                    <div>
-                      <button className="bg-blue-500 hover-bg-blue-700 text-white p-2 mt-3 rounded-sm" onClick={ApproveUser}> Approve
-                      </button>
-                      <button className="bg-red-500 ml-3 text-white p-2 mt-3 rounded-sm" onClick={() => handleRejectUser(userData?._id)}> Reject
-                      </button>
-                    </div>
-                }
-                {userData?.accountStatus === 'inactive' && 
-                    <div>
-                      <button className='bg-green-500 p-1 text-white rounded-sm text-xs' onClick={()=> ActivateAccount(userData?._id)}>Activate</button>
-                    </div>
-                }
-                {userData?.accountStatus === 'active' && 
-                    <div>
-                        <button className='bg-red-500 p-1 text-white rounded-sm text-xs' onClick={() => DeactivateAccount(userData._id)}>Deactivate</button>
-                    </div>
-                }
-                  
-                </div>
+              <div>
+                {/* Other user details information */}
+                <p className="text-xl font-semibold mb-2">Names</p>
+                <p className="text-gray-700">{userData?.fullName}</p>
+                {/* Add more user details here */}
               </div>
             </div>
-            ))
-        )}
 
-      {/* comfirmation pop up ........... */}
+            {/* Right Part */}
+            <div className="border-t border-gray-200 pt-4 mt-4">
+              {/* Other related info */}
+              <p className="text-xl font-semibold mb-2">Other Info</p>
+              <div className="flex items-center mb-2">
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  ></path>
+                </svg>
+                <p className="text-gray-700">Username: {userData?.username}</p>
+              </div>
+              <div className="flex items-center mb-2">
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  ></path>
+                </svg>
+                <p className="text-gray-700">Class: {userData?.level}</p>
+              </div>
+              <div className="flex items-center mb-2">
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  ></path>
+                </svg>
+                <p className="text-gray-700">Email: {userData?.email}</p>
+              </div>
+              <div className="flex items-center mb-2">
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  ></path>
+                </svg>
+                <p className="text-gray-700">Role: {userData?.role}</p>
+              </div>
+              <div className="flex items-center mb-2">
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  ></path>
+                </svg>
+                <p className="text-gray-700">accountStatus: {userData?.accountStatus}</p>
+              </div>
+              {/* Add more related info here */}
+            </div>
+
+            {/* Buttons */}
+            <div className="flex items-center justify-center mt-4">
+              {userData?.approvalStatus === 'pending' && (
+                <div className="flex items-center">
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 mt-3 rounded-md"
+                    onClick={ApproveUser}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 mt-3 ml-3 rounded-md"
+                    onClick={() => handleRejectUser(userData?._id)}
+                  >
+                    Reject
+                  </button>
+                </div>
+              )}
+              {userData?.accountStatus === 'inactive' && (
+                <div>
+                  <button
+                    className="bg-green-500 hover:bg-green-700 text-white px-4 py-2 mt-3 rounded-md"
+                    onClick={() => ActivateAccount(userData?._id)}
+                  >
+                    Activate
+                  </button>
+                </div>
+              )}
+              {userData?.accountStatus === 'active' && (
+                <div>
+                  <button
+                    className="bg-red-500 hover:bg-red-700 text-white px-4 py-2 mt-3 rounded-md"
+                    onClick={() => DeactivateAccount(userData._id)}
+                  >
+                    Deactivate
+                  </button>
+                </div>
+              )}
+            </div>
+
+          </div>
+        ))
+      )}
+
+      {/* Confirmation pop up */}
       {showSuccessPopup && !approvalConfirmed && (
         <form className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="w-full max-w-md bg-white shadow-lg rounded-lg">
