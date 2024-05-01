@@ -4,6 +4,8 @@ import axios from 'axios';
 import { authActions } from "../../../redux/auth/authSlice";
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
+import { UserCircleIcon, IdentificationIcon, MailIcon, PhoneIcon, BriefcaseIcon, CalendarIcon, UserGroupIcon, StatusOfflineIcon } from '@heroicons/react/outline';
+
 
 
 
@@ -146,91 +148,38 @@ const UserDetailsPage = () => {
             <div className="border-t border-gray-200 pt-4 mt-4">
               {/* Other related info */}
               <p className="text-xl font-semibold mb-2">Other Info</p>
-              <div className="flex items-center mb-2">
-                <svg
-                  className="w-5 h-5 mr-2 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-                <p className="text-gray-700">Username: {userData?.username}</p>
-              </div>
-              <div className="flex items-center mb-2">
-                <svg
-                  className="w-5 h-5 mr-2 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-                <p className="text-gray-700">Class: {userData?.level}</p>
-              </div>
-              <div className="flex items-center mb-2">
-                <svg
-                  className="w-5 h-5 mr-2 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-                <p className="text-gray-700">Email: {userData?.email}</p>
-              </div>
-              <div className="flex items-center mb-2">
-                <svg
-                  className="w-5 h-5 mr-2 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-                <p className="text-gray-700">Role: {userData?.role}</p>
-              </div>
-              <div className="flex items-center mb-2">
-                <svg
-                  className="w-5 h-5 mr-2 text-gray-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  ></path>
-                </svg>
-                <p className="text-gray-700">accountStatus: {userData?.accountStatus}</p>
-              </div>
+<div className="flex items-center mb-2">
+  <UserCircleIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Full names: {userData?.fullName}</p>
+</div>
+<div className="flex items-center mb-2">
+  <IdentificationIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Username: {userData?.username}</p>
+</div>
+<div className="flex items-center mb-2">
+  <MailIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Email: {userData?.email}</p>
+</div>
+<div className="flex items-center mb-2">
+  <PhoneIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Telephone: {userData?.telephone}</p>
+</div>
+<div className="flex items-center mb-2">
+  <BriefcaseIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Role: {userData?.role}</p>
+</div>
+<div className="flex items-center mb-2">
+  <CalendarIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Date joined: {userData?.createdAt}</p>
+</div>
+<div className="flex items-center mb-2">
+  <UserGroupIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">Position: {userData?.position}</p>
+</div>
+<div className="flex items-center mb-2">
+  <StatusOfflineIcon className="w-5 h-5 mr-2 text-gray-500" />
+  <p className="text-gray-700">accountStatus: {userData?.accountStatus}</p>
+</div>
               {/* Add more related info here */}
             </div>
 

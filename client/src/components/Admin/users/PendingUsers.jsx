@@ -10,24 +10,7 @@ function PendingUsers() {
   const [userTypeFilter, setUserTypeFilter] = useState('all'); // Default filter is 'all'
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter users based on the selected filters
-  // const filteredUsers = allUsers.filter((user) => {
-  //   const isApprovalStatusMatch =
-  //     approvalStatusFilter === 'all' || user.approvalStatus === approvalStatusFilter;
-
-  //   const isUserTypeMatch =
-  //     userTypeFilter === 'all' ||
-  //     (userTypeFilter === 'Student' && user.role === 'Student') ||
-  //     (userTypeFilter === 'Staff' && user.role === 'Staff');
-
-  //   const isSearchMatch =
-  //     !searchQuery ||
-  //     user.fullName.toLowerCase().includes(searchQuery.toLowerCase());
-
-  //   return isApprovalStatusMatch && isUserTypeMatch && isSearchMatch;
-  // });
-
-  // Filter users based on the selected filters
+// Filter users based on the selected filters
 const filteredUsers = allUsers.filter((user) => {
   const isApprovalStatusMatch =
     approvalStatusFilter === 'all' || user.approvalStatus === approvalStatusFilter;
