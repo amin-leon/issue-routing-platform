@@ -6,25 +6,46 @@ import Pagination from './Pagination';
 function PendingUsers() {
   const allUsers = useSelector((state) => state.auth.users);
   const [approvalStatusFilter, setApprovalStatusFilter] = useState('all'); // Default filter is 'all'
+  const [accountStatusFilter, setAccountStatusFilter] = useState('all'); // Default filter is 'all'
   const [userTypeFilter, setUserTypeFilter] = useState('all'); // Default filter is 'all'
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter users based on the selected filters
-  const filteredUsers = allUsers.filter((user) => {
-    const isApprovalStatusMatch =
-      approvalStatusFilter === 'all' || user.approvalStatus === approvalStatusFilter;
+  // const filteredUsers = allUsers.filter((user) => {
+  //   const isApprovalStatusMatch =
+  //     approvalStatusFilter === 'all' || user.approvalStatus === approvalStatusFilter;
 
-    const isUserTypeMatch =
-      userTypeFilter === 'all' ||
-      (userTypeFilter === 'Student' && user.role === 'Student') ||
-      (userTypeFilter === 'Staff' && user.role === 'Staff');
+  //   const isUserTypeMatch =
+  //     userTypeFilter === 'all' ||
+  //     (userTypeFilter === 'Student' && user.role === 'Student') ||
+  //     (userTypeFilter === 'Staff' && user.role === 'Staff');
 
-    const isSearchMatch =
-      !searchQuery ||
-      user.fullName.toLowerCase().includes(searchQuery.toLowerCase());
+  //   const isSearchMatch =
+  //     !searchQuery ||
+  //     user.fullName.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return isApprovalStatusMatch && isUserTypeMatch && isSearchMatch;
-  });
+  //   return isApprovalStatusMatch && isUserTypeMatch && isSearchMatch;
+  // });
+
+  // Filter users based on the selected filters
+const filteredUsers = allUsers.filter((user) => {
+  const isApprovalStatusMatch =
+    approvalStatusFilter === 'all' || user.approvalStatus === approvalStatusFilter;
+
+  const isUserTypeMatch =
+    userTypeFilter === 'all' ||
+    (userTypeFilter === 'Student' && user.role === 'Student') ||
+    (userTypeFilter === 'Staff' && user.role === 'Staff');
+
+  const isAccountStatusMatch =
+    accountStatusFilter === 'all' || (accountStatusFilter === 'active' && user.accountStatus === 'active') || (accountStatusFilter === 'inactive' && user.accountStatus === 'inactive');
+
+  const isSearchMatch =
+    !searchQuery ||
+    user.fullName.toLowerCase().includes(searchQuery.toLowerCase());
+
+  return isApprovalStatusMatch && isUserTypeMatch && isAccountStatusMatch && isSearchMatch;
+});
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,11 +77,9 @@ function PendingUsers() {
             onChange={(e) => setApprovalStatusFilter(e.target.value)}
             className="px-4 py-2 border rounded-md"
           >
-            <option value="all">All</option>
+            <option value="all">approvals</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
-            <option value="active">Active</option>
-            <option value="Inactive">Inactive</option>
           </select>
         </div>
 
@@ -70,9 +89,21 @@ function PendingUsers() {
             onChange={(e) => setUserTypeFilter(e.target.value)}
             className="px-4 py-2 border rounded-md"
           >
-            <option value="all">All</option>
+            <option value="all">roles</option>
             <option value="Student">Student</option>
             <option value="Staff">Staff</option>
+          </select>
+        </div>
+
+        <div>
+          <select
+            value={accountStatusFilter}
+            onChange={(e) => setAccountStatusFilter(e.target.value)}
+            className="px-4 py-2 border rounded-md"
+          >
+            <option value="all">status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
           </select>
         </div>
 

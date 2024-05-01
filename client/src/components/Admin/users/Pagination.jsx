@@ -8,16 +8,20 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
   }
 
   return (
-    <div className='flex justify-end gap-2'>
-        <nav className="pagination">
-          {pageNumbers.map((number) => (
-            <p key={number} onClick={() => paginate(number)} className="page-link">
+    <div className="flex justify-center mt-4">
+      <ul className="flex">
+        {pageNumbers.map((number) => (
+          <li key={number}>
+            <button
+              onClick={() => paginate(number)}
+              className="px-3 py-1 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-100"
+            >
               {number}
-            </p>
-          ))}
-        </nav>
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
-
   );
 };
 

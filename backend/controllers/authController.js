@@ -373,10 +373,17 @@ const ApproveUser = async (req, res) => {
     const { userId } = req.params;
     const { role, position } = req.body;
 
+    // Check if the position already exists in any user document
+    const positionExists = await User.findOne({ position: position });
+
+    if (positionExists) {
+      return res.status(400).json({ error: 'Position already exists' });
+    }
+
     const updatedUser = await User.findByIdAndUpdate(userId, { 
       approvalStatus: 'approved', 
       role:role,
-      position: position 
+      position:position
     }, { new: true });
 
     if (!updatedUser) {
@@ -389,6 +396,7 @@ const ApproveUser = async (req, res) => {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 
 // Reject a user

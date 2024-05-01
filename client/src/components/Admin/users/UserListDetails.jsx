@@ -44,6 +44,7 @@ const UserDetailsPage = () => {
   
       // If validation passes, proceed with the approval process
       await axios.put(`http://localhost:8080/auth/approve/${id}`, { role, position });
+  
       dispatch(authActions.approveAccount(id));
       navigate('/Home/admin/manage');
       setShowSuccessPopup(false);
@@ -59,9 +60,12 @@ const UserDetailsPage = () => {
             setPositionError(e.message);
           }
         });
+      } else if (error.response && error.response.status === 400) {
+        setPositionError('Position already exists');
       }
     }
   };
+  
   
   
 
@@ -270,43 +274,63 @@ const UserDetailsPage = () => {
                 </span>
               </div>
               <div className="mt-4">
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700">Select Role</label>
-              <select
-                id="role"
-                name="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${roleError && 'border-red-500'}`}
-              >
-                <option value="">Select Role</option>
-                <option value="Staff">Staff</option>
-                <option value="Student">Student</option>
-              </select>
-              {roleError && <p className="mt-1 text-red-500 text-sm">{roleError}</p>}
-            </div>
-            <div className="mt-4">
-              <label htmlFor="position" className="block text-sm font-medium text-gray-700">Select Position</label>
-              <select
-                id="position"
-                name="position"
-                value={position}
-                onChange={(e) => setPosition(e.target.value)}
-                className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${positionError && 'border-red-500'}`}
-              >
-                <option value="">Select Position</option>
-                <option value="Admin">Admin</option>
-                <option value="Ci">Ci</option>
-                <option value="Cmdt">Cmdt</option>
-                <option value="Io">Io</option>
-                <option value="Rogistic">Rogistic</option>
-                <option value="Academia">Academia</option>
-                <option value="Student">Student</option>
-              </select>
-              {positionError && <p className="mt-1 text-red-500 text-sm">{positionError}</p>}
-            </div>
-
+                <label htmlFor="role" className="block text-sm font-medium text-gray-700">Select Role</label>
+                <select
+                  id="role"
+                  name="role"
+                  value={role}
+                  onChange={(e) => {
+                    setRole(e.target.value);
+                    setPosition('');
+                  }}
+                  className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${roleError && 'border-red-500'}`}
+                >
+                  <option value="">Select Role</option>
+                  <option value="Staff">Staff</option>
+                  <option value="Student">Student</option>
+                </select>
+                {roleError && <p className="mt-1 text-red-500 text-sm">{roleError}</p>}
+              </div>
+              {role === 'Staff' && (
+                <div className="mt-4">
+                  <label htmlFor="position" className="block text-sm font-medium text-gray-700">Select Position</label>
+                  <select
+                    id="position"
+                    name="position"
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${positionError && 'border-red-500'}`}
+                  >
+                    <option value="">Select Position</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Ci">Ci</option>
+                    <option value="Cmdt">Cmdt</option>
+                    <option value="Io">Io</option>
+                    <option value="Rogistic">Rogistic</option>
+                    <option value="Academia">Academia</option>
+                  </select>
+                  {positionError && <p className="mt-1 text-red-500 text-sm">{positionError}</p>}
+                </div>
+              )}
+              {role === 'Student' && (
+                <div className="mt-4">
+                  <label htmlFor="position" className="block text-sm font-medium text-gray-700">Select Position</label>
+                  <select
+                    id="position"
+                    name="position"
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${positionError && 'border-red-500'}`}
+                  >
+                    <option value="">Select Position</option>
+                    <option value="Student">Student</option>
+                  </select>
+                  {positionError && <p className="mt-1 text-red-500 text-sm">{positionError}</p>}
+                </div>
+              )}
               <div className="mt-6 flex justify-center">
-                <button type='submit'
+                <button
+                  type="submit"
                   className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 mr-2"
                   onClick={handleConfirmApproval}
                 >
@@ -322,7 +346,7 @@ const UserDetailsPage = () => {
             </div>
           </div>
         </form>
-        )}
+      )}
     </div>
   );
 };
