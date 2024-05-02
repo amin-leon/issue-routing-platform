@@ -12,7 +12,8 @@ const Modal = ({ isOpen, onClose }) => {
               <span className="text-3xl text-red-500">&times;</span>
             </button>
           </div>
-          <p>Your issue has been submitted successfully!</p>
+          <p>Successfully done </p>
+          <button onClick={onClose} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">OK</button>
         </div>
       </div>
     </div>
