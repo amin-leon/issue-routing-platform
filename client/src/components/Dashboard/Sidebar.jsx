@@ -75,18 +75,10 @@ const Sidebar = ({ isSidebarOpen }) => {
           <div className='p-3 text-black  rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
             <BsInfoCircle className="text-xl" /> Info
           </div>
+        
           
           {userInfo.role === 'Admin' && (
           <Link to="/Home/school" className="text-gray-500">
-            <div className='p-3 text-black  rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
-              <PiStudentLight className="text-xl " /> Roles
-            </div>
-          </Link>
-
-          )}
-          
-          {userInfo.role === 'Admin' && (
-          <Link to="/Home/school/staff" className="text-gray-500">
             <div className='p-3 text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
               <FaPersonMilitaryToPerson  className="text-xl" /> Positions
             </div>

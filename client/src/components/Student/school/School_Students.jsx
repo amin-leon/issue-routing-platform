@@ -63,7 +63,7 @@ const School_Students = () => {
   return (
     <div className="container mx-auto mt-8 px-16 border w-[90%] py-8 h-[90%]">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Student List</h1>
+        <h1 className="text-2xl font-bold">Positions List</h1>
         <div className="flex space-x-4">
           <input
             type="text"
@@ -86,10 +86,9 @@ const School_Students = () => {
         <table className="min-w-max w-full table-auto">
           <thead>
             <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
-              <th className="py-3 px-6 text-left">Email</th>
-              <th className="py-3 px-6 text-left">Name</th>
-              <th className="py-3 px-6 text-left">Age</th>
-              <th className="py-3 px-6 text-left">Grade</th>
+              <th className="py-3 px-6 text-left">Position </th>
+              <th className="py-3 px-6 text-left">Created</th>
+              <th className="py-3 px-6 text-left">Updated</th>
               <th className="py-3 px-6 text-left">Actions</th>
             </tr>
           </thead>
@@ -102,7 +101,6 @@ const School_Students = () => {
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.email}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.name}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.age}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.grade}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   <Link to={`edit/${student._id}`}>
                     <button

@@ -7,7 +7,7 @@ import issueRoutes from './routes/issueRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import cors from 'cors'
 import staffRoutes from './routes/staffRoutes.js'
-import studentRoutes from './routes/studentRoutes.js'
+import positionsRoutes from './routes/positionsRoutes.js'
 import codeRequestRoutes from './routes/codeRequestRoutes.js'
 import feedbackRoutes from './routes/feedbackRoutes.js'
 import docsRoutes from './routes/SharedDocsRoutes.js'
@@ -33,7 +33,7 @@ app.use('/feedback', feedbackRoutes);
 app.use('/docs', docsRoutes);
 app.use('/notification', notificationRoutes);
 app.use("/api/school", staffRoutes);
-app.use("/api/school", studentRoutes);
+app.use("/api/school", positionsRoutes);
 app.use('/api/code', codeRequestRoutes);
 
 
