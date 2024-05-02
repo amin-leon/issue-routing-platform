@@ -1,11 +1,12 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-// import Student from '../models/Student.js';
-// import Staff from '../models/Staff.js';
-// import nodemailer from 'nodemailer'
-// import Mailgen from 'mailgen'
+
+
+
+
 import { generateVerificationCode } from '../VerificationCode.js';
+import SendEmail from '../helpers/sendEmail.js';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 const EMAIL = process.env.EMAIL;
@@ -37,7 +38,7 @@ const registerUser = async (req, res) => {
     });
 
     // Send email to user to confirm registration
-    // Example email sending code here...
+    SendEmail(email, verificationCode);
 
     await user.save();
     res.status(201).json({ message: 'User registered successfully.', user });
