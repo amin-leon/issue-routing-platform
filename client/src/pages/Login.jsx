@@ -56,7 +56,7 @@ const LoginForm = () => {
         navigate('/Home/staff-home');
       } else if (userData.role === 'Admin') {
         dispatch(authActions.loginUserSuccess(userData));
-        navigate('/Home/admin/manage');
+        navigate('/Home');
       } else {
         // Handle other roles or cases if needed
       }

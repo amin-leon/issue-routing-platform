@@ -63,7 +63,7 @@ function AccountSettings() {
     <div className='md:flex md:gap-3 md:ml-10 md:mr-10 md:mt-10 border md:px-32'>
          <div className="md:max-w-[300px] md:bg-white rounded-lg md:p-12 md:flex md:flex-col  border-r-2">
                 <div className="mb-8">
-                    <img className="object-center object-cover rounded-md h-48 w-48 md:h-36 md:w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="qw" />
+                    <img className="object-center object-cover rounded-md h-48 w-48 md:h-36 md:w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="profile" />
                 </div>
                 <div className="text-center">
                     <p className="text-xl text-gray-700 font-bold mb-2">{userInfo?.fullName}</p>

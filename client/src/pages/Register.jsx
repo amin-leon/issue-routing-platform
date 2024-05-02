@@ -42,11 +42,11 @@ password: string()
   .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
   ),
 
-  // password1: string()
-  // .min(8, 'Password must be at least 8 characters')
-  // .required('Please enter password')   
-  // .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
-  // ),
+  password1: string()
+  .min(8, 'Password must be at least 8 characters')
+  .required('Please enter password')   
+  .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+  ),
 
 });
 
@@ -219,6 +219,17 @@ const RegisterForm = () => {
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Enter your password"
                     name="password"
+                  />
+                </div>
+                {/* comfirm password */}
+                <div>
+                <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
+                  <input
+                    {...register("password1")}
+                    type="password"
+                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+                    placeholder="Comfirm password"
+                    name="password1"
                   />
                 </div>
               </div>

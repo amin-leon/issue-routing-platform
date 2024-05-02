@@ -3,7 +3,12 @@ import Positions from "../models/Positions.js";
 
 const registerPositions = async (req, res) => {
   try {
-    const {positionName} = req.body
+    const { positionName } = req.body;
+    // Check if positionName already exists in the database
+    const existingPosition = await Positions.findOne({ positionName });
+    if (existingPosition) {
+      return res.status(400).json({ message: "Position already exists" });
+    }
     const newPositions = new Positions({
       positionName
     });
@@ -14,6 +19,7 @@ const registerPositions = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 const updatePositions = async (req, res) => {
   const { id } = req.params;

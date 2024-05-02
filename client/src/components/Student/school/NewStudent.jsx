@@ -19,17 +19,15 @@ const NewStudentForm = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
-      setLoading(true)
+      setLoading(true);
       const addNewStudent = await axios.post('http://localhost:8080/api/school/positions/register', formData);
-      if(addNewStudent){
-        setLoading(false)
-        setError("Student successfully registered")
-        // window.location.href = '/Home/school'
-      }
+      setLoading(false)
+      setError(addNewStudent.data.message);
     } catch (error) {
-      setError("Student no registered");
+      setError(error.response.data.message);
     }
   };
+  
 
   return (
     <div className="container mx-auto mt-8 px-24 py-2">
