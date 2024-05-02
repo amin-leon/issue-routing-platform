@@ -7,17 +7,17 @@ import axios from "axios";
 
 const School_Students = () => {
   const [search, setSearch] = useState("");
-  const [students, setStudents] = useState([]);
+  const [positions, setPositions] = useState([]);
 
 
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/school/student/all');
+        const response = await fetch('http://localhost:8080/api/school/positions/all');
         if (response.ok) {
           const data = await response.json();
-          setStudents(data);
+          setPositions(data);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -29,13 +29,13 @@ const School_Students = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
 
-  const filteredStudents = students.filter((student) =>
-    student.name.toLowerCase().includes(search.toLowerCase())
+  const filteredPositions = positions.filter((position) =>
+  position.positionName.toLowerCase().includes(search.toLowerCase())
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredStudents.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredPositions.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -44,7 +44,7 @@ const School_Students = () => {
 
   const handleDelete = async(studentId) => {
     try {
-      const deleteStudent = await axios.delete(`http://localhost:8080/api/school/student/delete/${studentId}`);
+      const deleteStudent = await axios.delete(`http://localhost:8080/api/school/positions/delete/${studentId}`);
       if(deleteStudent){
         window.location.href= 'http://localhost:3000/Home/school'
       }
@@ -98,9 +98,9 @@ const School_Students = () => {
                 key={student.id}
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} hover:bg-gray-200`}
               >
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.email}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.name}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.age}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{student.positionName}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{student.createdAt}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{student.updatedAt}</td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   <Link to={`edit/${student._id}`}>
                     <button
@@ -125,7 +125,7 @@ const School_Students = () => {
       <div className="flex justify-end mt-4">
         <nav>
           <ul className="pagination flex space-x-2">
-            {[...Array(Math.ceil(filteredStudents.length / itemsPerPage)).keys()].map((number) => (
+            {[...Array(Math.ceil(filteredPositions.length / itemsPerPage)).keys()].map((number) => (
               <li key={number + 1} className="page-item">
                 <button
                   onClick={() => paginate(number + 1)}

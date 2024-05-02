@@ -3,7 +3,10 @@ import Positions from "../models/Positions.js";
 
 const registerPositions = async (req, res) => {
   try {
-    const newPositions = new Positions(req.body);
+    const {positionName} = req.body
+    const newPositions = new Positions({
+      positionName
+    });
     await newPositions.save();
     res.status(201).json({ message: "Position added successfully" });
   } catch (error) {
