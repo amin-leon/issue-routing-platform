@@ -16,7 +16,7 @@ import { object, string}  from "yup";
 
 // Validation Form schema
 const validationSchema = object().shape({
-  username: string()
+username: string()
   .required('username is required'),
  
 fullName: string()
@@ -42,6 +42,12 @@ password: string()
   .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
   ),
 
+  // password1: string()
+  // .min(8, 'Password must be at least 8 characters')
+  // .required('Please enter password')   
+  // .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+  // ),
+
 });
 
 const backgroundImageUrl = 'https://www.npc.ac.rw/fileadmin/user_upload/1H9A5050.jpg';
@@ -59,34 +65,35 @@ const RegisterForm = () => {
   const navigate = useNavigate()
 
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    username: '',
-    fullName: '',
-    gender: '',
-    telephone: '',
-    profile: ''
-  });
   const [error, setError] = useState(null);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-  const onSubmitHandler = async(formData) => {
+
+
+  const onSubmitHandler = async(data) => {
     try {
+
+      const formData = new FormData();
+      formData.append('fullName', data.fullName);
+      formData.append('username', data.username);
+      formData.append('telephone', data.telephone);
+      formData.append('gender', data.gender);
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      formData.append('profile', data.attachment[0]);
+
+
       dispatch(authActions.registerUserStart());
-      const response = await axios.post('http://localhost:8080/auth/register', formData);
+     const response =  await axios.post('http://localhost:8080/auth/register', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       dispatch(authActions.registerUserSuccess(response.data));
       setRegistrationSuccess(true); // Set registration success
       
@@ -107,9 +114,9 @@ const RegisterForm = () => {
 
     // Verify verification code
     const [verificationCode, setVerificationCode] = useState('');
-    const handleVerifyCode = async () => {
+    const handleVerifyCode = async (data) => {
       try {
-        await axios.put(`http://localhost:8080/auth/verifycode/${verificationCode}/${formData.email}`);
+        await axios.put(`http://localhost:8080/auth/verifycode/${verificationCode}/${data.email}`);
         navigate('/');
 
       } catch (error) {
@@ -147,10 +154,8 @@ const RegisterForm = () => {
                    {...register("email")}
                     type="email"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="mail.example@gmail.com"
+                    placeholder="Email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -159,10 +164,8 @@ const RegisterForm = () => {
                   {...register("username")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Kmoreen12"
+                    placeholder="username"
                     name="username"
-                    value={formData.username}
-                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -171,45 +174,22 @@ const RegisterForm = () => {
                   {...register("fullName")}
                     type="text"
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Keza Morgon"
+                    placeholder="Full names"
                     name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
                   />
                 </div>
                 {/* Gender */}
-                <div>
-                <label className="text-sm font-thin text-red-500">{errors.gender?.message}</label>
-                <div>
-                  <label>
-                    <input
-                      {...register("gender")}
-                      type="radio"
-                      name="gender"
-                      className="mr-1"
-                      value="female" // Set a unique value for the female option
-                      checked={formData.gender === "female"} // Check if the gender state matches the value
-                      onChange={handleChange}
-                    />
-                    Female
-                  </label>
+                <div className='mt-2'>
+                  <select
+                    {...register("gender")}
+                    className="w-full text-base p-3 border-none bg-gray-100  rounded-lg focus:outline-none focus:border-blue-400"
+                    name="gender"
+                  >
+                    <option value="">Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                 </div>
-                <div>
-                  <label>
-                    <input
-                      {...register("gender")}
-                      type="radio"
-                      name="gender"
-                      className="mr-1"
-                      value="male" // Set a unique value for the male option
-                      checked={formData.gender === "male"} // Check if the gender state matches the value
-                      onChange={handleChange}
-                    />
-                    Male
-                  </label>
-                </div>
-              </div>
-
 
                 {/* Telephone */}
                 <div>
@@ -220,19 +200,15 @@ const RegisterForm = () => {
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="0780933456"
                     name="telephone"
-                    value={formData.telephone}
-                    onChange={handleChange}
                   />
                 </div>
-                <div>
-                <label for="profileImage" class="block text-sm font-medium text-gray-700">Profile Image</label>
-                  <div class="mt-1 flex items-center">
-                    <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                      <img src="https://via.placeholder.com/150" alt="Profile Image" class="h-full w-full object-cover" />
-                    </span>
-                    <label for="profileImage" class="ml-5 cursor-pointer inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Upload</label>
-                    <input id="profileImage" name="profileImage" type="file" class="sr-only" />
-                  </div>
+                <div className='mt-2'>
+                  <input
+                    type="file"
+                    // required
+                    {...register("attachment")}
+                    className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
+                  />
                 </div>
                 {/* Password */}
                 <div>
@@ -243,21 +219,6 @@ const RegisterForm = () => {
                     className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Enter your password"
                     name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                  />
-                </div>
-                {/* Comvirm Password */}
-                <div>
-                <label className="text-sm font-thin text-red-500">{errors.password?.message}</label>
-                  <input
-                    {...register("password")}
-                    type="password"
-                    className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
-                    placeholder="Comfirm password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
                   />
                 </div>
               </div>

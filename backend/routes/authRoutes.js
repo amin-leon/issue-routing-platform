@@ -3,13 +3,13 @@
 import express from 'express';
 import verifyToken from '../middleware/auth.js';
 import authController from '../controllers/authController.js';
-import {upload} from '../middleware/multer.js';
+import upload from '../middleware/upload.js';
 
 
 const router = express.Router();
 
 // User
-router.post('/register', authController.registerUser);
+router.post('/register', upload.single('profile'), authController.registerUser);
 router.post('/login', authController.loginUser);
 router.get('/protected', verifyToken, authController.protectedRoute);
 router.put('/users/:userId', authController.updateUser);

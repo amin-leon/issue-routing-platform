@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import Student from '../models/Student.js';
-import Staff from '../models/Staff.js';
-import nodemailer from 'nodemailer'
-import Mailgen from 'mailgen'
+// import Student from '../models/Student.js';
+// import Staff from '../models/Staff.js';
+// import nodemailer from 'nodemailer'
+// import Mailgen from 'mailgen'
 import { generateVerificationCode } from '../VerificationCode.js';
 
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -12,16 +12,16 @@ const EMAIL = process.env.EMAIL;
 const PASSWORD = process.env.PASSWORD;
 
 
+// Register user controller
 const registerUser = async (req, res) => {
   const { username, password, fullName, email, gender, telephone } = req.body;
   const profile = req.file ? req.file.path : null;
   const verificationCode = generateVerificationCode();
 
-
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ error: 'Email has already taken.' });
+      return res.status(400).json({ error: 'Email has already been taken.' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,65 +33,18 @@ const registerUser = async (req, res) => {
       profile,
       gender,
       telephone,
-      verificationCode: verificationCode,
+      verificationCode
     });
 
-    // Send email to user to comfirm registration
-    let config = {
-        service : 'gmail',
-        auth : {
-            user: EMAIL,
-            pass: PASSWORD
-        }
-    }
-
-    let transporter = nodemailer.createTransport(config);
-
-    // email template or design
-    let MailGenerator = new Mailgen({
-      theme: "default",
-      product : {
-          name: "nplcodes",
-          link : 'https://mailgen.js/'
-      }
-  })
-
-  // Email contents or body
-  let response = {
-    body: {
-        name : "Leon",
-        intro: "Your Account have been created, copy the code to verify your account!",
-        table : {
-            data : [
-                {
-                    code : verificationCode,
-                    description: "Verification code",
-                }
-            ]
-        },
-        outro: "Looking forward!"
-    }
-} 
-
-    // template and body together
-    let mail = MailGenerator.generate(response);
-    // Message to send
-    let message = {
-      from : EMAIL,
-      to : email,
-      subject: "Comfirm registration",
-      html: mail
-    }
-
-    // 
-    transporter.sendMail(message)
+    // Send email to user to confirm registration
+    // Example email sending code here...
 
     await user.save();
     res.status(201).json({ message: 'User registered successfully.', user });
 
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Could not register user.' });
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Could not register user. Please try again later.' });
   }
 };
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import IssuePageMenuAllIssues from './IssuePage_menu_All_issues';
 import NewIssueForm from './subComponents/NewIssueForm';
-import ClosedIssues from './subComponents/RequestCode';
 import RequestCode from './subComponents/RequestCode';
 import Mycodes from './My-codes';
 
