@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authActions } from '../../redux/auth/authSlice';
+import { Link } from 'react-router-dom';
 
   
 function AccountSettings() {
@@ -12,7 +13,7 @@ function AccountSettings() {
       fullName: '',
       email: '',
       username: '',
-      faculty: '',
+      telephone: '',
       role: '',
       position: '',
       level: ''
@@ -26,9 +27,8 @@ function AccountSettings() {
               fullName: response.data.fullName || '',
               email: response.data.email || '',
               username: response.data.username || '',
-              level: response.data.level || '',
               role: response.data.role || '',
-              faculty: response.data.faculty || '',
+              telephone: response.data.telephone || '',
               position: response.data.position || ''
             });
 
@@ -66,11 +66,13 @@ function AccountSettings() {
                     <img className="object-center object-cover rounded-md h-48 w-48 md:h-36 md:w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="profile" />
                 </div>
                 <div className="text-center">
-                    <p className="text-xl text-gray-700 font-bold mb-2">{userInfo?.fullName}</p>
+                    <p className="text-xl text-gray-700 font-bold mb-2">{userInfo?.fullName + ""}</p>
                     <p className="text-base text-gray-400 font-normal">{userInfo?.role}</p>
                     <div className='add'>
-                        <button type="file" className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-sm w-full" > Edit Profile
+                      <Link to='/Home/admin/setting'>
+                        <button type="file" className="bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 mt-3 rounded-sm w-full" >Go to settings
                         </button>
+                      </Link>
                     </div>
                 </div>
             </div>
@@ -95,19 +97,15 @@ function AccountSettings() {
                         </div>
                         {userInfo.role ==='Student' && (
                         <div>
-                          <label className="text-sm font-medium text-gray-700">Faculty</label>
-                          <select
-                              className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
-                              name="faculty"
-                              onChange={handleChange}
-                          >
-                              <option value={formData.faculty}>{formData.faculty}</option>
-                              <option value="Law">Law</option>
-                              <option value="Ict">Ict</option>
-                              <option value="Languages">Languages</option>
-                              <option value="Pps">Pps</option>
-
-                          </select>
+                        <label className="text-sm font-medium text-gray-700">Telephone</label>
+                        <input 
+                            type="text"
+                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
+                            placeholder="0780944444"
+                            name="telephone"
+                            value={formData.telephone}
+                            onChange={handleChange}
+                        />
                         </div>
                         )}
                         <div>
@@ -139,13 +137,9 @@ function AccountSettings() {
                             className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                             name="position"
                             onChange={handleChange}
+                            readonly
                         >
                             <option value={formData.position}>{formData.position}</option>
-                            <option value="Io">Io</option>
-                            <option value="Ci">Ci</option>
-                            <option value="Academic">Academic</option>
-                            <option value="Student">Student</option>
-                            <option value="Logistics">Logistics</option>
                         </select>
                         </div>
                         )}
@@ -158,24 +152,9 @@ function AccountSettings() {
                             name="reserved"
                             value={formData.role}
                             onChange={handleChange}
+                            readonly
                         />
                         </div>
-                        {userInfo.role ==='Student' && (
-                        <div>
-                        <label className="text-sm font-medium text-gray-700">Level</label>
-                        <select
-                            className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
-                            name="level"
-                            onChange={handleChange}
-                        >
-                            <option value={formData.level}>{formData.level}</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                        </div>
-                        )}
                     </div>
                     <div className='flex gap-3'>
                         <button

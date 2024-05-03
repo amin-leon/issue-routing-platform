@@ -5,7 +5,7 @@ import { GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 import { GiConvergenceTarget } from "react-icons/gi";
-import { PiStudentLight } from "react-icons/pi";
+import { MdDashboard } from "react-icons/md";
 import { FaBars, FaPersonMilitaryToPerson } from "react-icons/fa6";
 
 const HamburgerMenu = () => (
@@ -59,7 +59,7 @@ const Sidebar = ({ isSidebarOpen }) => {
           className="text-gray-500"
         >
           <div className='p-3 text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
-            <AiOutlineHome className="text-xl" />Home
+            <MdDashboard  className="text-xl" />Dashboard
           </div>
         </Link>
 

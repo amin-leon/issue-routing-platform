@@ -328,7 +328,7 @@ const ApproveUser = async (req, res) => {
     const { role, position } = req.body;
 
     // Check if the position already exists in any user document
-    const positionExists = await User.findOne({ position: position });
+    const positionExists = await User.findOne({ position: position, role: 'Staff' });
 
     if (positionExists) {
       return res.status(400).json({ error: 'Position already exists' });
