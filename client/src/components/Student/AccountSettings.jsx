@@ -59,7 +59,6 @@ function AccountSettings() {
       };
 
   return (
-    // 
     <div className='md:flex md:gap-3 md:ml-10 md:mr-10 md:mt-10 border md:px-32'>
          <div className="md:max-w-[300px] md:bg-white rounded-lg md:p-12 md:flex md:flex-col  border-r-2">
                 <div className="mb-8">

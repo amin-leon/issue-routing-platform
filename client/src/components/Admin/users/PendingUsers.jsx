@@ -153,9 +153,11 @@ const filteredUsers = allUsers.filter((user) => {
               </td>
               <td className="px-6 py-4 whitespace-no-wrap">
                 <Link to={`/Home/admin/manage-users/${user._id}`}>
-                  <span className="relative inline-block px-3 py-1 font-semibold text-red-500 leading-tight">
-                    <span className="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                    <span className="relative">{user?.approvalStatus}</span>
+                  <span className="relative inline-block px-3 py-1 font-semibold text-green-500 leading-tight">
+                    <span className="absolute inset-0 bg-green-500 opacity-50 rounded-sm"></span>
+                    <span className="relative">{
+                      user?.approvalStatus && user?.accountStatus ? `${user?.accountStatus}`: `Inactive`}
+                    </span>
                   </span>
                 </Link>
               </td>

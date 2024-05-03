@@ -61,8 +61,8 @@ const LoginForm = () => {
         // Handle other roles or cases if needed
       }
     } catch (error) {
-      if (error.response.data.error === 'Your account is pending.') {
-        setError('Wait ..., Your account is pending.');
+      if (error.response.data.error === 'Your account is not active.') {
+        setError('Your account is not active.');
       } else if (error.response.data.error === 'User not exist.') {
         setError('User account not exist.');
       } else if (error.response.data.error === 'Invalid credentials.') {

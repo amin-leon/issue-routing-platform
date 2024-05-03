@@ -79,8 +79,8 @@ const loginUser = async (req, res) => {
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (checkPassword) {
-      if (user.approvalStatus === 'pending') {
-        return res.status(403).json({ error: 'Your account is pending.' });
+      if (user.approvalStatus === 'pending' || user.accountStatus === 'inactive') {
+        return res.status(403).json({ error: 'Your account is not active.' });
       } else {
         const token = jwt.sign({ email: user.email }, SECRET_KEY);
         res.setHeader('Authorization', `Bearer ${token}`);
@@ -335,7 +335,8 @@ const ApproveUser = async (req, res) => {
     }
 
     const updatedUser = await User.findByIdAndUpdate(userId, { 
-      approvalStatus: 'approved', 
+      approvalStatus: 'approved',
+      accountStatus: 'active',
       role:role,
       position:position
     }, { new: true });
