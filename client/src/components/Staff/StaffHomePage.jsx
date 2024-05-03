@@ -23,9 +23,11 @@ ChartJS.register(
 
 const StaffHomePage = () => {
   const dispatch = useDispatch();
-  const newIssues = useSelector((state) => state.issue.assignedToMe);
-  const prog = useSelector((state) => state.issue.progressIssues);
-  const closedIssues = useSelector((state) => state.issue.closedIssues);
+  const myIssuesStaff = useSelector((state) => state.issue.assignedToMe);
+
+  const prog = myIssuesStaff.filter((issue) => issue.status === 'assigned');
+  const newIssues = myIssuesStaff.filter((issue) => issue.status === 'new');
+  const closedIssues = myIssuesStaff.filter((issue) => issue.status === 'closed');
   const [feedbackData, setFeedbackData] = useState([]);
 
   
@@ -57,8 +59,13 @@ const StaffHomePage = () => {
     return issueDate.getMonth() === currentMonth && issue.status !== 'new';
   });
 
+  const filteredNewIssues = newIssues.filter((issue) => {
+    const issueDate = new Date(issue.createdAt);
+    return issueDate.getMonth() === currentMonth && issue.status === 'new';
+  });
+
   //Three lengths
-  const newLeng = newIssues.length;
+  const newLeng = filteredNewIssues.length;
   const progLeng = filteredProgressIssues.length;
   const closeLeng = filteredClosedIssues.length;
 
@@ -104,11 +111,11 @@ const StaffHomePage = () => {
   }, [dispatch, assignedToId]);
 
   const data = {
-    labels: ['New', 'Assigned', 'Closed'],
+    labels: ['New', 'Progressing', 'Closed'],
     datasets: [
       {
         label: 'Status of Issues',
-        data: [newIssues.length, filteredProgressIssues.length, filteredClosedIssues.length],
+        data: [filteredNewIssues.length, filteredProgressIssues.length, filteredClosedIssues.length],
         backgroundColor: [
           'rgba(54, 162, 235, 0.2)', // New
           'rgba(255, 206, 86, 0.2)', // Progress
@@ -126,16 +133,23 @@ const StaffHomePage = () => {
 
   const options = {};
 
+
   return (
     <div>
       {/* px-32 py-16 grid grid-cols-2 gap-6 */}
       <div className="issue-container md:px-32 md:py-16 md:grid md:grid-cols-2 md:gap-6">
         <div className="cards-graph">
           <div className="cards grid grid-cols-3 gap-3">
-            <Link to="/Home/staff-issue-page">
+            {/* <Link to="/Home/staff-issue-page">
               <div className="card-1 cursor-pointer text-black bg-gray-100 px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
                 <p className="text-2xl">Total</p>
                 <h1 className="text-2xl">{len}</h1>
+              </div>
+            </Link> */}
+            <Link to="/Home/staff-issue-page">
+              <div className="card-1 cursor-pointer text-red-500 bg-gray-100 px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
+                <p className="text-2xl">New</p>
+                <h1 className="text-2xl">{newLeng}</h1>
               </div>
             </Link>
             <Link to="/Home/staff-issue-page">
