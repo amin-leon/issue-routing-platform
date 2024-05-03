@@ -42,6 +42,7 @@ function MeetingAndEscalate({ onClose, issueId }) {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8080/issue/escalate/${issueId}`, { assignedTo });
+      onClose()
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +53,7 @@ function MeetingAndEscalate({ onClose, issueId }) {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8080/issue/share/${issue}`);
+      onClose()
     } catch (error) {
       console.log(error);
     }

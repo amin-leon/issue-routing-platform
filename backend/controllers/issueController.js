@@ -496,10 +496,9 @@ const closeIssue = async (req, res) => {
     issue.status = 'closed';
     const updatedIssue = await issue.save();
 
+    res.json(updatedIssue);
     // Delete code request related to the issueId
     await CodeRequest.findOneAndDelete(reporterId);
-
-    res.json(updatedIssue);
   } catch (error) {
     console.log('Error closing issue:', error);
     res.status(500).json({ error: 'Internal Server Error' });

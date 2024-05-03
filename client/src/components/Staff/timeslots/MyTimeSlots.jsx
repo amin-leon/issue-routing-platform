@@ -148,7 +148,7 @@ function MyTimeSlots() {
 
 
   return (
-    <div className="">
+    <div>
         <div className="md:w-[50%] md:p-5">
           <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
           <p className='text-xs'>"{issueDetails?.issue?.description}"</p>
@@ -159,8 +159,7 @@ function MyTimeSlots() {
             <div className="flex gap-2 md:p-2" key={comment._id}>
               <img
                 className="w-8 h-8 rounded-full"
-                // src={`http://localhost:8080/${comment?.userInfo?.profile}`}
-                src=''
+                src={`http://localhost:8080/${comment?.userInfo?.profile}`}
                 alt="No_Pic"
               />
               <div>
@@ -193,23 +192,21 @@ function MyTimeSlots() {
                   <input type="text" value={authorId} hidden readOnly />
                 </div>
                 <div className="p-3 text-red-500 font-bold">
-                  {/* {issueDetails.issue.status === 'closed' ? 'Closed' : ( */}
+                   {issueDetails?.issue.status === 'closed' ? 'Closed' : ( 
                       <button
                         type="submit"
                         className="bg-[#1F3365] hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
                       >
                      <BsSend />
                     </button>
-                  {/* )} */}
+                 )} 
                 </div>
               </form>
               {closerInfo?.role === 'Staff' && (
                 <div className='flex gap-3 items-center'>
-                  <button
-                    className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none'
-                    onClick={openForm}
-                  >Close issue
-                  </button>
+                   {!issueDetails?.issue.status && (
+                      <button className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none' onClick={openForm} >Close issue</button>
+                   )}
                 </div>
               )}
               {isFormOpen && (
