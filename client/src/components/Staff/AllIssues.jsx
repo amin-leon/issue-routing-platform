@@ -75,6 +75,7 @@ function AllIssues() {
         try {
           const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
           dispatch(issueActions.setAssignedToMe(response.data));
+          dispatch(issueActions.setIssues(response.data));
         } catch (error) {
           console.log(error);
         }

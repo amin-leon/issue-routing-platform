@@ -140,12 +140,6 @@ const StaffHomePage = () => {
       <div className="issue-container md:px-32 md:py-16 md:grid md:grid-cols-2 md:gap-6">
         <div className="cards-graph">
           <div className="cards grid grid-cols-3 gap-3">
-            {/* <Link to="/Home/staff-issue-page">
-              <div className="card-1 cursor-pointer text-black bg-gray-100 px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
-                <p className="text-2xl">Total</p>
-                <h1 className="text-2xl">{len}</h1>
-              </div>
-            </Link> */}
             <Link to="/Home/staff-issue-page">
               <div className="card-1 cursor-pointer text-red-500 bg-gray-100 px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
                 <p className="text-2xl">New</p>

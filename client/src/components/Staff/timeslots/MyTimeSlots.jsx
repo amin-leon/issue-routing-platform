@@ -4,11 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../../redux/issue/issueSlice';
 import { BsSend } from 'react-icons/bs';
+import FormatDate from '../../helpers/FormatDate';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
 
 function MyTimeSlots() {
   const { issueId , reporterId} = useParams();
   const dispatch = useDispatch();
-  const issueDetails = useSelector((state) => state.issue.studentIssues);
+  const issueDetails = useSelector((state) => state.issue.issues);
   const StaffStudentComments = useSelector((comments) => comments.issue.StudentStaffComment);
 
   // State for the comment form
@@ -146,12 +151,16 @@ function MyTimeSlots() {
     }
   };
 
-
   return (
     <div>
-        <div className="md:w-[50%] md:p-5">
-          <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
-          <p className='text-xs'>"{issueDetails?.issue?.description}"</p>
+        <div className="md:w-[100%] md:p-5">
+          <p className="text-4xl font-bold pb-3">{issueDetails[0]?.category} issue</p>
+          <div>
+            <FormatDate createOn={issueDetails[0]?.createdAt} status={issueDetails[0]?.status}/>
+          </div>
+          <div className='w-full'>
+            <p className='text-xl'>"{issueDetails[0]?.description}"</p>
+          </div>
         </div>
         <div className="md:p-10 border">
           <p className='pb-5'>({StaffStudentComments.length})Comments</p>
@@ -177,22 +186,22 @@ function MyTimeSlots() {
             <div className='mt-3'>
               <form onSubmit={handleCommentSubmit}>
                 <div>
-                  <textarea
-                  id="chat_message"
-                    cols={120}
-                    rows={7}
-                    required
-                    onChange={(e) => setComment(e.target.value)}
-                    value={commentText}
-                    className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
-                    placeholder="Type your comment ...."
-                  ></textarea>
-                </div> 
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={commentText}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setComment(data);
+                    }}
+                    style={{ width: '100%', height: '400px' }} 
+                  />
+                </div>
+
                 <div>
                   <input type="text" value={authorId} hidden readOnly />
                 </div>
                 <div className="p-3 text-red-500 font-bold">
-                   {issueDetails?.issue.status === 'closed' ? 'Closed' : ( 
+                   {issueDetails[0]?.status === 'closed' ? 'Closed' : ( 
                       <button
                         type="submit"
                         className="bg-[#1F3365] hover.bg-blue-700 text-white py-1 px-3 sm rounded-md focus-border-transparent focus-outline-none focus-shadow-outline-none"
@@ -204,7 +213,7 @@ function MyTimeSlots() {
               </form>
               {closerInfo?.role === 'Staff' && (
                 <div className='flex gap-3 items-center'>
-                   {!issueDetails?.issue.status && (
+                   {!issueDetails[0]?.status && (
                       <button className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none' onClick={openForm} >Close issue</button>
                    )}
                 </div>
