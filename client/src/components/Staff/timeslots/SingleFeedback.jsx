@@ -10,8 +10,7 @@ const ClaimFormModal = ({ onClose }) => {
     assignedStaff:issueDetails?.issue.assignedTo,
     reason: '',
     feedbackMessage: '',
-    whatToImprove: "",
-    wantToGoHigher: ""
+    wantToGoHigher: false
   });
 
   const handleChange = (e) => {

@@ -20,9 +20,6 @@ const feedbackSchema = new mongoose.Schema({
     reason: {
         type: String,
     },
-    whatToImprove: {
-        type: String,
-    },
     feedbackMessage: {
         type: String,
         required: true

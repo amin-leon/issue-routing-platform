@@ -64,7 +64,7 @@ const FeedbackModal = ({ feedback, onClose, onDelete }) => {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center">
                                 <img
-                                    src={feedback?.reporterImage}
+                                    src={'http://localhost:8080/'+feedback.reporterImage}
                                     alt="reporter_image"
                                     className="w-8 h-8 rounded-full mr-2"
                                 />

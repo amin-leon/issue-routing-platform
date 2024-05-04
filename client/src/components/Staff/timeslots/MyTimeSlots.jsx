@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../../redux/issue/issueSlice';
 import { BsSend } from 'react-icons/bs';
-import FormatDate from '../../helpers/FormatDate';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import FormatDate from '../../helpers/FormatDate';
 
 
 
@@ -175,10 +175,11 @@ function MyTimeSlots() {
                 <p className="font-bold">
                   {comment?.userInfo?.fullName}
                   <span className="text-gray-300 text-xs pl-10">
-                    {comment.createdAt}
+                    
+                    <FormatDate createOn={comment.createdAt}/>
                   </span>
                 </p>
-                <p className="text-xs text-red-500">{comment.text}</p>
+                <p className="text-md text-red-500">{comment.text}</p>
               </div>
             </div>
           ))}

@@ -86,6 +86,7 @@ const FeedbackComponent = () => {
 
   const groupedFeedbackData = groupFeedbackByDate();
 
+
   return (
     <div className="container mx-auto py-8">
       {groupedFeedbackData?.map((group) => (
@@ -97,15 +98,16 @@ const FeedbackComponent = () => {
                 <div
                   key={feedback._id}
                   className={`bg-white rounded-md shadow-md p-6 cursor-pointer ${
-                    feedback.isRead ? '' : 'border border-red-500'
+                    !feedback.isRead ? 'border border-red-500' : ''
                   }`}
+                  
                   onClick={() => openModal(feedback)}
                 >
                   <h2 className="text-lg font-semibold mb-2">{feedback.issueTitle}</h2>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <img
-                        src={feedback.reporterImage}
+                        src={'http://localhost:8080/'+feedback.reporterImage}
                         alt="reporter_image"
                         className="w-8 h-8 rounded-full mr-2"
                       />
