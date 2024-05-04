@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { useNavigate } from 'react-router-dom';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 
 
 function BoardChat() {
@@ -125,8 +128,8 @@ const RemoveIssuefromGroup = async(e)=>{
       </div>
       <div className="col-span-2">
         <div className="border p-5">
-          <p className="text-2xl font-bold pb-3">{currentIssue[0]?.title}</p>
-          <p className='text-xs'>{currentIssue[0]?.description}</p>
+          <p className="text-4xl font-bold pb-3">{currentIssue[0]?.title}</p>
+          <p className='text-xl'>{currentIssue[0]?.description}</p>
         </div>
         <div className="p-4 border">
           <p className='pb-5'>({groupComments.length})Comments</p>
@@ -152,16 +155,15 @@ const RemoveIssuefromGroup = async(e)=>{
             <div className='mt-3'>
             <form onSubmit={handleCommentSubmit}>
                 <div>
-                  <textarea
-                    required
-                    rows={8}
-                    cols={100}
-                    name="comments"
-                    className="w-full  rounded-md focus:outline-none p-3 bg-transparent"
-                    placeholder="Type your comment ...."
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                  ></textarea>
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={commentText}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setCommentText(data);
+                    }}
+                    style={{ width: '100%', height: '400px' }} 
+                  />
                 </div>
 
                 <div className="p-3">

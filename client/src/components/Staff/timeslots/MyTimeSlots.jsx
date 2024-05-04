@@ -178,7 +178,7 @@ function MyTimeSlots() {
                     {comment.createdAt}
                   </span>
                 </p>
-                <p className="text-xs text-gray-500">{comment.text}</p>
+                <p className="text-xs text-red-500">{comment.text}</p>
               </div>
             </div>
           ))}
