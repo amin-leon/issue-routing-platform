@@ -2,7 +2,8 @@ import {configureStore} from '@reduxjs/toolkit'
 import authSlice from './auth/authSlice';
 import issueSlice from './issue/issueSlice';
 import feedbackSlice from './feedbacks/feeddbackSlice';
-import codesSlice from './request_codes/codesSlice'; // Update import statement
+import codesSlice from './request_codes/codesSlice'; 
+import documentReducer from './docs/docsSlice'; 
 
 
 
@@ -14,6 +15,7 @@ const store = configureStore({
         issue: issueSlice.reducer,
         feedbacks: feedbackSlice.reducer,
         codes: codesSlice.reducer, 
+        documents: documentReducer,
 
 
     },

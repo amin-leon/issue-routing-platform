@@ -7,6 +7,8 @@ import { BsSend } from 'react-icons/bs';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import FormatDate from '../../helpers/FormatDate';
+import { setDocuments } from '../../../redux/docs/docsSlice';
+
 
 
 
@@ -94,6 +96,19 @@ function MyTimeSlots() {
       console.log('Error submitting comment:', error);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/docs/documents');
+        dispatch(setDocuments(response.data));
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchComments = async () => {
