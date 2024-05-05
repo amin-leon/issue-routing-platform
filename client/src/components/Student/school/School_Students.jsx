@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import FormatDate from "../../helpers/FormatDate";
+
 
 
 
@@ -99,8 +101,8 @@ const School_Students = () => {
                 className={`${index % 2 === 0 ? "bg-white" : "bg-gray-100"} hover:bg-gray-200`}
               >
                 <td className="py-3 px-6 text-left whitespace-nowrap">{student.positionName}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.createdAt}</td>
-                <td className="py-3 px-6 text-left whitespace-nowrap">{student.updatedAt}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap"> <FormatDate createOn={student?.createdAt} /></td>
+                <td className="py-3 px-6 text-left whitespace-nowrap"><FormatDate createOn={student?.updatedAt} /></td>
                 <td className="py-3 px-6 text-left whitespace-nowrap">
                   <Link to={`edit/${student._id}`}>
                     <button

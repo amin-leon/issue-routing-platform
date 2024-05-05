@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import FormatDate from '../helpers/FormatDate';
+
+
+
+
 
 function StaffPage() {
   const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
@@ -16,7 +21,7 @@ function StaffPage() {
   );
 
   const allIssues = useSelector((state) => state.issue.assignedIssues);
-  const recentIssues = (allIssues.slice(0, 3)).filter(issues => (issues.status ==='open'));
+  const recentIssues = (allIssues.slice(0, 3));
 
   const indexOfLastIssue = currentPage * itemsPerPage;
   const indexOfFirstIssue = indexOfLastIssue - itemsPerPage;
@@ -79,7 +84,7 @@ function StaffPage() {
                       {issue.category}
                     </td>
                     <td className="py-3 px-6 text-left whitespace-nowrap">
-                      {(issue?.createdAt)}
+                        <FormatDate createOn={issue?.dateReported} />
                     </td>
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <button
@@ -124,8 +129,7 @@ function StaffPage() {
               <Link key={issue._id} to={`/Home/middleman-issue-page/${issue._id}`}>
                 <div className="bg-white p-4 shadow-md rounded-md">
                   <h2 className="text-sm font-semibold">{issue.title}</h2>
-                  <h2 className="text-sm font-semibold">{issue.title}</h2>
-                  <p className='pt-3 text-gray-400'>{issue?.dateReported}</p>
+                  <p className='pt-3 text-gray-400'><FormatDate createOn={issue?.dateReported} /></p>
                 </div>
               </Link>
             ))}
