@@ -3,6 +3,7 @@ import CodeRequest from '../models/CodeRequestModel.js';
 import Issue from '../models/Issue.js';
 import Notification from '../models/Notification.js';
 import User from '../models/User.js';
+import { createNotification } from '../helpers/Nofication.js';
 
 
 // Create new issue
@@ -42,12 +43,7 @@ const createIssue = async (req, res) => {
     const adminUser = await User.findOne({ role: 'Admin' });
     
     if (adminUser) {
-      const adminNotification = new Notification({
-        notificationType: 'IssueCreated',
-        content: 'New issue created',
-        recipient: adminUser._id,
-      });
-      await adminNotification.save();
+      await createNotification('Issue rising', 'Hey admin! The new issue have been rised', adminUser._id, 'Home/issue-page');
     }
 
     res.status(201).json({ message: 'Issue submitted successfully', issue });
