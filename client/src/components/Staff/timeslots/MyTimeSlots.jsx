@@ -100,7 +100,7 @@ function MyTimeSlots() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/docs/documents');
+        const response = await axios.get(`http://localhost:8080/docs/documents/${issueId}`);
         dispatch(setDocuments(response.data));
       } catch (error) {
         console.error('Error fetching documents:', error);

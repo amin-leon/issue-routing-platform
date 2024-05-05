@@ -8,9 +8,12 @@ const router = express.Router();
 router.post('/upload', upload.single('document'), docsController.uploadDocument);
 
 // DELETE endpoint to delete a document
-router.delete('/delete/:id', docsController.deleteDocument);
+router.delete('/documents/delete/:id', docsController.deleteDocument);
 
 // GET endpoint to get all documents
 router.get('/documents', docsController.getAllDocuments);
+
+router.get('/documents/:issueId', docsController.getDocumentsByIssueId);
+
 
 export default router;
