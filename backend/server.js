@@ -31,7 +31,7 @@ app.use('/auth', authRoutes);
 app.use('/issue', issueRoutes);
 app.use('/feedback', feedbackRoutes);
 app.use('/docs', docsRoutes);
-app.use('/notification', notificationRoutes);
+app.use('/notifications', notificationRoutes);
 app.use("/api/school", staffRoutes);
 app.use("/api/school", positionsRoutes);
 app.use('/api/code', codeRequestRoutes);

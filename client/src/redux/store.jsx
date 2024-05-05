@@ -3,8 +3,8 @@ import authSlice from './auth/authSlice';
 import issueSlice from './issue/issueSlice';
 import feedbackSlice from './feedbacks/feeddbackSlice';
 import codesSlice from './request_codes/codesSlice'; 
-import documentReducer from './docs/docsSlice'; 
-
+import documentReducer from './docs/docsSlice';
+import notificationReducer from './notifications/notificationSlice';
 
 
 const savedAuthState = JSON.parse(sessionStorage.getItem('authState')) || {};
@@ -16,6 +16,7 @@ const store = configureStore({
         feedbacks: feedbackSlice.reducer,
         codes: codesSlice.reducer, 
         documents: documentReducer,
+        notifications: notificationReducer
 
 
     },

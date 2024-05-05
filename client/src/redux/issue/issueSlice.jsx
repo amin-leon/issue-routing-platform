@@ -19,10 +19,6 @@ const initialState = {
   StudentStaffComment:[],
   unassignedIssues: [],
   assignedIssues: [],
-
-  // Notification on issue
-  notifications: [],
-  unReadNots: [],
   
 };
 
@@ -30,17 +26,6 @@ const issueSlice = createSlice({
   name: 'issues',
   initialState,
   reducers: {
-
-    setNots: (state, action) => {
-      state.notifications=action.payload;
-      state.unReadNots = state.notifications.filter((not) => not.isRead === false);
-
-      },
-      removeReadedNots: (state, action)=>{
-        const notificationId= action.payload;
-        state.unReadNots = state.unReadNots.filter((not) => not._id !== notificationId);
-
-      },
 
     //Opened Issues on middleman page
     setIssues: (state, action) => {

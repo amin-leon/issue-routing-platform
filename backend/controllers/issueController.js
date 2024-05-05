@@ -43,7 +43,7 @@ const createIssue = async (req, res) => {
     const adminUser = await User.findOne({ role: 'Admin' });
     
     if (adminUser) {
-      await createNotification('Issue rising', 'Hey admin! The new issue have been rised', adminUser._id, 'Home/issue-page');
+      await createNotification('Issue rising', 'Hey admin! The new issue have been rised', adminUser._id, 'http://localhost:3000/Home/middleman-issue-page');
     }
 
     res.status(201).json({ message: 'Issue submitted successfully', issue });
