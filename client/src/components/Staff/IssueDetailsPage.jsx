@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../redux/issue/issueSlice';
 import AssignIssuePopup from './AssignIssuePopup';
+import FormatDate from '../helpers/FormatDate';
 
 function IssueDetailsPage() {
   const { issueId } = useParams();
@@ -54,12 +55,12 @@ function IssueDetailsPage() {
     <div className="md:grid md:grid-cols-3 gap-4 md:pl-32 md:pr-32 pt-4 md:pt-20">
       <div className="col-span-2">
         <div className="border p-5">
-          <p className="text-2xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
-          <p>{formatDate(issueDetails?.issue?.dateReported)}</p>
+          <p className="text-4xl font-bold pb-3">{issueDetails?.issue?.category} issue</p>
+          <p><FormatDate createOn={issueDetails?.issue?.dateReported}/></p>
         </div>
         <div className="p-4 border">
               <div className=''>
-                 <p className=''>"{issueDetails?.issue?.description}"</p>
+                 <p className='text-xl'>{issueDetails?.issue?.description}</p>
                  <button
                   onClick={() => assignIssueToStaff(issueDetails?.issue?._id, issueDetails?.issue?.reporter)}
                   className="bg-[#1F3365] text-white p-2 rounded hover:bg-blue-700 mt-5"
@@ -70,7 +71,7 @@ function IssueDetailsPage() {
         </div>
       </div>
 
-      <div className="pt-12 md:col-span-1">
+      <div className="md:col-span-1">
         <div className="p-4 border flex gap-3 mb-5">
           <img className='w-20 h-20 rounded-md' src={`http://localhost:8080/${reporter?.profile}`} alt="" />
           <div>
