@@ -8,6 +8,8 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import FormatDate from '../../helpers/FormatDate';
 import { setDocuments } from '../../../redux/docs/docsSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -15,6 +17,7 @@ import { setDocuments } from '../../../redux/docs/docsSlice';
 function MyTimeSlots() {
   const { issueId , reporterId} = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const issueDetails = useSelector((state) => state.issue.issues.filter(issue => issue._id === issueId));
   const StaffStudentComments = useSelector((comments) => comments.issue.StudentStaffComment);
 
@@ -196,7 +199,7 @@ function MyTimeSlots() {
                     <FormatDate createOn={comment.createdAt}/>
                   </span>
                 </p>
-                <p className="text-md text-red-500">{comment.text}</p>
+                <p className="text-md ">{comment.text}</p>
               </div>
             </div>
           ))}

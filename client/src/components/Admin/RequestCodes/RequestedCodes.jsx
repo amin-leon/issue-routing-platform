@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { codesActions } from '../../../redux/request_codes/codesSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 function RequestedCodes() {
   const dispatch = useDispatch(); // Initialize useDispatch
+  const navigate = useNavigate();
 
 
   const dummyCodeRequests = useSelector(state => state.codes.codeRequests.filter(request => request.status === 'Pending'));
@@ -76,6 +78,7 @@ function RequestedCodes() {
         { status: 'Approved' }
       );
       dispatch(codesActions.updateCodeRequest(selectedCode))
+      navigate('/Home/admin/manage');
     } catch (error) {
       console.error('Error updating status:', error);
     }
