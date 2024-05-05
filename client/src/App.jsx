@@ -26,6 +26,7 @@ import EditStaffInfo from './components/Staff/school/EditStaffInfo';
 import Users from './components/Admin/UsersList';
 import StaffPage from './components/Staff/staffPage';
 import RequestedCodes from './components/Admin/RequestCodes/RequestedCodes';
+import Notifications from './components/General/Notifications';
 import { useEffect, useState } from 'react';
 
 const App = () => {
@@ -63,6 +64,7 @@ const App = () => {
                   <Route index element={<Home />} />
                   <Route path="update-issue/:id" element={<UpdateIssue />} />
                   <Route path="settings" element={<AccountSettings />} />
+                  <Route path="my/notifications" element={<Notifications />} />
                   <Route path="staff-chatboard/:issueId" element={<BoardChat />} />
                   <Route path="board-issues" element={<BoardIssuesTOChatOn />} />
                   <Route path="hero" element={<HeroSectionStudent />} />

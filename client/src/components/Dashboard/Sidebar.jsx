@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, Navigate } from 'react-router-dom';
 import { GrUserSettings } from "react-icons/gr";
 import { BsInfoCircle } from "react-icons/bs";
-import { AiOutlineHome } from "react-icons/ai";
+import { IoIosNotificationsOutline } from "react-icons/io";
 import { GiConvergenceTarget } from "react-icons/gi";
 import { MdDashboard } from "react-icons/md";
 import { FaBars, FaPersonMilitaryToPerson } from "react-icons/fa6";
@@ -89,6 +89,12 @@ const Sidebar = ({ isSidebarOpen }) => {
         <Link to="/Home/admin/setting" className="text-gray-500">
               <div className='p-3  text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
                   <GrUserSettings className="text-xl text-black" />Settings
+              </div>
+        </Link>
+
+        <Link to="/Home/my/notifications" className="text-gray-500">
+              <div className='p-3  text-black rounded-md hover:bg-gray-100 hover:text-black flex gap-2 items-center'>
+                  <IoIosNotificationsOutline  className="text-xl text-black" />Notifications
               </div>
         </Link>
 
