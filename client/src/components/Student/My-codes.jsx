@@ -4,10 +4,13 @@ import { useSelector } from 'react-redux';
 
 function Mycodes() {
   const userInfo = useSelector((state) => state.auth.user);
+  const myCodes = useSelector((state) => state.codes.codeRequests.filter(codeRequest => codeRequest.status === 'Approved'));
+
+
   const requester = userInfo._id;
 
   const [allStaffs, setAllStaffs] = useState([]);
-  const [myCodes, setMyCodes] = useState([]);
+  // const [myCodes, setMyCodes] = useState([]);
 
   // staff
   const staff = 'Staff';
@@ -24,20 +27,6 @@ function Mycodes() {
     fetchIssuesData();
   }, []);
 
-  useEffect(() => {
-    const fetchCodeRequests = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/code/single-code-request/${requester}`);
-        setMyCodes(response.data.filter((code) => code.in_use === false));
-      } catch (error) {
-        console.error('Error fetching code requests:', error);
-      }
-    };
-
-    fetchCodeRequests();
-  }, [userInfo._id]);
-
-
 
 return (
   <div className="container mx-auto p-4">
@@ -48,8 +37,8 @@ return (
       myCodes.map((code) => (
         <div key={code._id} className="border border-gray-300 p-4 mb-4">
           <p className="font-semibold">Code: {code._id}</p>
-          <p>Staff: {code.staffInfo.name}</p>
-          <p>Appointment: {code.staffInfo.position}</p>
+          <p>Staff name: {code.staffInfo.name}</p>
+          <p>Position: {code.staffInfo.position}</p>
           <p>Created At: {code.createdAt}</p>
         </div>
       ))

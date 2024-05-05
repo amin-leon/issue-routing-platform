@@ -15,7 +15,7 @@ import { setDocuments } from '../../../redux/docs/docsSlice';
 function MyTimeSlots() {
   const { issueId , reporterId} = useParams();
   const dispatch = useDispatch();
-  const issueDetails = useSelector((state) => state.issue.issues);
+  const issueDetails = useSelector((state) => state.issue.issues.filter(issue => issue._id === issueId));
   const StaffStudentComments = useSelector((comments) => comments.issue.StudentStaffComment);
 
   // State for the comment form
@@ -165,6 +165,8 @@ function MyTimeSlots() {
       setNewStep('');
     }
   };
+
+  console.log("Hellooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", issueDetails)
 
   return (
     <div>

@@ -4,10 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { issueActions } from '../../redux/issue/issueSlice';
 import axios from 'axios';
+import { codesActions } from '../../redux/request_codes/codesSlice';
+
 
 function IssuePageMenuAllIssues() {
   const dispatch = useDispatch();
   const studentIssues = useSelector((state) => state.issue.issues);
+  const userInfo = useSelector((state) => state.auth.user);
+  const requester = userInfo._id;
+
   const [reporterId, setUserId] = useState(null);
   const [filter, setFilter] = useState('all');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
@@ -17,13 +22,25 @@ function IssuePageMenuAllIssues() {
 
   useEffect(() => {
     const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
-
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setUserId(storedUserInfo.user._id);
     } else {
       //
     }
   }, []);
+
+  useEffect(() => {
+    const fetchCodeRequests = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/code/single-code-request/${requester}`);
+        dispatch(codesActions.setCodeRequests(response.data));
+      } catch (error) {
+        console.error('Error fetching code requests:', error);
+      }
+    };
+
+    fetchCodeRequests();
+  }, [userInfo._id]);
 
   useEffect(() => {
     if (reporterId) {

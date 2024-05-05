@@ -1,3 +1,28 @@
+// import { createSlice } from '@reduxjs/toolkit';
+
+// const initialState = {
+//   codeRequests: [],
+// };
+
+// const codeSlice = createSlice({
+//   name: 'codeRequests',
+//   initialState,
+//   reducers: {
+//     setCodeRequests(state, action) {
+//       // Filter codeRequests where in_use is true
+//       state.codeRequests = action.payload.filter(codeRequest => codeRequest.in_use === true);
+//     },
+    // deleteCodeRequest(state, action) {
+    //   state.codeRequests = state.codeRequests.filter(codeRequest => codeRequest.code !== action.payload);
+    // },
+//   },
+// });
+
+// export const codesActions = codeSlice.actions;
+// export default codeSlice;
+
+
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -9,8 +34,8 @@ const codeSlice = createSlice({
   initialState,
   reducers: {
     setCodeRequests(state, action) {
-      state.codeRequests = action.payload;
-    },
+    state.codeRequests = action.payload;
+},
     deleteCodeRequest(state, action) {
       state.codeRequests = state.codeRequests.filter(codeRequest => codeRequest.code !== action.payload);
     },
