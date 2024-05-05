@@ -60,7 +60,7 @@ function AccountSettings() {
 
   return (
     <div className='md:flex md:gap-3 md:ml-10 md:mr-10 md:mt-10 border md:px-32'>
-         <div className="md:max-w-[300px] md:bg-white rounded-lg md:p-12 md:flex md:flex-col  border-r-2">
+         <div className="md:max-w-[300px] md:bg-white rounded-lg md:p-12 md:flex md:flex-col border-r-2">
                 <div className="mb-8">
                     <img className="object-center object-cover rounded-md h-48 w-48 md:h-36 md:w-36" src={`http://localhost:8080/${userInfo?.profile}`} alt="profile" />
                 </div>
@@ -79,7 +79,7 @@ function AccountSettings() {
                 <div className="flex z-10">
                 <div className="pt-8 md:pb-12 md:pl-12 pb-r bg-white md:mx-auto rounded-2xl w-full md:w-100">
                     <div>
-                    <p className='text-2xl pt-5 pb-10 font-bold'>Provide More info ..... </p>
+                    <p className='text-2xl pt-5 pb-10 font-bold'>{userInfo?.position}  info details </p>
                     </div>
                     <form className="grid grid-cols-1 gap-4" onSubmit={handleUpdate}>
                     <div className="md:grid md:grid-cols-2 md:gap-4">
@@ -143,16 +143,27 @@ function AccountSettings() {
                         </div>
                         )}
                         <div>
-                        <label className="text-sm font-medium text-gray-700">  Role</label>
-                        <input
-                            type="text"
-                            className="w-full text-basep-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
-                            placeholder="Comfirm  password @123"
-                            name="reserved"
-                            value={formData.role}
-                            onChange={handleChange}
-                            readonly
-                        />
+                          <label className="text-sm font-medium text-gray-700">  Role</label>
+                          <input
+                              type="text"
+                              className="w-full text-basep-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
+                              placeholder="Comfirm  password @123"
+                              name="reserved"
+                              value={formData.role}
+                              onChange={handleChange}
+                              readonly
+                          />
+                        </div>
+                        <div>
+                          <label className="text-sm font-medium text-gray-700">  Position</label>
+                          <input
+                              type="text"
+                              className="w-full text-basep-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
+                              name="reserved"
+                              value={formData.position}
+                              onChange={handleChange}
+                              readonly
+                          />
                         </div>
                     </div>
                     <div className='flex gap-3'>
