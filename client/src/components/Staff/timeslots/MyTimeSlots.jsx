@@ -169,7 +169,6 @@ function MyTimeSlots() {
     }
   };
 
-  console.log("Hellooooooooooooooooooooooooooooooooooooooooooooooooooooooooo", issueDetails)
 
   return (
     <div>
@@ -199,7 +198,7 @@ function MyTimeSlots() {
                     <FormatDate createOn={comment.createdAt}/>
                   </span>
                 </p>
-                <p className="text-md ">{comment.text}</p>
+                <p className="text-md">{comment.text}</p>
               </div>
             </div>
           ))}
