@@ -43,13 +43,6 @@ function IssueDetailsPage() {
     setSelectedselected(senderId);
   };
 
-  function formatDate(dateString) {
-    const originalDate = new Date(dateString);
-    const day = originalDate.getDate();
-    const time = originalDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    return `${day}, ${time}`;
-  }
 
   return (
     <div className="md:grid md:grid-cols-3 gap-4 md:pl-32 md:pr-32 pt-4 md:pt-20">

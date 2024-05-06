@@ -1,11 +1,12 @@
 import Notification from "../models/Notification.js";
 
-export const createNotification = async (notificationType, content, recipientId, link) => {
+export const createNotification = async (notificationType, content, recipientId, link, relatedIssue) => {
     const notification = new Notification({
       notificationType,
       content,
       recipient: recipientId,
-      link: link
+      link: link,
+      relatedIssue: relatedIssue
     });
     await notification.save();
   };

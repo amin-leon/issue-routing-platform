@@ -118,38 +118,17 @@ const updateAssignedTo = async (req, res) => {
     }
 
     // Send notification to the assigned user
-    const staffNotificationMessage = `You have been assigned to an issue (ID: ${issue._id}) with priority ${priority}.`;
-    const studentNotificationMessage = `Your issue (ID: ${issue._id}) has been assigned to a staff member.`;
 
     // Send notification to staff
-    let staffNotification;
     if (priority === 'Urgent') {
-      // Send an alert notification if priority is 'Urgent'
-      staffNotification = new Notification({
-        notificationType: 'alert',
-        content: "Urgent issue assigned!",
-        recipient: assignedTo,
-        relatedIssue: issue._id
-      });
+      
+      await createNotification('Issue is assigned', ' New Urgent Issue is assigned to you', assignedTo, 'http://localhost:3000/Home/staff-issue-page',issue._id );
     } else {
-      // Send a regular issue assigned notification otherwise
-      staffNotification = new Notification({
-        notificationType: 'IssueAssigned',
-        content: staffNotificationMessage,
-        recipient: assignedTo,
-        relatedIssue: issue._id
-      });
-    }
-    await staffNotification.save();
 
-    // Send notification to the student who reported the issue
-    const studentNotification = new Notification({
-      notificationType: 'IssueAssigned',
-      content: studentNotificationMessage,
-      recipient: issue.reporter,
-      relatedIssue: issue._id
-    });
-    await studentNotification.save();
+      await createNotification('Issue is assigned', ' New Issue is assigned to you', assignedTo, 'http://localhost:3000/Home/staff-issue-page',issue._id );
+
+    }
+    await createNotification('Issue is assigned', ' Your Issue is assigned to staff', senderId, 'http://localhost:3000/Home/issue-page',issue._id );
 
     res.status(200).json(issue);
   } catch (error) {
