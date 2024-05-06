@@ -1,57 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { MdPowerSettingsNew } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../redux/auth/authSlice';
 import axios from 'axios';
 import { notificationActions } from '../../redux/notifications/notificationSlice';
 
-
-
-
 const Topnav = () => {
-  const user = useSelector((user) => user.auth.user);
+  const user = useSelector((state) => state.auth.user);
   const notifications = useSelector((state) => state.notifications.notifications.filter(notification => !notification.isRead));
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
+  const fetchNotifications = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/notifications/${user._id}`);
+      dispatch(notificationActions.setNots(response.data));
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+    setTimeout(fetchNotifications, 500);
+  };
 
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(authActions.logoutUser());
-    e.preventDefault();
   };
-
-  // const fetchNotifications = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:8080/notifications/${user._id}`);
-  //     dispatch(notificationActions.setNots(response.data));
-  //   } catch (error) {
-  //     console.error('Error fetching notifications:', error);
-  //   }
-  // };
-
-  // const startPolling = () => {
-  //   setInterval(fetchNotifications, 500);
-  // };
-
-  // startPolling();
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/notifications/${user._id}`);
-        const userNotifications = response.data;
-        dispatch(notificationActions.setNots(userNotifications));
-      } catch (error) {
-        console.error('Error fetching notifications:', error);
-      }
-    };
-
-    fetchNotifications();
-  }, [dispatch, user._id]);
-
 
   return (
     <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
