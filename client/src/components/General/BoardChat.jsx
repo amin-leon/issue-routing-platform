@@ -8,6 +8,7 @@ import { issueActions } from '../../redux/issue/issueSlice';
 import { useNavigate } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import FormatDate from '../helpers/FormatDate';
 
 
 
@@ -26,7 +27,7 @@ const allusers = useSelector((state)=> state.issue.IssueReporter);
 const singleReport = allusers.filter((user)=> user._id === currentIssue[0]?.reporter);
 
 // Current user
-const [userInfo, setUserId] = useState('')
+const [userInfo, setUserId] = useState('');
 useEffect(() => {
   const storedUserInfo = JSON.parse(sessionStorage.getItem('authState'));
   
@@ -142,8 +143,8 @@ const RemoveIssuefromGroup = async(e)=>{
               alt=""
             />
             <div>
-              <p className="font-bold">{comment?.authorInfo?.fullName}<span className="text-gray-300 text-xs pl-10">{comment.createdAt}</span></p>
-              <p className="text-xs text-gray-500">{comment.text}</p>
+              <p className="font-bold">{comment?.authorInfo?.fullName}<span className="text-gray-300 text-xs pl-10"> <FormatDate createOn={comment.createdAt} /></span></p>
+              <p className="text-xl text-gray-500">{comment.text}</p>
             </div>
           </div>
           ))}

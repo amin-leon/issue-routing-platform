@@ -6,6 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { authActions } from '../../redux/auth/authSlice';
 import axios from 'axios';
 import { notificationActions } from '../../redux/notifications/notificationSlice';
+import { CiCircleAlert } from "react-icons/ci";
+
+
+
+
+
 
 const Topnav = () => {
   const user = useSelector((state) => state.auth.user);
@@ -49,10 +55,20 @@ const Topnav = () => {
                 {notifications.length}
               </span>
             )}
+            {/*  */}
+            <Link to='#'>
+              <CiCircleAlert  className="text-3xl relative text-black"/>
+            </Link>
+            {notifications.length > 0 && (
+              <span className="bg-red-500 text-white rounded-full px-2 ml-3 absolute top-[-6px] left-0">
+                {notifications.length}
+              </span>
+            )}
             <button className="focus:outline-none" onClick={handleLogout}>
               <MdPowerSettingsNew className="text-2xl text-black" />
             </button>
           </div>
+          {/* warning */}
         </div>
       </div>
     </div>
