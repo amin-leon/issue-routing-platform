@@ -1,18 +1,20 @@
 // codeRequestController.js
+import { createNotification } from "../helpers/Nofication.js";
 import CodeRequest from "../models/CodeRequestModel.js";
 import User from "../models/User.js";
+
 
 const createCodeRequest = async (req, res) => {
   try {
     // Extract data from the request
     const { staff, reason, requester, why } = req.body;
 
-      // Check if there is an existing code request with the same staff and requester
-      const existingCodeRequest = await CodeRequest.findOne({ staff, requester });
+    // Check if there is an existing code request with the same staff and requester
+    const existingCodeRequest = await CodeRequest.findOne({ staff, requester });
 
-      if (existingCodeRequest) {
-        return res.status(400).json({ message: 'Channel already exists' });
-      }
+    if (existingCodeRequest) {
+      return res.status(400).json({ message: 'Channel already exists' });
+    }
 
     // Create a new code request
     const newCodeRequest = new CodeRequest({
@@ -25,12 +27,21 @@ const createCodeRequest = async (req, res) => {
     // Save the code request to the database
     await newCodeRequest.save();
 
+    // Send notification to admin-middleman
+    const adminUser = await User.findOne({ role: 'Admin' });
+    if (adminUser) {
+      await createNotification('code requested', 'Student is requesting new channel', adminUser._id, 'http://localhost:3000/Home/admin/manage/requests', );
+    } else {
+      console.log('Admin user not found');
+    }
+
     res.status(201).json({ message: 'Code request created successfully' });
   } catch (error) {
     console.error('Error creating code request:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 };
+
 
 const confirmCodeRequest = async (req, res) => {
     try {
