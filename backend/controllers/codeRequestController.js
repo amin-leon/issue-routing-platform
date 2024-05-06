@@ -44,26 +44,35 @@ const createCodeRequest = async (req, res) => {
 
 
 const confirmCodeRequest = async (req, res) => {
-    try {
-      const { codeRequestId } = req.params;
-  
-      // Update the code request status to "Approved" and set the confirmedBy field
-      const updatedCodeRequest = await CodeRequest.findByIdAndUpdate(
-        codeRequestId,
-        { status: 'Approved' },
-        { new: true }
-      );
-  
-      if (!updatedCodeRequest) {
-        return res.status(404).json({ message: 'Code request not found' });
-      }
-  
-      res.status(200).json({ message: 'Code request confirmed successfully' });
-    } catch (error) {
-      console.error('Error confirming code request:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+  try {
+    const { codeRequestId } = req.params;
+
+    // Update the code request status to "Approved" and set the confirmedBy field
+    const updatedCodeRequest = await CodeRequest.findByIdAndUpdate(
+      codeRequestId,
+      { status: 'Approved' },
+      { new: true }
+    );
+
+    if (!updatedCodeRequest) {
+      return res.status(404).json({ message: 'Code request not found' });
     }
-  };
+
+    // Send notification to the user (requester)
+    const requesterUser = await User.findById(updatedCodeRequest.requester);
+    if (requesterUser) {
+      await createNotification('code confirmed', 'The new channel for you has been initiated', requesterUser._id, 'http://localhost:3000/Home/user/manage/requests');
+    } else {
+      console.log('Requester user not found');
+    }
+
+    res.status(200).json({ message: 'Code request confirmed successfully' });
+  } catch (error) {
+    console.error('Error confirming code request:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 
   const deleteCodeRequest = async (req, res) => {
     try {

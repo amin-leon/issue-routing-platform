@@ -12,8 +12,6 @@ function SharedDocs() {
   const { issueId } = useParams();
 
 
-
-
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -60,8 +58,6 @@ function SharedDocs() {
     }
   };
 
-
-  console.log("Hellloooooooooooooooooooooooooooooooooo", documents)
 
   return (
     <div className="container mx-auto mt-8 px-4">
