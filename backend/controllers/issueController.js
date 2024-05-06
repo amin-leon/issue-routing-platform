@@ -1,7 +1,6 @@
 // controllers/issueController.js
 import CodeRequest from '../models/CodeRequestModel.js';
 import Issue from '../models/Issue.js';
-import Notification from '../models/Notification.js';
 import User from '../models/User.js';
 import { createNotification } from '../helpers/Nofication.js';
 
@@ -168,15 +167,15 @@ const EscalateIssue = async (req, res) => {
       if (!issue) {
         return res.status(404).json({ message: 'Issue not found' });
       }
-  
+       
       res.status(200).json(issue);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   };
 
-    // Send issue in cht Room
-    const ShareIssueToChatRoom = async (req, res) => {
+  // Send issue in cht Room
+  const ShareIssueToChatRoom = async (req, res) => {
       const { issueId } = req.params;
     
       try {
@@ -187,12 +186,27 @@ const EscalateIssue = async (req, res) => {
         }
     
         res.status(200).json(issue);
+        // Retrieve all staff members
+        const staffMembers = await User.find({ role: 'Staff' });
+
+        // Send notification to each staff member
+        staffMembers.forEach(async (staffMember) => {
+          await createNotification(
+            'Issue posted',
+            'New Issue is posted in chatroom',
+            staffMember._id,
+            'http://localhost:3000/Home/staff-issue-page',
+            issue._id
+          );
+        });
+
       } catch (error) {
         res.status(400).json({ message: error.message });
       }
     };
-  // Retrieve issue to be display in chatroom
-  const getAllIssuesInChatRoom = async (req, res) => {
+
+// Retrieve issue to be display in chatroom
+const getAllIssuesInChatRoom = async (req, res) => {
     try {
       const Issues = await Issue.find({inChatRoom: true});
       res.status(200).json(Issues);
@@ -473,6 +487,8 @@ const closeIssue = async (req, res) => {
 
     res.json(updatedIssue);
     // Delete code request related to the issueId
+    await createNotification('Issue closed', 'Your issue is closed', reporterId, 'http://localhost:3000/Home/issue-page', issueId)
+
     await CodeRequest.findOneAndDelete(reporterId);
   } catch (error) {
     console.log('Error closing issue:', error);
