@@ -9,6 +9,7 @@ const uploadDocument = async (req, res) => {
         const newDoc = new Docs({ issueId, posterUser, document });
         await newDoc.save();
 
+
         res.status(201).json({ message: 'Document uploaded successfully', newDoc });
     } catch (error) {
         res.status(400).json({ message: error.message });

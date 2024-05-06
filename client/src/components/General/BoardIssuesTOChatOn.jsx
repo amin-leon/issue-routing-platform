@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { issueActions } from "../../redux/issue/issueSlice";
 import { useDispatch } from "react-redux";
 import {GoCommentDiscussion } from 'react-icons/go'
+import { BsPeople } from "react-icons/bs";
+import FormatDate from "../helpers/FormatDate";
+
 
 
 function BoardIssuesTOChatOn() {
@@ -41,13 +44,15 @@ function BoardIssuesTOChatOn() {
             <div className="col-span-1 flex flex-col bg-white rounded-md mt-5">
                 <div className="flex justify-between p-7 gap-5">
                     <div className="flex gap-2">
-                        <div className="rounded-full bg-blue-400 text-white w-10 h-10 text-xl flex items-center justify-center">G</div>
+                        <div className="rounded-full bg-blue-400 text-white w-10 h-10 text-xl flex items-center justify-center">
+                           <BsPeople />
+                        </div>
                         <div className="">{chatroomIssue.title}</div>
                     </div>
                     <div className="text-red-500 rounded-sm">{chatroomIssue.inDiscusion}</div>
                 </div>
                 <div className="flex flex-col pl-7">
-                <p className="text-gray-400 text-xs">{chatroomIssue.updatedAt}</p>
+                <p className="text-gray-400 text-xs"><FormatDate createOn={chatroomIssue.updatedAt} status='Posted On: '/></p>
                     <div className="flex items-center gap-1">
                        <p>{chatroomIssue.groupComments.length}</p>
                        <GoCommentDiscussion className="text-blue-500" />
