@@ -1,15 +1,11 @@
 import Alert from "../models/Alerts.js";
 
-export const createWarning = async (warningType, content, recipientId, link) => {
+export const createWarning = async (warningType, content, recipientId, pendingIssuesCount) => {
     const warning = new Alert({
-      warningType,
+      alertType:warningType,
       content,
       recipient: recipientId,
-      link: link,
+      count: pendingIssuesCount,
     });
     await warning.save();
   };
-  
-  // Usage example
-//   await createNotification('IssueCreated', 'New issue created', adminUser._id);
-  

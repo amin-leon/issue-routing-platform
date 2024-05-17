@@ -11,7 +11,7 @@ import positionsRoutes from './routes/positionsRoutes.js'
 import codeRequestRoutes from './routes/codeRequestRoutes.js'
 import feedbackRoutes from './routes/feedbackRoutes.js'
 import docsRoutes from './routes/SharedDocsRoutes.js'
-import { schedulePendingIssueAlerts } from './auto/Schedule.js';
+import { schedulePendingIssueReminder } from './auto/Schedule.js';
 
 
 
@@ -37,7 +37,7 @@ app.use("/api/school", staffRoutes);
 app.use("/api/school", positionsRoutes);
 app.use('/api/code', codeRequestRoutes);
 
-schedulePendingIssueAlerts()
+schedulePendingIssueReminder()
 
 
 

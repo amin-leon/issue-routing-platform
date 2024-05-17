@@ -7,7 +7,7 @@ const alertSchema = new mongoose.Schema({
   content: { type: String, required: true },
   recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   dateSent: { type: Date, default: Date.now },
-  link: {type: String},
+  count: {type: Number},
   isRead: { type: Boolean, default: false },
 });
 
