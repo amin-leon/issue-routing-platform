@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import issueRoutes from './routes/issueRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
+import alertRoutes from './routes/alertSRoutes.js'
 import cors from 'cors'
 import staffRoutes from './routes/staffRoutes.js'
 import positionsRoutes from './routes/positionsRoutes.js'
@@ -36,6 +37,7 @@ app.use('/notifications', notificationRoutes);
 app.use("/api/school", staffRoutes);
 app.use("/api/school", positionsRoutes);
 app.use('/api/code', codeRequestRoutes);
+app.use('/alerts',alertRoutes);
 
 schedulePendingIssueReminder()
 

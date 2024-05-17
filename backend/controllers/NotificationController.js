@@ -1,4 +1,6 @@
 import Notification from '../models/Notification.js';
+import Alert from '../models/Alerts.js';
+
 
 const getNotificationsByUser = async (req, res) => {
   try {
@@ -28,7 +30,17 @@ const updateNotificationIsRead = async (req, res) => {
   }
 };
 
+const fetchAllAlerts = async (req, res) => {
+  try {
+    const alerts = await Alert.find();
+    res.status(200).json(alerts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export default {
   getNotificationsByUser,
-  updateNotificationIsRead
+  updateNotificationIsRead,
+  fetchAllAlerts
 };

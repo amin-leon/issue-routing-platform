@@ -7,6 +7,7 @@ import { authActions } from '../../redux/auth/authSlice';
 import axios from 'axios';
 import { notificationActions } from '../../redux/notifications/notificationSlice';
 import { CiCircleAlert } from "react-icons/ci";
+import { alertsActions } from '../../redux/alerts/alertsSlice';
 
 
 
@@ -16,6 +17,8 @@ import { CiCircleAlert } from "react-icons/ci";
 const Topnav = () => {
   const user = useSelector((state) => state.auth.user);
   const notifications = useSelector((state) => state.notifications.notifications.filter(notification => !notification.isRead));
+  const alerts = useSelector((state) => state.alerts.alerts.filter(alert => !alert.isRead));
+
   const dispatch = useDispatch();
 
   const fetchNotifications = async () => {
@@ -30,6 +33,22 @@ const Topnav = () => {
 
   useEffect(() => {
     fetchNotifications();
+  }, []);
+
+
+  // alerts
+  const fetchAlerts = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/alerts/${user._id}`);
+      dispatch(alertsActions.setAlerts(response.data));
+    } catch (error) {
+      console.error('Error fetching alerts:', error);
+    }
+    setTimeout(fetchAlerts, 500);
+  };
+
+  useEffect(() => {
+    fetchAlerts();
   }, []);
 
   const handleLogout = (e) => {
@@ -55,13 +74,12 @@ const Topnav = () => {
                 {notifications.length}
               </span>
             )}
-            {/*  */}
             <Link to='#'>
               <CiCircleAlert  className="text-3xl relative text-black"/>
             </Link>
-            {notifications.length > 0 && (
-              <span className="bg-red-500 text-white rounded-full px-2 ml-3 absolute top-[-6px] left-0">
-                {notifications.length}
+            {alerts.length > 0 && (
+              <span className="bg-red-500 text-white rounded-full px-2 ml-6 absolute top-[-6px] left-8">
+                {alerts[0]?.count}
               </span>
             )}
             <button className="focus:outline-none" onClick={handleLogout}>
