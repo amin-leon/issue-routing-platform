@@ -30,6 +30,9 @@ const notifyAssignedStaff = () => {
 
       // Step 3: Create a warning for each staff user with the number of issues assigned to them
       for (const [userId, issueCount] of Object.entries(userIssueCount)) {
+
+        // Delete previous warnings
+        await Alert.deleteMany({ recipient: userId });
         await createWarning(
           'Reminder', 
           `You have ${issueCount} open issue(s) to work on.`,

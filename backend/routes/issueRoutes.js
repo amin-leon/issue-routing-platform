@@ -11,6 +11,7 @@ router.post('/new-issue', upload.single('attachment'), issueController.createIss
 router.post('/add-attachment/:issueId', upload.single('attachment'), issueController.addAttachment);
 router.delete('/attachments/:issueId/:attachmentId', issueController.deleteAttachment);
 router.put('/assign/:issueId', issueController.updateAssignedTo);
+router.put('/status/:issueId', issueController.updateIssueStatus);
 router.put('/escalate/:issueId', issueController.EscalateIssue);
 router.put('/share/:issueId', issueController.ShareIssueToChatRoom);
 router.put('/remove/:issueId', issueController.RemoveIssueToChatRoom);

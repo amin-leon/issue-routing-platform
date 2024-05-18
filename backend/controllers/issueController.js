@@ -497,11 +497,30 @@ const closeIssue = async (req, res) => {
 };
 
 
+// Update issue status
+const updateIssueStatus = async (req, res) => {
+  const { issueId } = req.params;
+
+  try {
+    // Update only the status field
+    const issue = await Issue.findByIdAndUpdate(issueId, { status: 'progress' }, { new: true });
+
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    res.status(200).json(issue);
+  } catch (error) {
+    console.error('Error updating issue status:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
   
 
 export default { 
     createIssue, 
     updateAssignedTo,
+    updateIssueStatus,
      updateIssue,
      getOpenIssues,
       rejectIssue , 

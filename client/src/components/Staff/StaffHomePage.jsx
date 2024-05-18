@@ -25,8 +25,8 @@ const StaffHomePage = () => {
   const dispatch = useDispatch();
   const myIssuesStaff = useSelector((state) => state.issue.assignedToMe);
 
-  const prog = myIssuesStaff.filter((issue) => issue.status === 'assigned');
-  const newIssues = myIssuesStaff.filter((issue) => issue.status === 'new');
+  const prog = myIssuesStaff.filter((issue) => issue.status === 'progress');
+  const newIssues = myIssuesStaff.filter((issue) => issue.status === 'assigned');
   const closedIssues = myIssuesStaff.filter((issue) => issue.status === 'closed');
   const [feedbackData, setFeedbackData] = useState([]);
 
@@ -51,17 +51,17 @@ const StaffHomePage = () => {
 
   const filteredProgressIssues = progressIssues.filter((issue) => {
     const issueDate = new Date(issue.createdAt);
-    return issueDate.getMonth() === currentMonth && issue.status !== 'new';
+    return issueDate.getMonth() === currentMonth && issue.status !== 'assigned';
   });
 
   const filteredClosedIssues = closedIssues.filter((issue) => {
     const issueDate = new Date(issue.createdAt);
-    return issueDate.getMonth() === currentMonth && issue.status !== 'new';
+    return issueDate.getMonth() === currentMonth && issue.status !== 'assigned';
   });
 
   const filteredNewIssues = newIssues.filter((issue) => {
     const issueDate = new Date(issue.createdAt);
-    return issueDate.getMonth() === currentMonth && issue.status === 'new';
+    return issueDate.getMonth() === currentMonth && issue.status === 'assigned';
   });
 
   //Three lengths

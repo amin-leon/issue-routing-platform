@@ -20,6 +20,22 @@ function AllIssues() {
     setSelectedIssueId(issueId);
   };
 
+  const handleStatusUpdate = async (issueId) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/issue/status/${issueId}`, { status: 'progress' });
+      if (response.status === 200) {
+        alert('Issue status updated to progress.');
+        // Optionally, you can refresh the issues list here or update the state to reflect the changes.
+      }
+    } catch (error) {
+      console.error('Error updating issue status:', error);
+    }
+  };
+
+  const handleRowClick = (issueId) => {
+    setSelectedIssueId(issueId);
+    handleStatusUpdate(issueId);
+  }
   const handleClosePopUp = () => {
     setSelectedIssueId(null);
   };
@@ -151,6 +167,8 @@ function AllIssues() {
                 <tr
                   key={issue._id}
                   className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}
+                  onClick={() => handleRowClick(issue._id)}
+                  style={{ cursor: 'pointer' }}
                 >
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <Link to={`/Home/manage-issue/${issue._id}/${issue.reporter}`} key={Date.now()}>

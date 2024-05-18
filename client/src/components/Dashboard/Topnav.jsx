@@ -34,7 +34,7 @@ const Topnav = () => {
 
       dispatch(alertsActions.setAlerts(alerts));
       if (alerts[0]?.count > 0) {
-        toast.error('Hey Middle man! You have new issues pending');
+        toast.error('Hey! You got new issues');
 
       }
 
@@ -62,6 +62,8 @@ const Topnav = () => {
     e.preventDefault();
     dispatch(authActions.logoutUser());
   };
+
+  console.log("Hellloooooooooooooooooooooooooooooooooooooooooooooooooo", alerts);
 
 
   return (
