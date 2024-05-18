@@ -1,3 +1,5 @@
+import daisyui from "daisyui";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -19,7 +21,22 @@ module.exports = {
 
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
-    }
+    },
+    extend: {
+      colors: {
+        // Define your custom colors here
+        primary: '#1da1f2',
+        secondary: '#14171a',
+        accent: '#657786',
+        // More custom colors...
+      },
+      // Other customizations...
+    },
   },
-  plugins: [],
+  plugins: [
+    daisyui,
+  ],
+  daisyui: {
+    themes: false,
+  },
 }

@@ -3,16 +3,13 @@ import { IoMdNotificationsOutline } from 'react-icons/io';
 import { MdPowerSettingsNew } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../redux/auth/authSlice';
 import axios from 'axios';
 import { notificationActions } from '../../redux/notifications/notificationSlice';
-import { CiCircleAlert } from "react-icons/ci";
+import { CiCircleAlert } from 'react-icons/ci';
 import { alertsActions } from '../../redux/alerts/alertsSlice';
-
-
-
-
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { authActions } from '../../redux/auth/authSlice';
 
 const Topnav = () => {
   const user = useSelector((state) => state.auth.user);
@@ -28,33 +25,44 @@ const Topnav = () => {
     } catch (error) {
       console.error('Error fetching notifications:', error);
     }
-    setTimeout(fetchNotifications, 500);
   };
 
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
-
-
-  // alerts
   const fetchAlerts = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/alerts/${user._id}`);
-      dispatch(alertsActions.setAlerts(response.data));
+      const alerts = response.data;
+
+      dispatch(alertsActions.setAlerts(alerts));
+      if (alerts[0]?.count > 0) {
+        toast.error('Hey Middle man! You have new issues pending');
+
+      }
+
     } catch (error) {
       console.error('Error fetching alerts:', error);
     }
-    setTimeout(fetchAlerts, 500);
   };
 
   useEffect(() => {
-    fetchAlerts();
-  }, []);
+    if (user) {
+      fetchNotifications();
+      fetchAlerts();
+      
+      const notificationsInterval = setInterval(fetchNotifications, 20000);
+      const alertsInterval = setInterval(fetchAlerts, 20000);
+      
+      return () => {
+        clearInterval(notificationsInterval);
+        clearInterval(alertsInterval);
+      };
+    }
+  }, [user, dispatch]);
 
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(authActions.logoutUser());
   };
+
 
   return (
     <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
@@ -63,7 +71,20 @@ const Topnav = () => {
           <p>NPC</p>
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center relative">
+      <ToastContainer
+      className='absolute bottom-0 right-0'
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
         <div className="relative group">
           <div className="mr-3 flex items-center gap-3">
             <Link to='my/notifications'>
@@ -75,7 +96,7 @@ const Topnav = () => {
               </span>
             )}
             <Link to='#'>
-              <CiCircleAlert  className="text-3xl relative text-black"/>
+              <CiCircleAlert className="text-3xl relative text-black"/>
             </Link>
             {alerts.length > 0 && (
               <span className="bg-red-500 text-white rounded-full px-2 ml-6 absolute top-[-6px] left-8">
@@ -86,7 +107,6 @@ const Topnav = () => {
               <MdPowerSettingsNew className="text-2xl text-black" />
             </button>
           </div>
-          {/* warning */}
         </div>
       </div>
     </div>
