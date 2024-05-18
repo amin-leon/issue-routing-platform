@@ -13,6 +13,7 @@ import codeRequestRoutes from './routes/codeRequestRoutes.js'
 import feedbackRoutes from './routes/feedbackRoutes.js'
 import docsRoutes from './routes/SharedDocsRoutes.js'
 import { schedulePendingIssueReminder } from './auto/Schedule.js';
+import { notifyAssignedStaff } from './auto/StaffSchedule.js';
 
 
 
@@ -40,6 +41,7 @@ app.use('/api/code', codeRequestRoutes);
 app.use('/alerts',alertRoutes);
 
 schedulePendingIssueReminder()
+notifyAssignedStaff()
 
 
 

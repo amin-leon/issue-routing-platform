@@ -2,33 +2,46 @@ import cron from 'node-cron';
 import { EventEmitter } from 'events';
 import Issue from '../models/Issue.js';
 import User from '../models/User.js';
-import Alert from '../models/Alerts.js';
 import { createWarning } from '../helpers/Warnings.js';
 
 const eventEmitter = new EventEmitter();
 
-const schedulePendingIssueReminder = () => {
+const notifyAssignedStaff = () => {
   cron.schedule('* * * * *', async () => {
     try {
-      const adminUser = await User.findOne({ role: 'Admin' });
-
-      if (!adminUser) {
-        console.error('Admin user not found.');
+      // Step 1: Get all staff users
+      const staffUsers = await User.find({ role: 'Staff' });
+      if (!staffUsers.length) {
+        console.error('No staff users found.');
         return;
       }
 
-      const adminId = adminUser._id;
+      // Get all staff user IDs
+      const staffUserIds = staffUsers.map(user => user._id);
 
-      // Delete previous warnings
-      await Alert.deleteMany({ recipient: adminId });
+      // Step 2: Find issues assigned to these staff users
+      const issues = await Issue.find({ assignedTo: { $in: staffUserIds }, status: 'assigned' });
 
-      const pendingIssuesCount = await Issue.countDocuments({ status: 'pending' });
+      // Create a mapping of user IDs to the number of issues assigned to them
+      const userIssueCount = {};
+      issues.forEach(issue => {
+        userIssueCount[issue.assignedTo] = (userIssueCount[issue.assignedTo] || 0) + 1;
+      });
 
-      await createWarning('Reminder', `You have open issues to work on.`, adminId, pendingIssuesCount);
+      // Step 3: Create a warning for each staff user with the number of issues assigned to them
+      for (const [userId, issueCount] of Object.entries(userIssueCount)) {
+        await createWarning(
+          'Reminder', 
+          `You have ${issueCount} open issue(s) to work on.`,
+          userId,
+          issueCount
+        );
+      }
+
     } catch (error) {
-      console.error('Error scheduling pending issue reminder:', error);
+      console.error('Error scheduling pending issue reminder:', error); 
     }
   });
 };
 
-export { eventEmitter, schedulePendingIssueReminder };
+export { eventEmitter, notifyAssignedStaff };
