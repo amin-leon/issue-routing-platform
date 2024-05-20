@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlineIssuesClose } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -23,14 +23,15 @@ function ManageSystem() {
 
   const fetchData = async () => {
     try {
-      const codesResponse = await axios.get('http://localhost:8080/api/code/all-code-requests');
-      dispatch(codesActions.setCodeRequests(codesResponse.data));
+      const [codesResponse, usersResponse, issuesResponse] = await Promise.all([
+        axios.get('http://localhost:8080/api/code/all-code-requests'),
+        axios.get('http://localhost:8080/auth/users'),
+        axios.get('http://localhost:8080/issue/all-issues')
+      ]);
 
-      const usersResponse = await axios.get('http://localhost:8080/auth/users');
+      dispatch(codesActions.setCodeRequests(codesResponse.data));
       dispatch(authActions.setAllUsers(usersResponse.data));
       dispatch(authActions.setUsers(usersResponse.data));
-
-      const issuesResponse = await axios.get('http://localhost:8080/issue/all-issues');
       dispatch(issueActions.setIssues(issuesResponse.data));
     } catch (error) {
       console.error('Error fetching data:', error);

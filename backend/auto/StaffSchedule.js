@@ -3,6 +3,7 @@ import { EventEmitter } from 'events';
 import Issue from '../models/Issue.js';
 import User from '../models/User.js';
 import { createWarning } from '../helpers/Warnings.js';
+import Alert from '../models/Alerts.js';
 
 const eventEmitter = new EventEmitter();
 
@@ -42,7 +43,7 @@ const notifyAssignedStaff = () => {
       }
 
     } catch (error) {
-      console.error('Error scheduling pending issue reminder:', error); 
+      console.error('Error scheduling pending issue reminder:', error)
     }
   });
 };
