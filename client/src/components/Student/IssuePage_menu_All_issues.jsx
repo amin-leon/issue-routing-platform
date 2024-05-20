@@ -117,7 +117,8 @@ function IssuePageMenuAllIssues() {
           onChange={(e) => setFilter(e.target.value)}
         >
           <option value="all">All</option>
-          <option value="assigned">In Progress</option>
+          <option value="assigned">New</option>
+          <option value="proress">In Progress</option>
           <option value="closed">Closed</option>
         </select>
         <select

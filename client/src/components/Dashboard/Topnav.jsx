@@ -68,7 +68,7 @@ const Topnav = () => {
     <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">
       <div className="flex items-center">
         <div className="flex items-center text-black flex-grow justify-center">
-          <p>NPC</p>
+          <p></p>
         </div>
       </div>
       <div className="flex items-center relative">

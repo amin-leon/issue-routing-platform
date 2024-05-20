@@ -212,7 +212,7 @@ function MyTimeSlots() {
               </form>
               {closerInfo?.role === 'Staff' && (
                 <div className='flex gap-3 items-center'>
-                   {!issueDetails[0]?.status && (
+                   {issueDetails[0]?.status ==='progress' && (
                       <button className='bg-[#1F3365] text-white p-2 rounded-sm focus:border-none' onClick={openForm} >Close issue</button>
                    )}
                 </div>
