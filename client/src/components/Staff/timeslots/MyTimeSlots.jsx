@@ -185,15 +185,17 @@ function MyTimeSlots() {
             <div className='mt-3'>
               <form onSubmit={handleCommentSubmit}>
                 <div>
-                  <CKEditor
-                    editor={ClassicEditor}
-                    data={commentText}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      setComment(data);
-                    }}
-                    style={{ width: '100%', height: '400px' }} 
-                  />
+                <CKEditor
+                  editor={ClassicEditor}
+                  data={commentText} // Ensure you are using commentText here
+                  onChange={(event, editor) => {
+                    const data = editor.getData();
+                    const cleanedData = data.replace(/<[^>]+>/g, '');
+                    // Set the cleaned data to the state
+                    setComment(cleanedData);
+                  }}
+                  style={{ width: '100%', height: '400px' }} 
+                />
                 </div>
 
                 <div>
