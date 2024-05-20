@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { issueActions } from '../../../redux/issue/issueSlice';
@@ -8,29 +8,23 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import FormatDate from '../../helpers/FormatDate';
 import { setDocuments } from '../../../redux/docs/docsSlice';
-import { useNavigate } from 'react-router-dom';
-
-
-
-
 
 function MyTimeSlots() {
-  const { issueId , reporterId} = useParams();
+  const { issueId, reporterId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const issueDetails = useSelector((state) => state.issue.issues.filter(issue => issue._id === issueId));
-  const StaffStudentComments = useSelector((comments) => comments.issue.StudentStaffComment);
+  const StaffStudentComments = useSelector((state) => state.issue.StudentStaffComment);
 
   // State for the comment form
   const [reporter, setReporter] = useState([]);
   const [commentText, setComment] = useState('');
   const [authorId, setUserId] = useState('');
   const [closerInfo, setCloserInfo] = useState('');
-  // const [file, setFile] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [newStep, setNewStep] = useState('');
   const [steps, setSteps] = useState([]);
-  const [feedbackText, setFeedbackText]= useState('')
+  const [feedbackText, setFeedbackText] = useState('');
 
   const [feedback, setFeedback] = useState({
     text: feedbackText,
@@ -39,33 +33,62 @@ function MyTimeSlots() {
     attachment: null
   });
 
-
   useEffect(() => {
     setFeedback(prevFeedback => ({
       ...prevFeedback,
       text: feedbackText,
       author: authorId,
       steps: steps,
-      // attachment: file
     }));
   }, [feedbackText, authorId, steps]);
 
-  
   useEffect(() => {
-    const fetchIssueDetails = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
-        const issueData = response.data;
-        dispatch(issueActions.getIssueDetails(issueData));
-        // reporter name
-        const reporterInfo = await axios.get(`http://localhost:8080/auth/${issueData.issue.reporter}`);
-        setReporter(reporterInfo.data);
+        // Fetch issue details
+        const issueResponse = await axios.get(`http://localhost:8080/issue/view/${issueId}`);
+        dispatch(issueActions.getIssueDetails(issueResponse.data));
+
+        // Fetch reporter info
+        const reporterResponse = await axios.get(`http://localhost:8080/auth/${issueResponse.data.issue.reporter}`);
+        setReporter(reporterResponse.data);
+
+        // Fetch comments
+        const commentsResponse = await axios.get(`http://localhost:8080/issue/staff-student-chat/${issueId}/comments`);
+        const commentData = commentsResponse.data;
+        await axios.put(`http://localhost:8080/issue/mark-as-read/${issueId}`);
+
+        // Fetch user information for each comment
+        const commentsWithUserInfo = await Promise.all(
+          commentData.map(async (comment) => {
+            const userInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
+            const userInfo = userInfoResponse.data;
+
+            return {
+              ...comment,
+              userInfo,
+            };
+          })
+        );
+
+        dispatch(issueActions.setStaffStudentComment(commentsWithUserInfo));
+
+        // Fetch documents
+        const documentsResponse = await axios.get(`http://localhost:8080/docs/documents/${issueId}`);
+        dispatch(setDocuments(documentsResponse.data));
       } catch (error) {
-        console.log('Error fetching issue details:', error);
+        console.error('Error fetching data:', error);
       }
     };
 
-    fetchIssueDetails();
+    // Initial fetch
+    fetchData();
+
+    // Set up an interval to fetch data every second
+    const interval = setInterval(fetchData, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
   }, [dispatch, issueId]);
 
   useEffect(() => {
@@ -100,60 +123,17 @@ function MyTimeSlots() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/docs/documents/${issueId}`);
-        dispatch(setDocuments(response.data));
-      } catch (error) {
-        console.error('Error fetching documents:', error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/issue/staff-student-chat/${issueId}/comments`);
-        const commentData = response.data;
-        await axios.put(`http://localhost:8080/issue/mark-as-read/${issueId}`);
-
-        // Fetch user information for each comment
-        const commentsWithUserInfo = await Promise.all(
-          commentData.map(async (comment) => {
-            const userInfoResponse = await axios.get(`http://localhost:8080/auth/${comment.author}`);
-            const userInfo = userInfoResponse.data;
-
-            return {
-              ...comment,
-              userInfo,
-            };
-          })
-        );
-
-        dispatch(issueActions.setStaffStudentComment(commentsWithUserInfo));
-      } catch (error) {
-        console.log('Error fetching comments:', error);
-      }
-    };
-
-    fetchComments();
-  }, [dispatch, issueId]);
-
-
   const handleCloseIssue = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.put(`http://localhost:8080/issue/close/${issueId}/${reporterId}`, feedback);
       dispatch(issueActions.setIssueToClose(response.data));
-      window.location.href = '/Home/staff-issue-page';
+      navigate('/Home/staff-issue-page');
     } catch (error) {
       console.log('Error closing issue:', error);
     }
   };
-  
+
   const openForm = () => {
     setIsFormOpen(true);
   };
@@ -168,7 +148,6 @@ function MyTimeSlots() {
       setNewStep('');
     }
   };
-
 
   return (
     <div>
