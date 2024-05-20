@@ -6,18 +6,18 @@ import { issueActions } from '../../redux/issue/issueSlice';
 import axios from 'axios';
 import { codesActions } from '../../redux/request_codes/codesSlice';
 
-
 function IssuePageMenuAllIssues() {
   const dispatch = useDispatch();
   const studentIssues = useSelector((state) => state.issue.issues);
   const userInfo = useSelector((state) => state.auth.user);
-  const requester = userInfo._id;
+  const requester = userInfo?._id;
 
   const [reporterId, setUserId] = useState(null);
   const [filter, setFilter] = useState('all');
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth().toString());
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear().toString());
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true); // Loading state
   const issuesPerPage = 5;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function IssuePageMenuAllIssues() {
     if (storedUserInfo && storedUserInfo.user && storedUserInfo.user._id) {
       setUserId(storedUserInfo.user._id);
     } else {
-      //
+      setLoading(false);
     }
   }, []);
 
@@ -39,18 +39,23 @@ function IssuePageMenuAllIssues() {
       }
     };
 
-    fetchCodeRequests();
-  }, [userInfo._id]);
+    if (requester) {
+      fetchCodeRequests();
+    }
+  }, [requester, dispatch]);
 
   useEffect(() => {
     if (reporterId) {
       const fetchStudentIssues = async () => {
+        setLoading(true); // Set loading to true when starting to fetch data
         try {
           const response = await axios.get(`http://localhost:8080/issue/reporter/${reporterId}`);
           const studentIssues = response.data;
           dispatch(issueActions.getStudentIssue(studentIssues));
         } catch (error) {
           console.log(error);
+        } finally {
+          setLoading(false); // Set loading to false after data is fetched
         }
       };
 
@@ -149,11 +154,14 @@ function IssuePageMenuAllIssues() {
           <option value="2024">2024</option>
           <option value="2025">2025</option>
           <option value="2026">2026</option>
-          {/* Add more years as needed */}
         </select>
       </div>
 
-      {currentIssues && currentIssues.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      ) : currentIssues.length > 0 ? (
         <>
           <table className="min-w-full table-auto">
             <thead>
