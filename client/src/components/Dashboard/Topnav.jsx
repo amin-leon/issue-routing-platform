@@ -63,8 +63,6 @@ const Topnav = () => {
     dispatch(authActions.logoutUser());
   };
 
-  console.log("Hellloooooooooooooooooooooooooooooooooooooooooooooooooo", alerts);
-
 
   return (
     <div className="bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md">

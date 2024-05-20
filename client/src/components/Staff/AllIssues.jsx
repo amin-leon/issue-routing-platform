@@ -22,11 +22,7 @@ function AllIssues() {
 
   const handleStatusUpdate = async (issueId) => {
     try {
-      const response = await axios.put(`http://localhost:8080/issue/status/${issueId}`, { status: 'progress' });
-      if (response.status === 200) {
-        alert('Issue status updated to progress.');
-        // Optionally, you can refresh the issues list here or update the state to reflect the changes.
-      }
+       await axios.put(`http://localhost:8080/issue/status/${issueId}`, { status: 'progress' });
     } catch (error) {
       console.error('Error updating issue status:', error);
     }
