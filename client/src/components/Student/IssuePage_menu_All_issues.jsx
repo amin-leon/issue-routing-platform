@@ -102,7 +102,7 @@ function IssuePageMenuAllIssues() {
   };
 
   return (
-    <div>
+    <div className='h-screen'>
       <div className="mb-4 flex items-center space-x-4">
         <select
           id="filterOption"

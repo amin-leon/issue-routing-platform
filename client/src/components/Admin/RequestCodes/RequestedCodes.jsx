@@ -69,7 +69,6 @@ function RequestedCodes() {
 
     setIsConfirmModalOpen(false);
     setSelectedCode(null);
-    setReason('');
 
     try {
       // Make API call to update status to "Approved"
@@ -172,22 +171,15 @@ function RequestedCodes() {
       {/* Confirm Modal */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none bg-black bg-opacity-50">
-          <div className="relative w-[1000px] bg-white rounded-lg shadow-lg">
+          <div className="relative w-[700px] bg-white rounded-lg shadow-lg">
             <div className="flex flex-col p-6 space-y-4">
               <p className="text-lg font-bold">Confirm Code</p>
-              <p>Yes, Leon</p>
+              <p>Reason for requesting private code:</p>
               <p>{why}</p>
-              <p>{selectedCode}</p>
-              <textarea
-                className="w-full h-48 border border-gray-300 rounded-lg resize-none focus:outline-none focus:border-blue-400"
-                placeholder="Enter reason for confirmation..."
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-              ></textarea>
               <div className="flex justify-end space-x-2">
                 <button
                   onClick={() => setIsConfirmModalOpen(false)}
-                  className="text-gray-500 px-4 py-2 focus:outline-none"
+                  className="bg-red-500 text-white px-4 py-2 focus:outline-none"
                 >
                   Cancel
                 </button>

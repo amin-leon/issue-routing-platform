@@ -11,14 +11,14 @@ import { useSelector } from 'react-redux';
 
 const validationSchema = object().shape({
   title: string()
-    .max(30, 'Issue title must be at most 30 characters')
+    .max(60, 'Issue title must be at most 60 characters')
     .required('Title is required'),
     reporter: string()
     .required('Your id is missing please'),
     private_channel_code: string()
     .max(30, 'Private channel code must be at most 30 characters'),
   description: string()
-    .max(200, 'Description must be at most 200 characters')
+    .max(1200, 'Description must be at most 1200 characters')
     .required('Description is required'),
   category: string().required('Select your category'),
 });
@@ -95,8 +95,8 @@ function NewIssueForm() {
           <div className="md:p-8 rounded-2xl w-full">
            <p className='pb-8 text-2xl font-bold'>Rise Issue Here </p>
            <form onSubmit={handleSubmit(onSubmitHandler)}>
-            {/* grid grid-cols-2 gap-4 */}
-            <div className="md:grid md:grid-cols-2 gap-4">
+            {/* md:grid md:grid-cols-2 gap-4*/}
+            <div className="md:grid gap-4">
               {/* fields */}
               <div>
                 <p>Is this issue private?</p>

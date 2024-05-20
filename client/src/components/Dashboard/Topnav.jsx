@@ -100,7 +100,7 @@ const Topnav = () => {
             </Link>
             {alerts.length > 0 && (
               <span className="bg-red-500 text-white rounded-full px-2 ml-6 absolute top-[-6px] left-8">
-                {alerts[0]?.count}
+                { alerts[0]?.count }
               </span>
             )}
             <button className="focus:outline-none" onClick={handleLogout}>

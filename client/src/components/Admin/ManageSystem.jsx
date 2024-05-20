@@ -1,16 +1,13 @@
-import { AiOutlineIssuesClose } from 'react-icons/ai'
-import { FiUsers } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { AiOutlineIssuesClose } from 'react-icons/ai';
+import { FiUsers } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 import { authActions } from '../../redux/auth/authSlice';
 import { issueActions } from '../../redux/issue/issueSlice';
 import { codesActions } from '../../redux/request_codes/codesSlice';
 import { GrChannel } from "react-icons/gr";
-
-
-
 
 function ManageSystem() {
   const dispatch = useDispatch();
@@ -18,48 +15,38 @@ function ManageSystem() {
   const pendingUsers = users ? users.filter((user) => user.approvalStatus === 'pending') : [];
   const pendingUsersCount = pendingUsers.length;
 
-  // codes
-  const dummyCodeRequests = useSelector(state => state.codes.codeRequests.filter(request => request.status === 'Pending'));
+  const dummyCodeRequests = useSelector((state) => state.codes.codeRequests.filter((request) => request.status === 'Pending'));
   const codes = dummyCodeRequests.length;
 
-  // Unassigned issues
   const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
   const total_number_issues = unassignedIssues.length;
 
+  const fetchData = async () => {
+    try {
+      const codesResponse = await axios.get('http://localhost:8080/api/code/all-code-requests');
+      dispatch(codesActions.setCodeRequests(codesResponse.data));
 
-  // initial request codes here
+      const usersResponse = await axios.get('http://localhost:8080/auth/users');
+      dispatch(authActions.setAllUsers(usersResponse.data));
+      dispatch(authActions.setUsers(usersResponse.data));
+
+      const issuesResponse = await axios.get('http://localhost:8080/issue/all-issues');
+      dispatch(issueActions.setIssues(issuesResponse.data));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const codesResponse = await axios.get('http://localhost:8080/api/code/all-code-requests');
-        dispatch(codesActions.setCodeRequests(codesResponse.data));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
+    // Initial fetch
     fetchData();
+
+    // Set up an interval to fetch data every second
+    const interval = setInterval(fetchData, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(interval);
   }, [dispatch]);
-  
-
-  // fetch all users
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const usersResponse = await axios.get('http://localhost:8080/auth/users');
-        dispatch(authActions.setAllUsers(usersResponse.data));
-        dispatch(authActions.setUsers(usersResponse.data));
-
-        const issuesResponse = await axios.get('http://localhost:8080/issue/all-issues');
-        dispatch(issueActions.setIssues(issuesResponse.data));
-      } catch (error) {
-        console.log('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [dispatch]);
-
 
   return (
     <div className='bg-gray-100'>
@@ -78,10 +65,9 @@ function ManageSystem() {
             <p className='text-2xl'>Pending Issues</p>
           </div>
         </Link>
-
         <Link to="requests">
           <div className='bg-white flex flex-col justify-center items-center gap-2 p-10'>
-            <p><GrChannel  className='text-6xl text-[#1F3365]'/></p>
+            <p><GrChannel className='text-6xl text-[#1F3365]'/></p>
             <p className='text-xl text-red-500'>{codes}</p>
             <p className='text-2xl text-center'>Private Channels</p>
           </div>

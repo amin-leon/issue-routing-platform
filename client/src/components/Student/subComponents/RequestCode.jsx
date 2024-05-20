@@ -11,12 +11,12 @@ import { useSelector } from 'react-redux';
 
 const validationSchema = object().shape({
   staff: string()
-    .max(30, 'Issue title must be at most 30 characters')
+    .max(60, 'Issue title must be at most 60 characters')
     .required('Title is required'),
   requester: string()
     .required('Your id is missing please'),
   why: string()
-    .max(200, 'Why must be at most 200 characters')
+    .max(1200, 'Why must be at most 1200 characters')
     .required('Description is required'),
   reason: string().required('Select your Reason'),
 });
@@ -87,7 +87,8 @@ function RequestCode() {
             {/* CodeCard component */}
             <p className='pb-8 text-2xl font-bold'>Request Private Channel</p>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
-              <div className="md:grid md:grid-cols-2 gap-4">
+              {/* md:grid-cols-2 */}
+              <div className="md:grid gap-4">
                 {/* fields */}
                 <div>
                   <div className='mt-2'>
