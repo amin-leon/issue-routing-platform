@@ -231,30 +231,6 @@ function MyTimeSlots() {
                         className="w-full p-2 border rounded-md"
                         rows={6}
                       />
-                      <div>
-                        <p className="font-bold">Steps to Follow:</p>
-                        <ol className="list-decimal pl-4">
-                          {steps.map((step, index) => (
-                            <li key={index}>{step}</li>
-                          ))}
-                        </ol>
-                        <div className="flex space-x-2">
-                          <input
-                            type="text"
-                            placeholder="Add new step..."
-                            value={newStep}
-                            onChange={(e) => setNewStep(e.target.value)}
-                            className="border p-2 rounded-md flex-grow"
-                          />
-                          <button
-                            type="button"
-                            onClick={handleAddStep}
-                            className="bg-[#1F3365] text-white p-2 rounded-md hover:bg-blue-700"
-                          >
-                            Add Step
-                          </button>
-                        </div>
-                      </div>
                       <button
                         type="submit"
                         className="bg-[#1F3365] text-white p-2 rounded-md hover:bg-blue-700"
