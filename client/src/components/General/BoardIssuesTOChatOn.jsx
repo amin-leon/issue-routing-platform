@@ -61,7 +61,6 @@ function BoardIssuesTOChatOn() {
             </div>
         </Link>
             ))}
-            
         </div>
         </div>
     </div>

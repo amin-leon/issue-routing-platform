@@ -177,7 +177,7 @@ function MyTimeSlots() {
                     <FormatDate createOn={comment.createdAt}/>
                   </span>
                 </p>
-                <p className="text-md">{comment.text}</p>
+                <p className="text-md">{(comment.text).replace(/<[^>]*>/g, '')}</p>
               </div>
             </div>
           ))}

@@ -136,7 +136,9 @@ function NewIssueForm() {
                     <option value="Welfare">Welfare</option>
                     <option value="Academic">Academic</option>
                     <option value="Rogistics">Rogistics</option>
+                    <option value="Health">Health</option>
                     <option value="Personal">Personal</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 <div className='mt-2'>
