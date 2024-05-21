@@ -12,7 +12,7 @@ import { GrChannel } from "react-icons/gr";
 function ManageSystem() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.auth.users);
-  const pendingUsers = users ? users.filter((user) => user.approvalStatus === 'pending') : [];
+  const pendingUsers = users ? users.filter((user) => user.approvalStatus === 'pending' && user.verificationCode === 0) : [];
   const pendingUsersCount = pendingUsers.length;
 
   const dummyCodeRequests = useSelector((state) => state.codes.codeRequests.filter((request) => request.status === 'Pending'));

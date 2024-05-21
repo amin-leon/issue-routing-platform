@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { authActions } from "../../../redux/auth/authSlice";
@@ -17,6 +17,9 @@ const schema = Yup.object().shape({
 
 
 const UserDetailsPage = () => {
+  const [positions, setPositions] = useState([]);
+
+
   const navigate = useNavigate()
   const userId = useParams();
   const id = userId.userId;
@@ -68,7 +71,18 @@ const UserDetailsPage = () => {
     }
   };
   
-  
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/school/positions/all');
+        setPositions(response.data);
+      } catch (error) {
+        console.error('Error fetching positions:', error);
+      }
+    };
+
+    fetchPositions();
+  }, []);
   
 
   const handleCancelApproval = () => {
@@ -272,12 +286,11 @@ const UserDetailsPage = () => {
                     className={`w-full px-3 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${positionError && 'border-red-500'}`}
                   >
                     <option value="">Select Position</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Ci">Ci</option>
-                    <option value="Cmdt">Cmdt</option>
-                    <option value="Io">Io</option>
-                    <option value="Rogistic">Rogistic</option>
-                    <option value="Academia">Academia</option>
+                    {positions.map((pos) => (
+                      <option key={pos.positionName} value={pos.positionName}>
+                        {pos.positionName}
+                      </option>
+                    ))}
                   </select>
                   {positionError && <p className="mt-1 text-red-500 text-sm">{positionError}</p>}
                 </div>
