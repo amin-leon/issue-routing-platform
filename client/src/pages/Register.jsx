@@ -133,9 +133,9 @@ const RegisterForm = () => {
           <div className="flex-col flex  self-center p-10 sm:max-w-5xl xl:max-w-2xl  z-10">
             <div className="self-start hidden lg:flex flex-col  text-white">
               <img src="" className="mb-3" alt=''/>
-              <h1 class="mb-8 font-bold text-3xl">RWANDA NATIONAL POLICE COLLAGE </h1>
-              <p className="pr-3 text-sm">Lorem ipsum is placeholder text commonly used in the graphic, print,
-                and publishing industries for previewing layouts and visual mockups</p>
+              <h1 class="mb-8 font-bold text-3xl">NATIONAL POLICE COLLEGE </h1>
+              <p className="pr-3 text-sm">NPC is an established institution of Police high training for Rwanda National Police 
+              mandated to build the capacity of Police officers and other law enforcers</p>
               <p className='mt-5'>Join npc on #social medias:</p>
                  <SocialIcons />
             </div>

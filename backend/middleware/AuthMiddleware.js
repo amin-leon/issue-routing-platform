@@ -11,7 +11,7 @@ export default class AuthMiddleware {
       if (!authorization) {
         return res.status(401).json({
           status: "fail",
-          message: "Missing authorisation token",
+          message: "Missing authorization token",
         });
       }
 
@@ -20,7 +20,7 @@ export default class AuthMiddleware {
       if (!token) {
         return res.status(401).json({
           status: "fail",
-          message: "Unathorised action",
+          message: "Unauthorized action",
         });
       }
 
@@ -36,21 +36,31 @@ export default class AuthMiddleware {
     }
   }
 
-  static async checkRole(req, res, next) {
-    try {
-      const user = req.user;
-      if (user.role == "admin") {
-        return next();
+  static async checkRole(roles) {
+    return async (req, res, next) => {
+      try {
+        const user = req.user;
+        if (!user) {
+          return res.status(401).json({
+            status: "fail",
+            message: "Unauthorized action",
+          });
+        }
+
+        if (roles.includes(user.role)) {
+          return next();
+        }
+
+        return res.status(403).json({
+          status: "fail",
+          message: "You do not have permission to perform this task",
+        });
+      } catch (error) {
+        return res.status(500).json({
+          status: "error",
+          message: error.message,
+        });
       }
-      return res.status(403).json({
-        status: "fail",
-        message: "You do not have a permission to perform this task",
-      });
-    } catch (error) {
-      return res.status(500).json({
-        status: "error",
-        message: error.message,
-      });
-    }
+    };
   }
 }
