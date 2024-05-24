@@ -79,11 +79,13 @@ function UserDetailComponent() {
             onChange={handleChange}
             className="border-none bg-gray-100 p-3 w-full rounded-md"
             placeholder='Full Name'
+            required
 
           />
         </div>
         <div className="mb-4">
           <input
+          required
             type="email"
             id="email"
             name="email"
@@ -101,7 +103,8 @@ function UserDetailComponent() {
             value={formData.username}
             onChange={handleChange}
             className="border-none bg-gray-100 p-3 w-full rounded-md"
-            placeholder='Username'    
+            placeholder='Username'   
+            required 
             />
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">

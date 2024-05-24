@@ -3,29 +3,33 @@ import axios from 'axios';
 import { authActions } from '../../redux/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 function PasswordComponent() {
-
-   const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.auth.user);
   const userId = userInfo._id;
 
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordMatchError, setPasswordMatchError] = useState('');
 
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+      setPasswordMatchError('Passwords do not match');
+      return;
+    }
+
+    try {
       await axios.put(`http://localhost:8080/auth/user/setting/${userId}/password`, {
         password,
-      })
-      .then(()=>{
-        dispatch(authActions.updatePassword(password));
-      })
-      .catch((error)=>{
-        console.log(error);
-      })
-
+      });
+      dispatch(authActions.updatePassword(password));
+      alert("Password changed successfully");
+    } catch (error) {
+      console.error('Error changing password:', error);
+    }
   };
 
   return (
@@ -33,13 +37,15 @@ function PasswordComponent() {
       <h2 className="text-2xl mb-4 pb-7">Change account Password</h2>
       <form onSubmit={handleSubmit} className='md:p-8'>
         <div className="mb-4">
-          <input 
+          <input
             type="password"
             id="currentPassword"
             name="password"
-            onChange={(e)=> setPassword (e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="border-none bg-gray-100 p-3 w-full rounded-md"
             placeholder='Type new password'
+            required
           />
         </div>
         <div className="mb-4">
@@ -47,12 +53,16 @@ function PasswordComponent() {
             type="password"
             id="newPassword"
             name="newPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             className="border-none bg-gray-100 p-3 w-full rounded-md"
-            placeholder='Comfirm password'
+            placeholder='Confirm password'
+            required
           />
+          {passwordMatchError && <p className="text-red-500">{passwordMatchError}</p>}
         </div>
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
-           Edit
+          Edit
         </button>
       </form>
     </div>
