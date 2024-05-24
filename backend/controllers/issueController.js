@@ -3,7 +3,8 @@ import CodeRequest from '../models/CodeRequestModel.js';
 import Issue from '../models/Issue.js';
 import User from '../models/User.js';
 import { createNotification } from '../helpers/Nofication.js';
-
+import Feedback from '../models/Feedback.js';
+import Notification from '../models/Notification.js';
 
 // Create new issue
 const createIssue = async (req, res) => {
@@ -339,6 +340,8 @@ const getOpenIssues = async (req, res) => {
         return res.status(404).json({ message: 'Issue not found' });
       }
       res.status(200).json({ message: 'Issue deleted successfully' });
+      await Feedback.findByIdAndDelete(id);
+      await Notification.findByIdAndDelete(id);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }

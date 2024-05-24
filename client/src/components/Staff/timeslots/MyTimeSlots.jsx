@@ -150,7 +150,7 @@ function MyTimeSlots() {
   };
 
   return (
-    <div>
+    <div className="">
         <div className="md:w-[100%] md:p-5">
           <p className="text-4xl font-bold pb-3">{issueDetails[0]?.category} issue</p>
           <div>
@@ -158,7 +158,17 @@ function MyTimeSlots() {
           </div>
           <div className='w-full'>
             <p className='text-xl'>"{issueDetails[0]?.description}"</p>
+            <div className='pt-5'>
+              {issueDetails[0]?.attachments && issueDetails[0]?.attachments.length > 0 ? (
+                <a href={`http://localhost:8080${issueDetails[0].attachments[0].url}`} target="_blank" rel="noopener noreferrer" className="block text-blue-500">
+                  Attachment file
+                </a>
+              ) : (
+                <p className='text-blue-500'>No attachment</p>
+              )}
+            </div>
           </div>
+
         </div>
         <div className="md:p-10 border">
           <p className='pb-5'>({StaffStudentComments.length})Comments</p>
@@ -185,17 +195,15 @@ function MyTimeSlots() {
             <div className='mt-3'>
               <form onSubmit={handleCommentSubmit}>
                 <div>
-                <CKEditor
-                  editor={ClassicEditor}
-                  data={commentText} // Ensure you are using commentText here
-                  onChange={(event, editor) => {
-                    const data = editor.getData();
-                    const cleanedData = data.replace(/<[^>]+>/g, '');
-                    // Set the cleaned data to the state
-                    setComment(cleanedData);
-                  }}
-                  style={{ width: '100%', height: '400px' }} 
-                />
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={commentText}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setComment(data);
+                    }}
+                    style={{ width: '100%', height: '400px' }}
+                  />
                 </div>
 
                 <div>

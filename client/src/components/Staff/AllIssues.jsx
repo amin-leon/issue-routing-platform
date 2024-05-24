@@ -23,6 +23,7 @@ function AllIssues() {
   const handleStatusUpdate = async (issueId) => {
     try {
        await axios.put(`http://localhost:8080/issue/status/${issueId}`, { status: 'progress' });
+       await axios.delete(`http://localhost:8080/alerts/${assignedToId}`);
     } catch (error) {
       console.error('Error updating issue status:', error);
     }
@@ -80,21 +81,24 @@ function AllIssues() {
     }
   }, [assignedToId]);
 
-  // assigned to me
-    useEffect(() => {
-    if (assignedToId) {
-      const fetchStudentIssues = async () => {
-        try {
+  useEffect(() => {
+    const fetchStudentIssues = async () => {
+      try {
+        if (assignedToId) {
           const response = await axios.get(`http://localhost:8080/issue/assigned-staff/${assignedToId}`);
           dispatch(issueActions.setAssignedToMe(response.data));
           dispatch(issueActions.setIssues(response.data));
-        } catch (error) {
-          console.log(error);
         }
-      };
-      fetchStudentIssues();
-    }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    const intervalId = setInterval(fetchStudentIssues, 1000);
+  
+    return () => clearInterval(intervalId);
   }, [dispatch, assignedToId]);
+  
 
   return (
     <div>

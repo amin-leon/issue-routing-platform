@@ -33,10 +33,10 @@ module.exports = {
       // Other customizations...
     },
   },
-  plugins: [
-    daisyui,
-  ],
-  daisyui: {
-    themes: false,
-  },
+  // plugins: [
+  //   daisyui,
+  // ],
+  // daisyui: {
+  //   themes: false,
+  // },
 }

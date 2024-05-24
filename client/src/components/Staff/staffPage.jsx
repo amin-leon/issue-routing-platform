@@ -69,7 +69,7 @@ function StaffPage() {
                   <th className="py-3 px-6 text-left">Title</th>
                   <th className="py-3 px-6 text-left">Category</th>
                   <th className="py-3 px-6 text-left">Date Reported</th>
-                  <th className="py-3 px-6 text-left">Actions</th>
+                  <th className="py-3 px-6 text-left">Status</th>
                 </tr>
               </thead>
               <tbody className="text-gray-600 text-sm font-light">
@@ -89,9 +89,9 @@ function StaffPage() {
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <button
                         onClick={() => handleReject(issue._id)}
-                        className="text-red-500 hover:text-red-700"
+                        className="text-red-500 hover:text-red-700 font-bold"
                       >
-                        Reject
+                        Pending
                       </button>
                     </td>
                   </tr>

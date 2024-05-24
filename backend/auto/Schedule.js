@@ -8,7 +8,7 @@ import { createWarning } from '../helpers/Warnings.js';
 const eventEmitter = new EventEmitter();
 
 const schedulePendingIssueReminder = () => {
-  cron.schedule('* * * * *', async () => {
+  cron.schedule('* * * * * *', async () => {
     try {
       const adminUser = await User.findOne({ role: 'Admin' });
 

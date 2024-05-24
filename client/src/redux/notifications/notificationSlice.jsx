@@ -32,6 +32,9 @@ const notificationSlice = createSlice({
       const notificationId = action.payload;
       state.notifications = state.notifications.filter((notification) => notification._id !== notificationId);
     },
+    clearNotifications: (state) => {
+      state.notifications = [];
+    },
   },
 });
 

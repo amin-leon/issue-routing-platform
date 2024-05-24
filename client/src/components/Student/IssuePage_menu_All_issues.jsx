@@ -47,7 +47,7 @@ function IssuePageMenuAllIssues() {
   useEffect(() => {
     if (reporterId) {
       const fetchStudentIssues = async () => {
-        setLoading(true); // Set loading to true when starting to fetch data
+        setLoading(true);
         try {
           const response = await axios.get(`http://localhost:8080/issue/reporter/${reporterId}`);
           const studentIssues = response.data;
@@ -55,7 +55,7 @@ function IssuePageMenuAllIssues() {
         } catch (error) {
           console.log(error);
         } finally {
-          setLoading(false); // Set loading to false after data is fetched
+          setLoading(false);
         }
       };
 
@@ -193,13 +193,28 @@ function IssuePageMenuAllIssues() {
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex gap-2">
                       <Link to={`/Home/update-issue/${issue._id}`}>
-                        <button className="px-4 py-2 text-blue-500 cursor-pointer rounded-md">Edit</button>
+                        <button
+                          className={`px-4 py-2 rounded-md ${
+                            issue.status === 'closed' ? 'text-gray-500 cursor-not-allowed' : 'text-blue-500'
+                          }`}
+                          disabled={issue.status === 'closed'}
+                        >
+                          Edit
+                        </button>
                       </Link>
                       <Link to="#" onClick={() => handleDelete(issue._id)}>
-                        <button className="px-4 py-2 text-red-500 cursor-pointer rounded-md">Delete</button>
+                        <button
+                          className={`px-4 py-2 rounded-md ${
+                            issue.status === 'closed' ? 'text-gray-500 cursor-not-allowed' : 'text-red-500'
+                          }`}
+                          disabled={issue.status === 'closed'}
+                        >
+                          Delete
+                        </button>
                       </Link>
                     </div>
                   </td>
+
                 </tr>
               ))}
             </tbody>

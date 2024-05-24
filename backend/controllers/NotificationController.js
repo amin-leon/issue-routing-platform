@@ -39,8 +39,20 @@ const fetchAllAlerts = async (req, res) => {
   }
 };
 
+const deleteAllAlerts = async (req, res) => {
+  try {
+    const recipient = req.params.recipient;
+
+    const alerts = await Notification.deleteMany({recipient: recipient });
+    res.status(200).json({mesage: "Data deleted very well"});
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export default {
   getNotificationsByUser,
   updateNotificationIsRead,
-  fetchAllAlerts
+  fetchAllAlerts,
+  deleteAllAlerts
 };

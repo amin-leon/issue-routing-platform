@@ -8,7 +8,7 @@ import Alert from '../models/Alerts.js';
 const eventEmitter = new EventEmitter();
 
 const notifyAssignedStaff = () => {
-  cron.schedule('* * * * *', async () => {
+  cron.schedule('* * * * * *', async () => {
     try {
       // Step 1: Get all staff users
       const staffUsers = await User.find({ role: 'Staff' });
