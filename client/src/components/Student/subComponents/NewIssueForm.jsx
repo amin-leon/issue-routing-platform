@@ -59,6 +59,15 @@ function NewIssueForm() {
       fetchCodeRequests();
     }, []);
 
+  
+  // token
+  const token = sessionStorage.getItem('authToken');
+
+  if (!token) {
+    console.error('No token found');
+    return;
+  }
+
 
   const onSubmitHandler = async (data) => {
     try {
@@ -77,6 +86,7 @@ function NewIssueForm() {
       await axios.post('http://localhost:8080/issue/new-issue', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         },
       });
       openModal();
