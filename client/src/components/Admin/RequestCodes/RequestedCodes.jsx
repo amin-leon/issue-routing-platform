@@ -22,7 +22,7 @@ function RequestedCodes() {
 
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [reason, setReason] = useState('');
-  const codesPerPage = 5;
+  const codesPerPage = 7;
 
   useEffect(() => {
     // Use dummy data for code requests
@@ -102,12 +102,13 @@ function RequestedCodes() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative pt-10">
         <div className="flex z-10">
-          <div className="p-12 bg-white mx-auto rounded-2xl w-[90%] h-screen border">
+          {/* p-12 bg-white mx-auto rounded-2xl w-[90%] h-screen border */}
+          <div className="w-full md:p-12  md:mx-auto rounded-2xl md:w-[90%] bg-white border overflow-x-scroll">
             <div>
               <p className="text-2xl pt-5">Private channels requests</p>
             </div>
             {currentCodes.length > 0 ? (
-              <table className="min-w-full table-auto">
+              <table className="min-w-full table-auto overflow-x-scroll">
                 <thead>
                   <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
                     <th className="py-3 px-6 text-left">Email</th>
