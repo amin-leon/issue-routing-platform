@@ -4,6 +4,7 @@ import Topnav from '../components/Dashboard/Topnav';
 import MainContent from '../components/Dashboard/MainContent';
 
 const App = () => {
+  // Set the default value of isSidebarOpen to true
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -21,7 +22,7 @@ const App = () => {
     };
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // Call on initial load
+    handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -29,12 +30,11 @@ const App = () => {
     <div className="flex overflow-hidden">
       <Sidebar isSidebarOpen={isSidebarOpen} />
       <div className="flex flex-col w-full">
-        <Topnav toggleSidebar={toggleSidebar} />
-           <MainContent />
+        <Topnav toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+        <MainContent />
       </div>
     </div>
   );
 };
 
 export default App;
-
