@@ -78,6 +78,12 @@ const RegisterForm = () => {
   const onSubmitHandler = async(data) => {
     try {
 
+      // Compare passwords
+      if (data.password !== data.password1) {
+        setError('Passwords do not match');
+        return;
+      }
+
       const formData = new FormData();
       formData.append('fullName', data.fullName);
       formData.append('username', data.username);
@@ -261,7 +267,7 @@ const RegisterForm = () => {
               <div className="pt-5 text-center text-gray-400 text-xs">
                 <span>
                   Copyright © 2023-2027
-                  <a href="https://github.com/nplcodes/final2024" rel=""  title="NPL Codes" className="text-green hover:text-green-500 ">Npl Codes</a>
+                  <a href="" rel=""  title="NPC rw" className="text-green hover:text-green-500 ">NPC</a>
                 </span>
               </div>
             </div>

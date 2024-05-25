@@ -66,6 +66,7 @@ const updateProfileImage = async (req, res) => {
   }
 };
 
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -73,29 +74,32 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ error: 'User not exist.' });
+      return res.status(401).json({ error: 'User does not exist.' });
     }
 
-    const checkPassword = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (checkPassword) {
-      if (user.approvalStatus === 'pending' || user.accountStatus === 'inactive') {
-        return res.status(403).json({ error: 'Your account is not active.' });
-      } else {
-        const token = jwt.sign({ email: user.email }, SECRET_KEY);
-        res.setHeader('Authorization', `Bearer ${token}`);
-        return res.json({ message: 'Login successful.', token });
-      }
-    } else {
+    if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid credentials.' });
     }
+
+    if (user.approvalStatus === 'pending' || user.accountStatus === 'inactive') {
+      return res.status(403).json({ error: 'Your account is not active.' });
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role },
+      SECRET_KEY,
+      { expiresIn: '1d' }
+    );
+
+    return res.json({ message: 'Login successful.', token });
+
   } catch (error) {
-    console.log('Login failed', error);
+    console.error('Login failed:', error);
     return res.status(500).json({ error: 'Could not login.' });
   }
 };
-
-
 
 const protectedRoute = (req, res) => {
   res.json({ message: 'This is a protected route.', user: req.user });

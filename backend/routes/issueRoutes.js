@@ -3,11 +3,14 @@
 import express from 'express';
 import issueController from '../controllers/issueController.js';
 import upload from '../middleware/upload.js';
+import AuthMiddleware from '../middleware/AuthMiddleware.js';
+
+
 
 const router = express.Router();
 
 
-router.post('/new-issue', upload.single('attachment'), issueController.createIssue);
+router.post('/new-issue', AuthMiddleware.isAuthenticated, AuthMiddleware.checkRole('[Student]'), upload.single('attachment'), issueController.createIssue);
 router.post('/add-attachment/:issueId', upload.single('attachment'), issueController.addAttachment);
 router.delete('/attachments/:issueId/:attachmentId', issueController.deleteAttachment);
 router.put('/assign/:issueId', issueController.updateAssignedTo);
