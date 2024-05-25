@@ -66,10 +66,9 @@ const Topnav = ({ toggleSidebar, isSidebarOpen }) => {
     <div className={`bg-white text-gray-700 h-24 flex justify-between items-center px-6 shadow-md ${isSidebarOpen ? 'ml-64' : ''}`}>
        <div className="flex items-center">
         <div className="flex items-center text-black flex-grow justify-center gap-2">
-          <Link to='/'>
-            <img src="https://www.npc.ac.rw/fileadmin/templates/assets/images/NPC_LOGO.png" alt="Logo" className="w-10 h-10 rounded-full" />
-          </Link>
-          <p>{user?.position}</p>
+          <button onClick={toggleSidebar} className="text-gray-700 focus:outline-none mr-3 md:hidden">
+            <FaBars className='text-3xl'/>
+          </button>
         </div>
       </div>
       <div className="flex items-center relative">
@@ -88,7 +87,7 @@ const Topnav = ({ toggleSidebar, isSidebarOpen }) => {
         />
         <div className="relative group">
           <div className="mr-3 flex items-center gap-3">
-            <Link to='/my/notifications'>
+            <Link to='http://localhost:3000/Home/my/notifications'>
               <IoMdNotificationsOutline className="text-3xl relative text-black" />
             </Link>
             {notifications.length > 0 && (
@@ -109,9 +108,6 @@ const Topnav = ({ toggleSidebar, isSidebarOpen }) => {
             </button>
           </div>
         </div>
-        <button onClick={toggleSidebar} className="text-gray-700 focus:outline-none mr-3 md:hidden">
-          <FaBars />
-        </button>
       </div>
     </div>
   );

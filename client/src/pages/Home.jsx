@@ -22,7 +22,6 @@ const Home = () => {
       <div className="absolute inset-0" style={overlayStyle}></div>
       <div className="text-center text-black z-10">
         <h1 className="text-5xl font-bold mb-4">WELCOME TO NATIONAL POLICE COLLEGE</h1>
-        <p className="text-2xl">Issueless Invironment</p>
       </div>
     </div>
   );
