@@ -98,7 +98,7 @@ function BoardIssuesTOChatOn() {
   }, [dispatch]);
 
   return (
-    <div className="flex justify-center pt-10 bg-gray-50 min-h-screen">
+    <div className="flex justify-center pt-10 bg-gray-50 min-h-[100%]">
       {/* w-[100%] bg-white p-6 rounded-lg shadow-lg */}
       <div className="w-full md:w-[90%] bg-white md:p-6 rounded-lg shadow-lg">
         <div className="mb-6">
