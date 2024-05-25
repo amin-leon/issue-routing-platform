@@ -14,7 +14,7 @@ function SharedDocs() {
     // Function to fetch documents
     const fetchDocuments = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/docs/documents');
+        const response = await axios.get(`http://localhost:8080/docs/documents/${issueId}`);
         // Dispatch the action to update the documents in the Redux store
         dispatch({ type: 'documents/setDocuments', payload: response.data });
       } catch (error) {
@@ -33,6 +33,15 @@ function SharedDocs() {
     setFile(event.target.files[0]);
   };
 
+
+    // token
+    const token = sessionStorage.getItem('authToken');
+
+      if (!token) {
+        console.error('No token found');
+        return;
+      }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -48,7 +57,8 @@ function SharedDocs() {
 
       const response = await axios.post('http://localhost:8080/docs/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         }
       });
 
@@ -62,7 +72,11 @@ function SharedDocs() {
 
   const handleDelete = async (documentId) => {
     try {
-      await axios.delete(`http://localhost:8080/docs/documents/delete/${documentId}`);
+      await axios.delete(`http://localhost:8080/docs/documents/delete/${documentId}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       dispatch(deleteDocument(documentId));
       alert('Document deleted');
     } catch (error) {

@@ -10,10 +10,10 @@ import AuthMiddleware from '../middleware/AuthMiddleware.js';
 const router = express.Router();
 
 
-router.post('/new-issue', AuthMiddleware.isAuthenticated, AuthMiddleware.checkRole('[Student]'), upload.single('attachment'), issueController.createIssue);
+router.post('/new-issue', AuthMiddleware.isAuthenticated, AuthMiddleware.checkRole(['Student']), upload.single('attachment'), issueController.createIssue);
 router.post('/add-attachment/:issueId', upload.single('attachment'), issueController.addAttachment);
 router.delete('/attachments/:issueId/:attachmentId', issueController.deleteAttachment);
-router.put('/assign/:issueId', issueController.updateAssignedTo);
+router.put('/assign/:issueId',AuthMiddleware.isAuthenticated, AuthMiddleware.checkRole(['Admin']), issueController.updateAssignedTo);
 router.put('/status/:issueId', issueController.updateIssueStatus);
 router.put('/escalate/:issueId', issueController.EscalateIssue);
 router.put('/share/:issueId', issueController.ShareIssueToChatRoom);
@@ -31,7 +31,7 @@ router.post('/staff-student-chat/:issueId/comments', issueController.addCommentI
 router.get('/chatroom/:issueId/comments', issueController.getCommentsByIssueId);
 router.get('/staff-student-chat/:issueId/comments', issueController.getStaffStudentCommentsByIssueId);
 router.put('/mark-as-read/:issueId', issueController.markIssueAsRead);
-router.put('/close/:issueId/:reporterId', issueController.closeIssue);
+router.put('/close/:issueId/:reporterId', AuthMiddleware.isAuthenticated, AuthMiddleware.checkRole(['Staff']), issueController.closeIssue);
 
 
 

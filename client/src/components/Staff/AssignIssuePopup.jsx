@@ -27,10 +27,22 @@ function AssignIssuePopup({ isOpen, onClose, issueId, senderId }) {
     fetchIssuesData();
   }, []);
 
+    // token
+    const token = sessionStorage.getItem('authToken');
+
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
+
 // update 
   const handleAssignIssue = async(e) => {
     e.preventDefault()
-    await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, priority, status, issueId})
+    await axios.put(`http://localhost:8080/issue/assign/${issueId}`, {assignedTo, senderId, priority, status, issueId}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
     .then(()=>{
         dispatch(issueActions.removeAssignedIssue({issueId}))
         navigate('/Home/middleman-issue-page');

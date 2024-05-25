@@ -123,10 +123,22 @@ function MyTimeSlots() {
     }
   };
 
+    // token
+    const token = sessionStorage.getItem('authToken');
+
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
+
   const handleCloseIssue = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8080/issue/close/${issueId}/${reporterId}`, feedback);
+      const response = await axios.put(`http://localhost:8080/issue/close/${issueId}/${reporterId}`, feedback, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       dispatch(issueActions.setIssueToClose(response.data));
       navigate('/Home/staff-issue-page');
     } catch (error) {
