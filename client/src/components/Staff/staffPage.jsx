@@ -6,7 +6,6 @@ import FormatDate from '../helpers/FormatDate';
 
 
 
-
 function StaffPage() {
   const unassignedIssues = useSelector((state) => state.issue.unassignedIssues);
   const totalNumberIssues = unassignedIssues.length;
@@ -40,7 +39,7 @@ function StaffPage() {
   };
 
   return (
-    <div className='md:pl-4 md:pr-4 md:pt-10'>
+    <div className='md:pl-4 md:pr-4 md:pt-10 rounded-md'>
       <header className="bg-slate-200 p-5 text-black">
         <div className="container mx-auto flex justify-between items-center rounded-md">
           <h1 className="text-xl font-bold">New Issues</h1>
@@ -62,7 +61,7 @@ function StaffPage() {
           </div>
 
           {/* Issues Table */}
-          <div className="bg-white shadow-md overflow-x-auto">
+          <div className="bg-white shadow-md overflow-x-scroll">
             <table className="min-w-full table-auto">
               <thead>
                 <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">

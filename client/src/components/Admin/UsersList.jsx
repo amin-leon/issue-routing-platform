@@ -24,7 +24,7 @@ function Users() {
       }
     };
   return (
-  <div className="px-32 pt-8 bg-white">
+  <div className="md:px-32 md:pt-8 bg-white overflow-x-auto">
     <PendingUsers />
   </div>
 
