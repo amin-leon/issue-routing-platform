@@ -107,7 +107,7 @@ function IssuePageMenuAllIssues() {
   };
 
   return (
-    <div className='h-screen'>
+    <div>
       <div className="mb-4 flex items-center space-x-4">
         <select
           id="filterOption"
@@ -164,61 +164,59 @@ function IssuePageMenuAllIssues() {
         </div>
       ) : currentIssues.length > 0 ? (
         <>
-          <table className="min-w-full table-auto">
-            <thead>
-              <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Title</th>
-                <th className="py-3 px-6 text-left">Category</th>
-                <th className="py-3 px-6 text-left">Status</th>
-                <th className="py-3 px-6 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 text-sm font-light">
-              {currentIssues.map((issue, index) => (
-                <tr key={issue._id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
-                  <td className="py-3 px-6 text-left whitespace-nowrap">
-                    <Link to={`/Home/manage-issue/${issue._id}`}>
-                      <div className="flex gap-2">
-                        <div className="text-green-500 text-4xl">
-                          <BsDot />
-                        </div>
-                        <div onClick={() => dispatch(issueActions.setAssignedTo(issue.assignedTo))}>
-                          <p className="pb-2">{issue.title}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  </td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap">{issue.category}</td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap">{issue.status}</td>
-                  <td className="py-3 px-6 text-left whitespace-nowrap">
-                    <div className="flex gap-2">
-                      <Link to={`/Home/update-issue/${issue._id}`}>
-                        <button
-                          className={`px-4 py-2 rounded-md ${
-                            issue.status === 'closed' ? 'text-gray-500 cursor-not-allowed' : 'text-blue-500'
-                          }`}
-                          disabled={issue.status === 'closed'}
-                        >
-                          Edit
-                        </button>
-                      </Link>
-                      <Link to="#" onClick={() => handleDelete(issue._id)}>
-                        <button
-                          className={`px-4 py-2 rounded-md ${
-                            issue.status === 'closed' ? 'text-gray-500 cursor-not-allowed' : 'text-red-500'
-                          }`}
-                          disabled={issue.status === 'closed'}
-                        >
-                          Delete
-                        </button>
-                      </Link>
-                    </div>
-                  </td>
-
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto">
+              <thead>
+                <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
+                  <th className="py-3 px-6 text-left">Title</th>
+                  <th className="py-3 px-6 text-left">Category</th>
+                  <th className="py-3 px-6 text-left">Status</th>
+                  <th className="py-3 px-6 text-left">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="text-gray-600 text-sm font-light">
+                {currentIssues.map((issue, index) => (
+                  <tr key={issue._id} className={`${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'}`}>
+                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                      <Link to={`/Home/manage-issue/${issue._id}`}>
+                        <div className="flex gap-2">
+                          <div className="text-green-500 text-4xl">
+                            <BsDot />
+                          </div>
+                          <div onClick={() => dispatch(issueActions.setAssignedTo(issue.assignedTo))}>
+                            <p className="pb-2">{issue.title}</p>
+                          </div>
+                        </div>
+                      </Link>
+                    </td>
+                    <td className="py-3 px-6 text-left whitespace-nowrap">{issue.category}</td>
+                    <td className="py-3 px-6 text-left whitespace-nowrap">{issue.status}</td>
+                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                      <div className="flex gap-2">
+                        <Link to={`/Home/update-issue/${issue._id}`}>
+                          <button
+                            className={`px-4 py-2 rounded-md ${issue.status === 'closed' ? 'text-gray-500 cursor-not-allowed' : 'text-blue-500'}`}
+                            disabled={issue.status === 'closed'}
+                          >
+                            Edit
+                          </button>
+                        </Link>
+                        <Link to="#" onClick={() => handleDelete(issue._id)}>
+                          <button
+                            className={`px-4 py-2 rounded-md ${issue.status === 'closed' ? 'text-gray-500 cursor-not-allowed' : 'text-red-500'}`}
+                            disabled={issue.status === 'closed'}
+                          >
+                            Delete
+                          </button>
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
           <div className="mt-4 flex justify-end">
             <nav>
               <ul className="pagination flex space-x-2">

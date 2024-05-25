@@ -90,10 +90,12 @@ function BoardChat() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4 pl-32 pt-10">
-      <div className="col-span-1">
-        <div className="p-4 border flex flex-col gap-3 mb-2">
-          <div className="flex-shrink-0">
+    // grid grid-cols-3 gap-4 pl-32 pt-10
+    <div className="md:grid md:grid-cols-3 gap-4 md:pl-32 md:pt-10">
+      <div className="col-span-1 flex justify-center flex-col md:col-span-1">
+        {/* p-4 border flex flex-col gap-3 mb-2 */}
+        <div className="border flex flex-col gap-3 mb-2 md:p-4">
+          <div className="w-full md:flex-shrink-0">
             {singleReport[0]?.profile ? (
               <img
                 src={`http://localhost:8080/${singleReport[0]?.profile}`}
@@ -114,7 +116,7 @@ function BoardChat() {
             <button className='text-white bg-blue-500 rounded-md p-1 pl-2 pr-2 mt-5 hover:bg-black'>More info</button>
           </div>
         </div>
-        <div className="p-4 border">
+        <div className="w-full md:p-4 md:border">
           <p className='pb-3'>Staff commented:</p>
           <div className='flex pl-5'>
             <img className='w-10 h-10 rounded-full' src="https://images.unsplash.com/photo-1532074205216-d0e1f4b87368?auto=format&fit=crop&q=80&w=1641&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
@@ -123,10 +125,11 @@ function BoardChat() {
       </div>
       <div className="col-span-2">
         <div className="border p-5">
-          <p className="text-4xl font-bold pb-3">{currentIssue[0]?.title}</p>
+          {/* text-4xl font-bold pb-3 */}
+          <p className="text-2xl md:text-4xl font-bold pb-3">{currentIssue[0]?.title}</p>
           <p className='text-xl'>{currentIssue[0]?.description}</p>
         </div>
-        <div className="p-4 border">
+        <div className="md:p-4 border">
           <p className='pb-5'>({groupComments.length})Comments</p>
           {groupComments.map((comment) => (
             <div className="flex gap-2 p-2 pb-5" key={comment._id}>

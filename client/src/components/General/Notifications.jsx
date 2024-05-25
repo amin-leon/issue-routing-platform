@@ -44,7 +44,8 @@ function Notifications() {
   };
 
   return (
-    <div className="notification-container bg-gray-100 px-48 h-screen">
+    // notification-container bg-gray-100 px-48 h-screen
+    <div className="notification-container bg-gray-100 md:px-48 md:h-screen lg:px-48 lg:h-screen">
       <h1 className="text-2xl font-bold mb-4">Notifications</h1>
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2 font-semibold">Filter:</label>

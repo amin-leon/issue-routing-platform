@@ -164,12 +164,12 @@ function MyTimeSlots() {
   return (
     <div className="">
         <div className="md:w-[100%] md:p-5">
-          <p className="text-4xl font-bold pb-3">{issueDetails[0]?.category} issue</p>
+          <p className="text-2xl pt-3 md:text-4xl font-bold md:pb-3">{issueDetails[0]?.category} issue</p>
           <div>
             <FormatDate createOn={issueDetails[0]?.createdAt} status={issueDetails[0]?.status}/>
           </div>
           <div className='w-full'>
-            <p className='text-xl'>"{issueDetails[0]?.description}"</p>
+            <p className='text-md pt-3 md:text-xl'>{issueDetails[0]?.description}</p>
             <div className='pt-5'>
               {issueDetails[0]?.attachments && issueDetails[0]?.attachments.length > 0 ? (
                 <a href={`http://localhost:8080${issueDetails[0].attachments[0].url}`} target="_blank" rel="noopener noreferrer" className="block text-blue-500">

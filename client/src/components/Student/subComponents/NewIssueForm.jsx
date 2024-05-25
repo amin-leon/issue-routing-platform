@@ -174,7 +174,7 @@ function NewIssueForm() {
               {/* text area and button */}
               <div>
                 <div>
-                  <textarea {...register("description")} rows={10}
+                  <textarea {...register("description")} rows={6}
                     className="w-full text-base p-3 border-none bg-gray-100 rounded-lg focus:outline-none focus:border-blue-400"
                     placeholder="Enter issue description"
                     name="description"

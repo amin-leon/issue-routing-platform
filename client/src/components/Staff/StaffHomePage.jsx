@@ -309,7 +309,7 @@ const StaffHomePage = () => {
           'rgba(255, 206, 86, 1)', // Progress
           'rgba(75, 192, 192, 1)', // Closed
         ],
-        borderWidth: 1,
+        borderWidth: 5,
       },
     ],
   };
@@ -320,7 +320,8 @@ const StaffHomePage = () => {
     <div>
       <div className="issue-container md:px-32 md:py-16 md:grid md:grid-cols-2 md:gap-6">
         <div className="cards-graph">
-          <div className="cards grid grid-cols-3 gap-3">
+          {/* cards grid grid-cols-3 gap-3 */}
+          <div className="cards grid gap-2 md:grid md:grid-cols-3 md:gap-3">
             <Link to="/Home/staff-issue-page">
               <div className="card-1 cursor-pointer text-red-500 bg-gray-100 px-10 py-10 rounded-md flex flex-col gap-4 justify-center items-center">
                 <p className="text-2xl">New</p>
@@ -340,8 +341,8 @@ const StaffHomePage = () => {
               </div>
             </Link>
           </div>
-          <div className="graph py-32">
-            <Bar data={data} options={options}></Bar>
+          <div className="graph md:pt-32">
+            <Bar data={data} options={options} className='w-full'></Bar>
           </div>
         </div>
         <div className="latest-issue border px-8 py-4">

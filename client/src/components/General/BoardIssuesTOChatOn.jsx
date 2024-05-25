@@ -99,13 +99,14 @@ function BoardIssuesTOChatOn() {
 
   return (
     <div className="flex justify-center pt-10 bg-gray-50 min-h-screen">
-      <div className="w-[90%] bg-white p-6 rounded-lg shadow-lg">
+      {/* w-[100%] bg-white p-6 rounded-lg shadow-lg */}
+      <div className="w-full md:w-[90%] bg-white md:p-6 rounded-lg shadow-lg">
         <div className="mb-6">
           <h1 className="text-3xl font-semibold text-gray-800">Staff Chat Room</h1>
           <p className="text-sm text-gray-600">Click on a card to share your point of view.</p>
         </div>
         <hr className="mb-6" />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {chatroomIssues.length > 0 ? (
             chatroomIssues.map((chatroomIssue) => (
               <Link to={`/Home/staff-chatboard/${chatroomIssue._id}`} key={chatroomIssue._id}>
