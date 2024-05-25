@@ -102,7 +102,7 @@ function NewIssueForm() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative">
         <div className="flex z-10 px-2">
-          <div className="md:p-8 rounded-2xl w-full">
+          <div className="md:p-4 rounded-2xl w-full">
            <p className='pb-8 text-2xl font-bold'>Rise Issue Here </p>
            <form onSubmit={handleSubmit(onSubmitHandler)}>
             {/* md:grid md:grid-cols-2 gap-4*/}

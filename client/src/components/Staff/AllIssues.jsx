@@ -152,7 +152,7 @@ function AllIssues() {
       {currentIssues.length === 0 ? (
         <p>No issues found.</p>
       ) : (
-        <>
+        <div className='overflow-x-scroll'>
           <table className="min-w-full table-auto">
             <thead>
               <tr className="bg-gray-300 text-gray-700 text-sm leading-normal">
@@ -233,7 +233,7 @@ function AllIssues() {
               </ul>
             </nav>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

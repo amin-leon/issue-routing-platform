@@ -318,7 +318,7 @@ const StaffHomePage = () => {
 
   return (
     <div>
-      <div className="issue-container md:px-32 md:py-16 md:grid md:grid-cols-2 md:gap-6">
+      <div className="issue-container md:px-32 md:py-10 md:grid md:grid-cols-2 md:gap-6">
         <div className="cards-graph">
           {/* cards grid grid-cols-3 gap-3 */}
           <div className="cards grid gap-2 md:grid md:grid-cols-3 md:gap-3">

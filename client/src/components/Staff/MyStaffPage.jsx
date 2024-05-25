@@ -34,7 +34,7 @@ function MyStaffPage() {
 
   return (
     // 
-    <div className="md:px-8 md:py-16 md:w-full md:grid md:grid-cols-6">
+    <div className="md:px-8 md:py-2 md:w-full md:grid md:grid-cols-6">
       <div className="pt-10 flex flex-col p-6 gap-3 col-span-1 border bg-gray-50">
         <div
           className={`p-5 text-black cursor-pointer rounded-md flex justify-center items-center ${
@@ -58,14 +58,11 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('busting-issue')}
         >
-          Busting issues
+          Most rised issues
         </div>
       </div>
-      <div className="col-span-5 border h-screen px-8">
-        <div className="pb-10">
-          {/* Your other content */}
-        </div>
-        <div className="overflow-auto">
+      <div className="col-span-5 border px-8">
+        <div className="">
           {renderMenuSelection()}
         </div>
       </div>

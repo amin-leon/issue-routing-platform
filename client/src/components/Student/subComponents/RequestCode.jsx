@@ -83,7 +83,7 @@ function RequestCode() {
     <div>
       <div className="bg-no-repeat bg-cover bg-center relative">
         <div className="flex z-10 px-2">
-          <div className="md:p-8 rounded-2xl w-full">
+          <div className="md:p-4 rounded-2xl w-full">
             {/* CodeCard component */}
             <p className='pb-8 text-2xl font-bold'>Request Private Channel</p>
             <form onSubmit={handleSubmit(onSubmitHandler)}>

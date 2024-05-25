@@ -8,6 +8,8 @@ function Notifications() {
   const user = useSelector((state) => state.auth.user);
   const notifications = useSelector((state) => state.notifications.notifications);
   const [filter, setFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
   const dispatch = useDispatch();
 
   const filteredNotifications = () => {
@@ -21,6 +23,11 @@ function Notifications() {
       default:
         return notifications;
     }
+  };
+
+  const paginatedNotifications = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredNotifications().slice(startIndex, startIndex + itemsPerPage);
   };
 
   const markAsRead = async (notificationId, issueId, link) => {
@@ -43,9 +50,10 @@ function Notifications() {
     }
   };
 
+  const pageCount = Math.ceil(filteredNotifications().length / itemsPerPage);
+
   return (
-    // notification-container bg-gray-100 px-48 h-screen
-    <div className="notification-container bg-gray-100 md:px-48 md:h-screen lg:px-48 lg:h-screen">
+    <div className="notification-container bg-gray-100 md:px-48 lg:px-48">
       <h1 className="text-2xl font-bold mb-4">Notifications</h1>
       <div className="mb-4">
         <label htmlFor="filter" className="mr-2 font-semibold">Filter:</label>
@@ -53,7 +61,10 @@ function Notifications() {
           id="filter"
           className="border rounded px-10 py-1"
           value={filter}
-          onChange={(e) => setFilter(e.target.value)}
+          onChange={(e) => {
+            setFilter(e.target.value);
+            setCurrentPage(1); // Reset to first page on filter change
+          }}
         >
           <option value="all">All</option>
           <option value="read">Read</option>
@@ -67,7 +78,7 @@ function Notifications() {
         </button>
       </div>
       <ul className="notification-list">
-        {filteredNotifications().map((notification) => (
+        {paginatedNotifications().map((notification) => (
           <li
             key={notification._id}
             className={`notification-item ${notification.isRead ? 'text-gray-500' : 'text-black'} bg-white p-2 rounded mb-2 cursor-pointer transition-colors duration-300 hover:bg-gray-200 relative`}
@@ -95,6 +106,22 @@ function Notifications() {
           </li>
         ))}
       </ul>
+      <div className="mt-4 flex justify-end">
+        <nav>
+          <ul className="pagination flex space-x-2">
+            {[...Array(pageCount)].map((_, index) => (
+              <li key={index} className="page-item">
+                <button
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={`px-3 py-1 border rounded-md ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'hover:bg-blue-300'}`}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }
