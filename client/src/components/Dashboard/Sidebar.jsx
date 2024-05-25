@@ -142,7 +142,8 @@ const Sidebar = ({ isSidebarOpen }) => {
         <Link to="#">
           <div className="p-3 border-b border-1">
             <div className="text-black text-4xl font-bold">
-              <img src="https://www.npc.ac.rw/fileadmin/templates/assets/images/NPC_LOGO.png" alt="" className="w-16 h-16" />
+              {/* <img src="https://www.npc.ac.rw/fileadmin/templates/assets/images/NPC_LOGO.png" alt="" className="w-32 h-24" /> */}
+              <img src="https://www.simplerqms.com/wp-content/uploads/2021/05/npc-logo-1.png" alt="" className="w-32 h-24" />
               
             </div>
           </div>

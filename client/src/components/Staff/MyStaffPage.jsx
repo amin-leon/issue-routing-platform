@@ -58,7 +58,7 @@ function MyStaffPage() {
           }`}
           onClick={() => handleSettingClick('busting-issue')}
         >
-          Most rised issues
+          Most rised
         </div>
       </div>
       <div className="col-span-5 border px-8">
